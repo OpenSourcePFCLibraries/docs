@@ -73,6 +73,7 @@ To use n_cst_security in an application:
 - Group membership from an identity provider: see the of_InitSecurity syntax that takes an array of groups, and of_GetGroups and of_IsExternalGroups.
 - Keeping restrictions in place after application code enables or shows controls: see of_ApplyRestrictions, of_IsEnabledAllowed, and of_IsVisibleAllowed.
 - Controls of types the service doesn't list are secured through their Visible property instead of ending the application: see of_SetControlStatus.
+- Deny by default (least privilege): controls and menu items without a setting can be disabled or hidden: see of_SetDefaultStatus.
 
 **See also**
 
@@ -97,6 +98,7 @@ N_cst_security includes instance variables:
 | ids_items |  | n_ds | Protected |
 | ids_updates |  | n_ds | Protected |
 | ii_libcnt |  | Integer | Protected |
+| ipo_settled[ ] | Controls and menu items that received a setting in the current of_SetSecurity or of_ApplyRestrictions call, while a default status is set (PFC 2025 and later) | PowerObject | Protected |
 | ii_numgroups |  | Integer | Protected |
 | il_numberofrows |  | Long | Protected |
 | inv_string |  | n_cst_string | Protected |
@@ -104,7 +106,9 @@ N_cst_security includes instance variables:
 | is_app |  | String | Protected |
 | is_currfilter |  | String | Protected |
 | is_defaultgroup |  | String | Protected |
+| is_defaultstatus | Status for controls and menu items without a setting, set with of_SetDefaultStatus (PFC 2025 and later) | String | Protected |
 | is_disabledborder |  | String | Protected |
+| is_forcedstatus | Status applied instead of looking up a setting, while the default status is applied (PFC 2025 and later) | String | Protected |
 | is_groups[ ] | Groups whose settings apply to the user (PFC 2025 and later) | String | Protected |
 | is_enabledborder |  | String | Protected |
 | is_keyword |  | String | Protected |
@@ -164,9 +168,12 @@ None.
 N_cst_security includes many precoded object functions. The functions you call from an application are documented here:
 
 - of_addobject
+- of_ApplyDefault (PFC 2025 and later)
+- of_ApplyDefaultMenu (PFC 2025 and later)
 - of_ApplyRestrictions (PFC 2025 and later)
 - of_FindEntry
 - of_GetControlName (PFC 2025 and later)
+- of_GetDefaultStatus (PFC 2025 and later)
 - of_GetGroups (PFC 2025 and later)
 - of_GetPermissions
 - of_GetStatus (PFC 2025 and later)
@@ -176,10 +183,13 @@ N_cst_security includes many precoded object functions. The functions you call f
 - of_InitScanProcess
 - of_InitSecurity
 - of_IsA (PFC 2025 and later)
+- of_IsDefaultEligible (PFC 2025 and later)
 - of_IsEnabledAllowed (PFC 2025 and later)
 - of_IsExternalGroups (PFC 2025 and later)
+- of_IsSettled (PFC 2025 and later)
 - of_IsVisibleAllowed (PFC 2025 and later)
 - of_LoadSecurity
+- of_MarkSettled (PFC 2025 and later)
 - of_ScanControlArray
 - of_ScanDatawindow
 - of_ScanWindow
@@ -187,6 +197,7 @@ N_cst_security includes many precoded object functions. The functions you call f
 - of_SetControlStatus
 - of_SetControlStatus_Generic (PFC 2025 and later)
 - of_SetDataWindowColumns
+- of_SetDefaultStatus (PFC 2025 and later)
 - of_SetMenu
 - of_SetMenuStatus
 - of_SetSecurity
@@ -220,6 +231,71 @@ instancename.of_addobject ( as_app, as_winname, as_object, as_objecttype, as_des
 **Return value**
 
 Integer. integer; Return code from import string.
+
+### of_ApplyDefault
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Gives the default status (see of_SetDefaultStatus) to the controls in a control array that received no setting.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_ApplyDefault ( window, controls, objectname )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_security |
+| *window* | String. Name of the window |
+| *controls* | GraphicObject array. The control array |
+| *objectname* | String. Name of the object that owns the control array, or an empty string for the window |
+
+**Return value**
+
+Integer. Returns the number of controls set.
+
+**Usage**
+
+Called by of_SetSecurity. The controls of user objects, tabs, and tab pages are checked one by one, as of_SetControlArray does. The default only restricts: a disabled control isn't shown, and nothing is enabled.
+
+### of_ApplyDefaultMenu
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Gives the default status (see of_SetDefaultStatus) to the menu items that have no submenu and received no setting.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_ApplyDefaultMenu ( window, menu )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_security |
+| *window* | String. Name of the window |
+| *menu* | Menu. The menu or menu item, together with its items |
+
+**Return value**
+
+Integer. Returns the number of menu items set.
+
+**Usage**
+
+Called by of_SetSecurity and of_ApplyRestrictions. Toolbar buttons follow their menu items. Cascading menu items and separators are left as designed.
 
 ### of_ApplyRestrictions
 
@@ -287,6 +363,8 @@ Integer. Returns the number of menu items set, 0 if there are no settings, and -
 of_SetSecurity applies the settings when you call it, and code that later sets a control's Enabled or Visible property can undo them. Call of_ApplyRestrictions after such code to apply the Disable and Invisible settings again. Unlike calling of_SetSecurity again, it doesn't enable or show controls whose setting is Enable, so your application's own state is kept.
 
 Use Syntax 3 after code that enables or shows menu items, so that the whole window isn't processed. As with of_SetSecurity, the settings stored for the menu itself are used when the window has none for it. PFC's Window menu (pfc_m_master) and MRU service call this syntax after they enable or show items.
+
+When a default status is set (see of_SetDefaultStatus), Syntax 1 and Syntax 3 also apply it to the controls and menu items that have no setting. Syntax 2 doesn't.
 
 **Examples**
 
@@ -356,6 +434,37 @@ instancename.of_GetControlName ( control, window, name )
 **Return value**
 
 Integer. Returns 1 if the function succeeds and -1 if the control is not on a window.
+
+### of_GetDefaultStatus
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Gets the status given to controls and menu items that have no setting for the user.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+application.instancename.of_GetDefaultStatus ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *application* | Global variable of type n_cst_appmanager (this must be gnv_app) |
+| *instancename* | Instance name of n_cst_security |
+
+**Return value**
+
+String. Returns DISABLE, INVISIBLE, or NOTSET (the default: controls without a setting are left as designed).
+
+**See also**
+
+of_SetDefaultStatus
 
 ### of_GetGroups
 
@@ -430,7 +539,7 @@ Protected
 **Syntax**
 
 ```
-instancename.of_GetStatus ( window, control )
+instancename.of_GetStatus ( window, control {, default } )
 ```
 
 | Argument | Description |
@@ -438,10 +547,11 @@ instancename.of_GetStatus ( window, control )
 | *instancename* | Instance name of n_cst_security |
 | *window* | String. Name of the window (or object) |
 | *control* | String. Name of the control |
+| *default* (optional) | Boolean. TRUE (the default) returns the default status set with of_SetDefaultStatus when there's no setting; FALSE returns NOTSET |
 
 **Return value**
 
-String. Returns ENABLE, DISABLE, or INVISIBLE, or NOTSET if there is no setting, of_InitSecurity hasn't been called, or the lookup fails.
+String. Returns ENABLE, DISABLE, or INVISIBLE, or NOTSET if of_InitSecurity hasn't been called. When there is no setting or the lookup fails, it returns the default status (NOTSET unless one is set with of_SetDefaultStatus).
 
 **Usage**
 
@@ -696,6 +806,37 @@ instancename.of_IsA ( object, systemtype )
 
 Boolean. Returns TRUE if the object is of that type or inherits from it, FALSE otherwise.
 
+### of_IsDefaultEligible
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Determines whether the default status (see of_SetDefaultStatus) applies to a control or menu item.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_IsDefaultEligible ( object )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_security |
+| *object* | PowerObject. The control or menu item |
+
+**Return value**
+
+Boolean. Returns TRUE for interactive controls (including control types the service doesn't list) and for menu items that have no submenu and aren't separators. Returns FALSE for static text, lines and shapes (line, rectangle, round rectangle, oval), group boxes, pictures, progress bars, animations, the MDI client, status bar, MDI tabbed bar, ribbon bar, user objects, tabs, windows, and cascading menu items.
+
+**Usage**
+
+Override this function in n_cst_security to change which objects the default applies to. The controls inside user objects and tabs are checked one by one, whatever this function returns for the user object or tab.
+
 ### of_IsEnabledAllowed
 
 > Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
@@ -735,7 +876,7 @@ application.instancename.of_IsEnabledAllowed ( control )
 
 **Return value**
 
-Boolean. Returns FALSE if the user's settings disable or hide the control, TRUE otherwise. Controls without settings, and all controls before of_InitSecurity is called, are allowed.
+Boolean. Returns FALSE if the user's settings disable or hide the control, TRUE otherwise. Controls without settings, and all controls before of_InitSecurity is called, are allowed, unless a default status is set (see of_SetDefaultStatus). With Syntax 2, the default status is used only for the controls it applies to (see of_IsDefaultEligible).
 
 **Usage**
 
@@ -779,6 +920,37 @@ application.instancename.of_IsExternalGroups ( )
 
 Boolean. Returns TRUE if the groups were passed to of_InitSecurity (from an identity provider), FALSE if they were read from the security database.
 
+### of_IsSettled
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Determines whether a control or menu item received a setting in the current of_SetSecurity or of_ApplyRestrictions call.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_IsSettled ( object )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_security |
+| *object* | PowerObject. The control or menu item |
+
+**Return value**
+
+Boolean. Returns TRUE if of_MarkSettled recorded the object, FALSE otherwise.
+
+**Usage**
+
+Used by of_ApplyDefault and of_ApplyDefaultMenu, so that the default status is only given to objects without a setting.
+
 ### of_IsVisibleAllowed
 
 > Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
@@ -818,7 +990,7 @@ application.instancename.of_IsVisibleAllowed ( control )
 
 **Return value**
 
-Boolean. Returns FALSE if the user's settings hide the control, TRUE otherwise. Controls without settings, and all controls before of_InitSecurity is called, are allowed.
+Boolean. Returns FALSE if the user's settings hide the control, TRUE otherwise. Controls without settings, and all controls before of_InitSecurity is called, are allowed, unless the default status is INVISIBLE (see of_SetDefaultStatus). With Syntax 2, the default status is used only for the controls it applies to (see of_IsDefaultEligible).
 
 **Usage**
 
@@ -852,6 +1024,37 @@ instancename.of_LoadSecurity ( as_object )
 **Return value**
 
 Integer. 1 if there is security on the object 0 if there is not security -1 for error.
+
+### of_MarkSettled
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Records that a control or menu item received a setting in the current of_SetSecurity or of_ApplyRestrictions call, so that the default status isn't applied to it.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_MarkSettled ( object )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_security |
+| *object* | PowerObject. The control or menu item |
+
+**Return value**
+
+None.
+
+**Usage**
+
+Called by of_SetControlStatus and of_SetMenuStatus. Objects are only recorded while a default status is set (see of_SetDefaultStatus).
 
 ### of_ScanControlArray
 
@@ -1068,6 +1271,57 @@ instancename.of_SetDataWindowColumns ( adw_obj )
 
 Integer. the number of columns set -1 = error occured.
 
+### of_SetDefaultStatus
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Sets a status for the controls and menu items that have no setting for the user (deny by default, or least privilege).
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+application.instancename.of_SetDefaultStatus ( status )
+```
+
+| Argument | Description |
+| --- | --- |
+| *application* | Global variable of type n_cst_appmanager (this must be gnv_app) |
+| *instancename* | Instance name of n_cst_security (the n_cst_appmanager default for this is inv_security) |
+| *status* | String. DISABLE ('D') to disable, INVISIBLE ('I') to hide, or NOTSET ('') to leave them as designed (the default) |
+
+**Return value**
+
+Integer. Returns 1 if it succeeds and -1 if the status isn't valid.
+
+**Usage**
+
+By default, of_SetSecurity only changes the controls that have a setting for the user. With a default status, the security database only needs to grant access (Enable): after applying the settings, of_SetSecurity gives the default status to the controls and menu items that received none, also when the window has no settings at all or they can't be loaded.
+
+The default only restricts: a disabled control isn't shown, and nothing is enabled. It applies to interactive controls (including the controls inside user objects and tabs) and to menu items that have no submenu, whose toolbar buttons follow them. Static text, lines and shapes, group boxes, pictures, progress bars, animations, frame controls (the MDI client, status bar, MDI tabbed bar, and ribbon bar), user objects and tabs themselves, cascading menu items, separators, and DataWindow columns are left as designed; see of_IsDefaultEligible.
+
+of_ApplyRestrictions (Syntax 1 and 3), of_IsEnabledAllowed, and of_IsVisibleAllowed use the default too. of_SetSecurity for a single object (a GraphicObject or DataWindow) doesn't.
+
+**Examples**
+
+This example initializes security and disables everything the user isn't granted:
+
+```
+li_return = this.inv_security.of_InitSecurity &
+   (itr_sec, "EISAPP", this.of_GetUserID(), "Default")
+this.inv_security.of_SetDefaultStatus &
+   (this.inv_security.DISABLE)
+```
+
+**See also**
+
+of_GetDefaultStatus, of_IsDefaultEligible, of_SetSecurity
+
 ### of_SetMenu
 
 **Description**
@@ -1152,6 +1406,8 @@ Boolean. Returns TRUE if the function succeeds and FALSE if an error occurs.
 Call this function in a window Open or pfc_PreOpen event to apply security to a window, hiding and/or disabling controls, as specified for the user in the security database.
 
 The settings are applied when you call this function. Code that later sets a control's Enabled or Visible property can undo them. Calling this function again also enables and shows controls whose setting is Enable; to apply only the Disable and Invisible settings again, use of_ApplyRestrictions (PFC 2025 and later).
+
+**PFC 2025 and later** When a default status is set with of_SetDefaultStatus, the window syntax also gives it to the controls and menu items that have no setting, including on windows that have no settings at all. It then returns TRUE unless the settings can't be loaded. Without a default status, a window that has no settings returns FALSE, as in earlier versions.
 
 **Examples**
 

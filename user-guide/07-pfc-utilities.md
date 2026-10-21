@@ -459,6 +459,8 @@ Enabling the security service in your application involves:
   gnv_app.inv_security.of_SetSecurity(this)
   ```
 
+**Deny by default (PFC 2025 and later)** By default, controls that have no setting for the user are left as designed. To disable or hide them instead, so that you only need to define the controls each user or group may use, call the n_cst_security of_SetDefaultStatus function after of_InitSecurity. See "Security service" in Chapter 4. This is available in PFC 2025 and later; it is not available in the 2019 and 2022 versions of PFC.
+
 ### Maintaining the security database
 
 The PFC security system tables are delivered in the PFC.DB local database. The PFC security tables are:
