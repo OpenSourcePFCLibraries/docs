@@ -77,26 +77,62 @@ N_cst_resize includes instance variables:
 | DRAGOBJECT | Constant set to DragObject! | String | Protected | Internal |
 | FIXEDBOTTOM | Constant set to FixedToBottom | String | Public | Use with of_Register |
 | FIXEDBOTTOM_SCALERIGHT | Constant set to FixedToBottom& ScaleToRight | String | Public | Use with of_Register |
+| FIXEDCENTER | Constant set to 'FixedToCenter' | String | Public |  |
+| FIXEDCENTERBOTTOM | Constant set to 'FixedToCenterBottom' | String | Public |  |
+| FIXEDCENTERLEFT | Constant set to 'FixedToCenterLeft' | String | Public |  |
+| FIXEDCENTERRIGHT | Constant set to 'FixedToCenterRight' | String | Public |  |
+| FIXEDCENTERTOP | Constant set to 'FixedToCenterTop' | String | Public |  |
 | FIXEDRIGHT | Constant set to FixedToRight | String | Public | Use with of_Register |
 | FIXEDRIGHT_SCALEBOTTOM | Constant set to FixedToRight& ScaleToBottom | String | Public | Use with of_Register |
 | FIXEDRIGHTBOTTOM | Constant set to FixedToRight&Bottom | String | Public | Use with of_Register |
+| ics_dragobject | Obsoleted in 6.0. | String | Protected |  |
+| ics_line | Obsoleted in 6.0. | String | Protected |  |
+| ics_mdiclient | Obsoleted in 6.0. | String | Protected |  |
+| ics_oval | Obsoleted in 6.0. | String | Protected |  |
+| ics_rectangle | Obsoleted in 6.0. | String | Protected |  |
+| ics_roundrectangle | Obsoleted in 6.0. | String | Protected |  |
 | ii_rounding | Rounding factor | Integer | Protected | Internal (default is 5) |
 | il_parentminimumheight | Minimum height for the parent window | Long | Protected | Set with the of_SetMinSize |
 | il_parentminimumwidth | Minimum width for the parent window | Long | Protected | Set with the of_SetMinSize |
 | il_parentprevheight | Original height of the parent window | Long | Protected | Set with of_SetOrigSize |
 | il_parentprevwidth | Original width of the parent window | Long | Protected | Set with of_SetOrigSize |
 | inv_registered [ ] | Structure array to track objects eligible for resizing | n_cst_resize attrib | Protected | Internal |
+| istr_registered[ ] |  | n_cst_resizeattrib | Protected |  |
 | LINE | Constant set to Line! | String | Protected | Internal |
 | MDICLIENT | Constant set to MDIClient! | String | Protected | Internal |
 | OVAL | Constant set to Oval! | String | Protected | Internal |
 | RECTANGLE | Constant set to Rectangle! | String | Protected | Internal |
 | ROUNDRECTANGLE | Constant set to RoundRectangle! | String | Protected | Internal |
+| SCALE | Constant set to 'Scale' | String | Public |  |
+| SCALEBOTTOM | Constant set to 'ScaleToBottom' | String | Public |  |
+| SCALERIGHT | Constant set to 'ScaleToRight' | String | Public |  |
+| SCALERIGHTBOTTOM | Constant set to 'ScaleToRight&Bottom' | String | Public |  |
 
 ## Events
 
 N_cst_resize includes a precoded event:
 
 pfc_Resize
+
+### Constructor
+
+**Description**
+
+Resize service.
+
+**Syntax**
+
+```
+instancename.EVENT Constructor ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_resize |
+
+**Return value**
+
+None.
 
 ### pfc_Resize
 
@@ -129,6 +165,7 @@ The u_dw, u_tab, and u_tabpg Resize events call this event.
 N_cst_resize includes precoded object functions:
 
 - of_GetMinMaxPoints
+- of_getminmaxpoints_line
 - of_Register
 - of_Resize
 - of_SetMinSize
@@ -188,6 +225,35 @@ ELSE
        + "~r~nMaximum y: " + String(li_maxy))
 END IF
 ```
+
+### of_getminmaxpoints_line
+
+**Description**
+
+No description is available.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_getminmaxpoints_line ( awo_control, ai_x, ai_y, ai_width, ai_height )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_resize |
+| *awo_control* | WindowObject. |
+| *ai_x* | Integer, passed by reference. |
+| *ai_y* | Integer, passed by reference. |
+| *ai_width* | Integer, passed by reference. |
+| *ai_height* | Integer, passed by reference. |
+
+**Return value**
+
+Integer.
 
 ### of_Register
 

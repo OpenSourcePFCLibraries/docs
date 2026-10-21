@@ -151,6 +151,7 @@ U_calendar includes instance variables.
 | ii_boldfontweight | Bold font weight | Integer | Protected | Internal (default is 700) |
 | ii_dwcolumnstyle[ ] | Edit styles of registered columns | Integer | Protected | Set with of_Register |
 | ii_normalfontweight | Normal font weight | Integer | Protected | Internal (default is 400) |
+| ii_registry |  | Integer | Public |  |
 | il_fontcolor | Font color for normal days | Long | Protected | Internal |
 | il_holidaycolor | Font color for holidays | Long | Protected | Set with of_SetHolidayColor |
 | il_markeddaycolor | Font color for marked days | Long | Protected | Set with of_SetMarkedDayColor |

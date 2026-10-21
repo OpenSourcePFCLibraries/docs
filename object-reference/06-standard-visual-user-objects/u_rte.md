@@ -22,7 +22,6 @@ PFC visual user objects are designed to be used with windows that are descendant
 - [N_cst_filesrv](../09-custom-class-user-objects/n_cst_filesrv.md)
 - [N_cst_rtefind](../09-custom-class-user-objects/n_cst_rtefind.md)
 - [N_cst_textstyleattrib](../05-global-structures-and-structure-objects/n_cst_textstyleattrib.md)
-- [S_printdlgattrib](../05-global-structures-and-structure-objects/s_printdlgattrib.md)
 
 **Usage**
 
@@ -66,6 +65,7 @@ U_rte includes instance variables:
 | --- | --- | --- | --- | --- |
 | ib_continuouspages | Indicates whether continuous page numbering is enabled when printing | Boolean | Protected | Use of_GetContinuousPages and of_SetContinuousPages to access |
 | ib_ignorefileexists | Indicates whether u_rte asks the user to confirm when saving a file that already exists | Boolean | Protected | Use of_GetIgnoreFileExists and of_SetIgnoreFileExists to access |
+| ib_IsObsolete |  | Boolean | Protected |  |
 | ib_ongoingfind | Indicates whether a find operation is in progress | Boolean | Protected | Internal |
 | ib_rmbmenu | Indicates whether right mouse button support is enabled | Boolean | Protected | When this is TRUE, PFC displays the m_edit popup menu when a user presses the right mouse button over this control |
 |  |  |  |  | To disable right mouse button support, set this variable to FALSE in the control’s Constructor event |
@@ -95,11 +95,9 @@ U_rte includes precoded event scripts:
 - pfc_NextPage
 - pfc_Open
 - pfc_Paste
-- pfc_PrePrintDlg
 - pfc_PreRmbMenu
 - pfc_PreviousPage
 - pfc_Print
-- pfc_PrintDlg
 - pfc_PrintImmediate
 - pfc_PrintPreview
 - pfc_ReplaceDlg
@@ -295,38 +293,6 @@ Integer. Returns the number of characters that were pasted if the event succeeds
 
 The message router calls this event when a RichTextEdit control based on u_rte has focus and the user selects Edit>Paste from the menu bar of a menu descended from the PFC m_master menu.
 
-### pfc_PrePrintDlg
-
-**Description**
-
-Empty user event allowing you to modify the properties passed to the n_cst_platform of_PrintDlg function.
-
-**Syntax**
-
-```
-instancename.EVENT pfc_PrePrintDlg ( attributes )
-```
-
-| Argument | Description |
-| --- | --- |
-| *instancename* | Instance name of u_rte |
-| *attributes* | S_printdlgattrib variable into which the event places additional printing information. This argument is accessed through the *astr_printdlg* argument (passed by reference) |
-
-**Usage**
-
-This event is called by pfc_PrintDlg before calling the n_cst_platform of_PrintDlg function.
-
-You can use this event to modify or extend the information passed in the s_printdlgattrib structure.
-
-**Examples**
-
-This example contains code you might add to the pfc_PrePrintDlg event:
-
-```
-// Default copies to 1
-astr_printdlg.l_copies = 1
-```
-
 ### pfc_PreRmbMenu
 
 **Description**
@@ -375,31 +341,6 @@ Integer. Returns 1 if the event succeeds and -1 if an error occurs.
 **Usage**
 
 This event is triggered when the RichTextEdit control has focus and the user selects File>Print from the menu bar of a menu descended from the PFC m_master menu.
-
-### pfc_PrintDlg
-
-**Description**
-
-Initializes the s_printdlgattrib structure with the RichTextEdit control’s current settings, displays the Print dialog box by calling the n_cst_platform of_PrintDlg function, and resets the settings, as specified by the user.
-
-**Syntax**
-
-```
-instancename.EVENT pfc_PrintDlg ( attributes )
-```
-
-| Argument | Description |
-| --- | --- |
-| *instancename* | Instance name of u_rte |
-| *attributes* | S_printdlgattrib variable into which the event places printing information. This argument is accessed through the *astr_printdlg* argument (passed by reference) |
-
-**Return value**
-
-Integer. Returns 1 if the event succeeds and -1 if an error occurs.
-
-**Usage**
-
-This event is called by the pfc_Print event.
 
 ### pfc_PrintImmediate
 

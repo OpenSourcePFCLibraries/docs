@@ -58,9 +58,12 @@ N_cst_dwsrv_querymode includes instance variables:
 
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
+| ib_resetcriteria |  | Boolean | Protected |  |
 | ib_resetquerycriteria | Indicates whether PFC resets query criteria between query mode toggles | Boolean | Protected | Internal |
 | ib_retrieveondisabled | Indicates whether PFC automatically retrieves the DataWindow when query mode is disabled | Boolean | Protected | Internal |
 | inv_querymodeinfo[ ] | Stores querymode information for each of the DataWindow’s columns | n_cst_dwsrv_query modeattrib | Protected | Internal |
+| is_querycolumns[ ] |  | String | Protected |  |
+| istr_querymodeinfo[ ] |  | n_cst_dwsrv_querymodeattrib | Protected |  |
 
 ## Events
 

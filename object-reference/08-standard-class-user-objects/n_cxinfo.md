@@ -23,3 +23,12 @@ Use this nonvisual object instead of the standard PowerBuilder ContextInformatio
 - [n_inet](n_inet.md)
 - [n_ir](n_ir.md)
 - [n_srv](n_srv.md)
+
+## Instance variables
+
+N_cxinfo includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |
+

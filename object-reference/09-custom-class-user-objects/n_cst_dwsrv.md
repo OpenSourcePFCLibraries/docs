@@ -77,6 +77,7 @@ N_cst_dwsrv includes instance variables:
 | HEADER | Constant set to 2 | Integer | Public | Use with of_SetColumnDisplayName Style |
 | idw_requestor | The DataWindow control that owns the n_cst_dwsrv instance | u_dw | Protected | Used to access and control the associated DataWindow control |
 | ii_source | Used by n_cst_dwsrv_querymode | Integer | Protected | Access |
+| is_charThousand | leave this empty to read char from Registry. | String | Protected |  |
 | is_defaultheadersuffix | Default suffix for DataWindow column headers and labels (the default is _t) | String | Protected | Call of_SetDefaultHeaderSuffix and of_GetDefaultHeaderSuffix to access |
 | is_displayitem | Controls message text displayed for a single row | String | Protected | Call of_SetDisplayItem and of_GetDisplayItem to access |
 | is_displayunits | Controls message text displayed for multiple rows | String | Protected | Call of_SetDisplayUnits and of_GetDisplayUnits to access |
@@ -91,8 +92,10 @@ N_cst_dwsrv includes precoded object functions:
 - of_DWArguments
 - of_GetColumnDisplayName
 - of_GetColumnDisplayNameStyle
+- of_GetColumnEditStatus
 - of_GetColumnNameSource
 - of_GetDefaultHeaderSuffix
+- of_GetDescription
 - of_GetDisplayItem
 - of_GetDisplayUnits
 - of_GetHeaderName
@@ -100,6 +103,7 @@ N_cst_dwsrv includes precoded object functions:
 - of_GetInfo
 - of_GetItem
 - of_GetItemAny
+- of_GetName
 - of_GetObjects
 - of_GetPropertyInfo
 - of_GetWidth
@@ -514,6 +518,32 @@ MessageBox("Style",  &
    "Display style is " + String(li_style))
 ```
 
+### of_GetColumnEditStatus
+
+**Description**
+
+Determine the Edit Status of the passed column/row combination.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_GetColumnEditStatus ( as_column, al_row )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_dwsrv |
+| *as_column* | String. The column to test. |
+| *al_row* | Long. The row number to test. |
+
+**Return value**
+
+String. "editable" The column/row is editable. "displayonly" The column/row is display only "protected" The column/row is not editable. "!" if an error is encountered.
+
 ### of_GetColumnNameSource
 
 **Description**
@@ -583,6 +613,30 @@ ls_suffix = inv_base.of_GetDefaultHeaderSuffix( )
 MessageBox("DataWindow", "Header suffix is: " &
    + ls_suffix)
 ```
+
+### of_GetDescription
+
+**Description**
+
+Gets the Service Description.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_GetDescription ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_dwsrv |
+
+**Return value**
+
+String. The Service Description.
 
 ### of_GetDisplayItem
 
@@ -900,6 +954,30 @@ FOR li_i = 1 to li_num_links
    END IF
 ...
 ```
+
+### of_GetName
+
+**Description**
+
+Gets the Service Name.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_GetName ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_dwsrv |
+
+**Return value**
+
+String. The Service Name.
 
 ### of_GetObjects
 

@@ -73,8 +73,11 @@ N_tr includes instance variables:
 
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
+| CST_FILETYPE_INI | Constant set to 1 | Integer | Public |  |
+| CST_FILETYPE_XML | Constant set to 2 | Integer | Public |  |
 | ib_autorollback | Specifies whether the Destructor event issues a COMMIT or a ROLLBACK if the transaction is still connected | Boolean | Protected | The Destructor event uses this event to determine whether to call of_Commit or of_Rollback: • TRUE — Call of_Rollback • FALSE (default) — Call of_Commit |
 |  |  |  |  | Set with of_SetAutoRollback. This controls how n_tr handles transactions if the application closes (or the object is otherwise destroyed) while the transaction is still connected |
+| ib_IsObsolete |  | Boolean | Protected |  |
 | ib_trace | Specifies whether trace is enabled | Boolean | Protected | Call of_GetTrace to access this value (default is FALSE) |
 | is_name | A name used to identify the transaction | String | Protected | You can reuse transactions between windows by passing this value (using OpenWithParm) when opening a new window. The new window can use the passed value with the n_cst_trregistration of_GetByName function to access the Transaction object |
 |  |  |  |  | Call of_GetName and of_SetName to access this value |
@@ -112,8 +115,10 @@ N_tr includes precoded object functions:
 - of_GetSqlState
 - of_GetTrace
 - of_Init
+- of_init_xml
 - of_IsConnected
 - of_MessageBox
+- of_Restore
 - of_Rollback
 - of_SetAutoRollback
 - of_SetLogidAndPassword
@@ -652,6 +657,32 @@ IF ll_return <> 0 THEN
 END IF
 ```
 
+### of_init_xml
+
+**Description**
+
+No description is available.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_init_xml ( as_xmlfile, as_inisectionxmlroot )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_tr |
+| *as_xmlfile* | String. |
+| *as_inisectionxmlroot* | String. |
+
+**Return value**
+
+Integer.
+
 ### of_IsConnected
 
 **Description**
@@ -747,6 +778,36 @@ of_Messagebox(’tr_dberror’,’Save’, &
    as_error, StopSign!, Ok!, 1)
 ...
 ```
+
+### of_Restore
+
+**Description**
+
+Perform the actual Get from the .Ini or .Xml File.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_Restore ( ai_filetype, as_keyoriniorxml, as_inisectionxmlroot, as_subkeyelement, as_value, as_default )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_tr |
+| *ai_filetype* | Integer. Function behavior. - use the registry, an .ini or .xml file. |
+| *as_keyoriniorxml* | String. The KeyName for use with the Registry , the Ini or XML file name for use with an .Ini or .Xml File. |
+| *as_inisectionxmlroot* | String. The name of the .Ini section. or Xml Root. |
+| *as_subkeyelement* | String. The key/element value to be used on either the Registry , .Ini or .Xml file. |
+| *as_value* | String, passed by reference. The value to be restored from either the Registry, .Ini or .Xml file Passed by reference. |
+| *as_default* | String. Used also as a default value, if the desired value is not found. |
+
+**Return value**
+
+Integer. 1 if it succeeds. 0 if the default value was used. -1 if an error occurs.
 
 ### of_Rollback
 

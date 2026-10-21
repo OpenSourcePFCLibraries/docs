@@ -44,6 +44,14 @@ To use n_cn:
 
 n_trp
 
+## Instance variables
+
+N_cn includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |
+
 ## Functions
 
 N_cn includes precoded object functions:

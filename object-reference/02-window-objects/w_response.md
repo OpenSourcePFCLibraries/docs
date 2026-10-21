@@ -32,6 +32,26 @@ W_response includes predefined events:
 | pfc_Apply pfc_Default |
 | pfc_Cancel |
 
+### Close
+
+**Description**
+
+Standard PowerBuilder close event.
+
+**Syntax**
+
+```
+instancename.EVENT Close ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of w_response |
+
+**Return value**
+
+None.
+
 ### pfc_Apply
 
 **Description**
@@ -122,3 +142,43 @@ ELSE
   CloseWithReturn(This, 1)
 END IF
 ```
+
+### pfc_preOpen
+
+**Description**
+
+Triggered from the top of the open event.
+
+**Syntax**
+
+```
+instancename.EVENT pfc_preOpen ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of w_response |
+
+**Return value**
+
+None.
+
+### ue_sysCommand
+
+**Description**
+
+Mapped to pbm_sysCommand. The purpose here is to prevent the window from being closed using Alt-F4 when the close sysMenu option has been disabled.
+
+**Syntax**
+
+```
+instancename.EVENT ue_sysCommand ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of w_response |
+
+**Return value**
+
+None.

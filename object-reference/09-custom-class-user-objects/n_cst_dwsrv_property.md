@@ -36,12 +36,33 @@ u_dw
 | --- | --- | --- | --- | --- |
 | iw_property | Reference to w_dwproperty window | w_dwproperty | Protected | Internal |
 | iw_dwpropertyservices | Reference to w_dwpropertyservices window | w_dwpropertyservices | Protected | Internal |
+| iw_propertyservices |  | w_dwpropertyservices | Protected |  |
 
 ## Events
 
 N_cst_dwsrv_property includes one precoded event:
 
 Destructor
+
+### Constructor
+
+**Description**
+
+DataWindow Property Service to peek and change behavior of u_dw objects. Including start/stop services, service behaviors, service syntax, dw buffers, and dw row/column status. The object can be instantiated as a shared (global to all application dws) or per instance (one dw at a time). This service consits of this object plus the visual window(s), visual tab control(s), and visual tab page(s). This collection of objects was developed so that they can easily be extended to include other services that may be found in u_dw other than the ones provided by PFC.
+
+**Syntax**
+
+```
+instancename.EVENT Constructor ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_dwsrv_property |
+
+**Return value**
+
+None.
 
 ### Destructor
 

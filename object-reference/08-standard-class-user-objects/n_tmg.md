@@ -32,8 +32,53 @@ N_tmg includes instance variables:
 
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |  |
 | inv_multiple | Reference variable for multiple notify service | N_cst_tmgmultiple | Public | Call of_SetMultiple to enable |
 | inv_single | Reference variable for single notify service | N_cst_tmgsingle | Public | Call of_SetSingle to enable |
+
+## Events
+
+N_tmg includes these events:
+
+### Destructor
+
+**Description**
+
+Clean anything that has been created or opened by the service.
+
+**Syntax**
+
+```
+instancename.EVENT Destructor ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_tmg |
+
+**Return value**
+
+None.
+
+### Timer
+
+**Description**
+
+Processes timer.
+
+**Syntax**
+
+```
+instancename.EVENT Timer ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_tmg |
+
+**Return value**
+
+None.
 
 ## Functions
 

@@ -45,6 +45,7 @@ N_cst_winsrv_sheetmanager includes instance variables:
 | --- | --- | --- | --- | --- |
 | ie_arrange | Current arrange type | ArrangeTypes | Protected | Internal |
 | inv_sheet[ ] | Array containing information on the previous state of active sheets | n_cst_winsrv_she etmanagerattrib | Protected | Internal |
+| istr_sheet[ ] |  | n_cst_winsrv_sheetmanagerattrib | Protected |  |
 
 ## Events
 
@@ -138,6 +139,7 @@ N_cst_winsrv_sheetmanager includes precoded object functions:
 - of_GetSheetsByClass
 - of_GetSheetsByTitle
 - of_SetCurrentState
+- of_SetRequestor
 
 ### of_GetCurrentState
 
@@ -399,3 +401,28 @@ of_SetCurrentState(Cascade!)
 li_rc = iw_requestor.ArrangeSheets(Cascade!)
 Return li_rc
 ```
+
+### of_SetRequestor
+
+**Description**
+
+associates a frame window with this service.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_SetRequestor ( aw_requestor )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_winsrv_sheetmanager |
+| *aw_requestor* | w_master. The frame window requesting this service. |
+
+**Return value**
+
+Integer. Returns 1 = success, -1 = error.

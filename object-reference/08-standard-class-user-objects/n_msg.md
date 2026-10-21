@@ -33,6 +33,7 @@ N_msg includes instance variables:
 
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |  |
 | idbl_parm | Contains passed numeric values | Double | Protected | Access with of_GetDoubleParm and of_SetDoubleParm |
 | ipo_parm | Contains passed objects | PowerObject | Protected | Access with of_GetPowerObjectParm and of_SetPowerObjectParm |
 | is_parm | Contains passed string values | String | Protected | Access with of_GetStringParm and of_SetStringParm |

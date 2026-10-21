@@ -33,6 +33,7 @@ N_base includes instance variables:
 | --- | --- | --- | --- | --- |
 | CONTINUE_ACTION | Constant set to 1 | Integer | Public | Internal |
 | FAILURE | Constant set to -1 | Integer | Public | Internal |
+| ib_IsObsolete |  | Boolean | Protected |  |
 | NO_ACTION | Constant set to 0 | Integer | Public | Internal |
 | PREVENT_ACTION | Constant set to 0 | Integer | Public | Internal |
 | SUCCESS | Constant set to 1 | Integer | Public | Internal |

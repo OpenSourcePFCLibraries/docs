@@ -21,3 +21,12 @@ Structure object containing DataWindow property information.
 **See also**
 
 w_dwproperty
+
+## Instance variables
+
+N_cst_dwpropertyattrib includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| iw_main |  | Window | Public |
+

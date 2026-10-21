@@ -42,7 +42,33 @@ M_edit includes one instance variable:
 
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |  |
 | idrg_current | Current window or window control | DragObject | Protected | Used to access the current control |
+| idrg_parent |  | DragObject | Protected |  |
+
+## Events
+
+M_edit includes these events:
+
+### pfc_isobsolete
+
+**Description**
+
+No description is available.
+
+**Syntax**
+
+```
+instancename.EVENT pfc_isobsolete ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of m_edit |
+
+**Return value**
+
+Boolean.
 
 ## Functions
 

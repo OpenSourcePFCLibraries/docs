@@ -25,6 +25,14 @@ Use this visual user object in windows instead of the standard PowerBuilder Grap
 
 w_master
 
+## Instance variables
+
+U_gr includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |
+
 ## Events
 
 U_gr includes a precoded event script:

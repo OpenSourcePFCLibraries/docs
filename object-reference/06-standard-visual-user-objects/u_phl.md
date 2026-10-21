@@ -26,6 +26,14 @@ Use this visual object in windows instead of the standard PowerBuilder PictureHy
 - [u_p](u_p.md)
 - [u_sth](u_sth.md)
 
+## Instance variables
+
+U_phl includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |
+
 ## Events
 
 U_phl includes a precoded event script:

@@ -18,7 +18,6 @@ Defining virtual functions in an ancestor object is a technique that allows you 
 **Object relationships**
 
 - [s_pagesetupattrib](../05-global-structures-and-structure-objects/s_pagesetupattrib.md)
-- [s_printdlgattrib](../05-global-structures-and-structure-objects/s_printdlgattrib.md)
 - w_pagesetup
 
 **Usage**
@@ -30,7 +29,7 @@ To use the platform service:
 
 **Descendants**
 
-n_cst_platformaix (see n_cst_platformsol2) n_cst_platformhpux (see n_cst_platformsol2) n_cst_platformsol2 n_cst_platformwin32
+- [n_cst_platformunicode](n_cst_platformunicode.md)
 
 **See also**
 
@@ -43,6 +42,7 @@ N_cst_platform contains an instance variable:
 
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
+| is_ClassName[ ] |  | String | Protected |  |
 | is_separator | Separator character | String | Protected | Used by the operating system when specifying fully qualified pathnames (default is backslash) |
 
 ## Functions
@@ -50,17 +50,26 @@ N_cst_platform contains an instance variable:
 N_cst_platform includes precoded object functions, which are virtual functions with corresponding versions in n_cst_platform descendants:
 
 - of_FindWindow
+- of_getactivewindowborder
+- of_getClientRect
 - of_GetComputerName
+- of_getDPIX
+- of_getDPIY
 - of_GetFreeMemory
+- of_getfreeresources
+- of_getknownfolderpath
 - of_GetPhysicalMemory
+- of_getSysColor
 - of_GetSystemDirectory
+- of_getSystemMetrics
 - of_GetTextSize
 - of_GetUserID
 - of_GetWindowsDirectory
 - of_GetWindowText
+- of_isapprunning
+- of_maxpath
 - of_PageSetupDlg
 - of_PlaySound
-- of_PrintDlg
 - of_SetFindWindowClasses
 
 By defining virtual functions in this object, you can declare a reference variable of type n_cst_platform for use with all n_cst_platform descendants.
@@ -90,9 +99,58 @@ instancename.of_FindWindow ( windowname )
 
 UnsignedInteger. Always returns 0.
 
-**See also**
+### of_getactivewindowborder
 
-n_cst_platformsol2 of_FindWindow function (also in n_cst_platformaix and n_cst_platformhpux) n_cst_platformwin32 of_FindWindow function of_SetFindWindowClasses
+**Description**
+
+No description is available.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_getactivewindowborder ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_platform |
+
+**Return value**
+
+Integer.
+
+### of_getClientRect
+
+**Description**
+
+Returns the value representing the client rectangle for the handle indicated.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_getClientRect ( vul_hwnd, rl_left, rl_top, rl_right, rl_bottom )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_platform |
+| *vul_hwnd* | UnsignedLong. |
+| *rl_left* | Long, passed by reference. |
+| *rl_top* | Long, passed by reference. |
+| *rl_right* | Long, passed by reference. |
+| *rl_bottom* | Long, passed by reference. |
+
+**Return value**
+
+Boolean. Boolean TRUE if call succeeds.
 
 ### of_GetComputerName
 
@@ -118,9 +176,53 @@ instancename.of_GetComputerName ( )
 
 String. Always returns an empty string.
 
-**See also**
+### of_getDPIX
 
-n_cst_platformsol2 of_GetComputerName function (also in n_cst_platformaix and n_cst_platformhpux) n_cst_platformwin32 of_GetComputerName function
+**Description**
+
+Returns the number of pixels per logical inch along the screen width.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_getDPIX ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_platform |
+
+**Return value**
+
+UnsignedLong. UnsignedLong Dots per inch.
+
+### of_getDPIY
+
+**Description**
+
+Returns the number of pixels per logical inch along the screen height.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_getDPIY ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_platform |
+
+**Return value**
+
+UnsignedLong. UnsignedLong Dots per inch.
 
 ### of_GetFreeMemory
 
@@ -146,9 +248,77 @@ instancename.of_GetFreeMemory ( )
 
 Long. Always returns -1.
 
-**See also**
+### of_getfreeresources
 
-n_cst_platformsol2 of_GetFreeMemory function (also in n_cst_platformaix and n_cst_platformhpux) n_cst_platformwin32 of_GetFreeMemory function
+**Description**
+
+No description is available.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_getfreeresources ( ai_type )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_platform |
+| *ai_type* | Integer. |
+
+**Return value**
+
+Integer.
+
+### of_getknownfolderpath
+
+**Description**
+
+No description is available.
+
+**Syntax 1**
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_getknownfolderpath ( ai_foldercode, as_folderpath )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_platform |
+| *ai_foldercode* | Integer. |
+| *as_folderpath* | String, passed by reference. |
+
+**Return value**
+
+Integer.
+
+**Syntax 2**
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_getknownfolderpath ( ai_foldercode, ab_currentpath, as_folderpath )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_platform |
+| *ai_foldercode* | Integer. |
+| *ab_currentpath* | Boolean. |
+| *as_folderpath* | String, passed by reference. |
+
+**Return value**
+
+Integer.
 
 ### of_GetPhysicalMemory
 
@@ -174,9 +344,30 @@ instancename.of_GetPhysicalMemory ( )
 
 Long. Always returns -1.
 
-**See also**
+### of_getSysColor
 
-n_cst_platformsol2 of_GetPhysicalMemory function (also in n_cst_platformaix and n_cst_platformhpux) n_cst_platformwin32 of_GetPhysicalMemory function
+**Description**
+
+Returns a system color for the color requested by the index parameter.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_getSysColor ( ai_index )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_platform |
+| *ai_index* | Integer. |
+
+**Return value**
+
+UnsignedLong. unsignedLong color requested.
 
 ### of_GetSystemDirectory
 
@@ -202,9 +393,30 @@ instancename.of_GetSystemDirectory ( )
 
 String. Always returns an empty string.
 
-**See also**
+### of_getSystemMetrics
 
-n_cst_platformsol2 of_GetSystemDirectory function (also in n_cst_platformaix and n_cst_platformhpux) n_cst_platformwin32 of_GetSystemDirectory function
+**Description**
+
+Returns a system metric for the metric requested by the index parameter.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_getSystemMetrics ( ai_index )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_platform |
+| *ai_index* | Integer. |
+
+**Return value**
+
+UnsignedInteger. unsignedLong metric requested.
 
 ### of_GetTextSize
 
@@ -240,10 +452,6 @@ underline, height, width )
 
 Integer. Always returns -1.
 
-**See also**
-
-n_cst_platformsol2 of_GetTextSize function (also in n_cst_platformaix and n_cst_platformhpux) n_cst_platformwin32 of_GetTextSize function
-
 ### of_GetUserID
 
 **Description**
@@ -268,10 +476,6 @@ instancename.of_GetUserID ( )
 
 String. Always returns an empty string.
 
-**See also**
-
-n_cst_platformsol2 of_GetUserID function (also in n_cst_platformaix and n_cst_platformhpux) n_cst_platformwin32 of_GetUserID function
-
 ### of_GetWindowsDirectory
 
 **Description**
@@ -295,10 +499,6 @@ instancename.of_GetWindowsDirectory ( )
 **Return value**
 
 String. Always returns an empty string.
-
-**See also**
-
-n_cst_platformsol2 of_GetWindowsDirectory function (also in n_cst_platformaix and n_cst_platformhpux) n_cst_platformwin32 of_GetWindowsDirectory function
 
 ### of_GetWindowText
 
@@ -325,9 +525,54 @@ instancename.of_GetWindowText ( window )
 
 String. Always returns an empty string.
 
-**See also**
+### of_isapprunning
 
-n_cst_platformsol2 of_GetWindowText function (also in n_cst_platformaix and n_cst_platformhpux) n_cst_platformwin32 of_GetWindowText function
+**Description**
+
+No description is available.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_isapprunning ( as_app_name )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_platform |
+| *as_app_name* | String. |
+
+**Return value**
+
+Boolean.
+
+### of_maxpath
+
+**Description**
+
+Returns a system metric for the metric requested by the index parameter.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_maxpath ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_platform |
+
+**Return value**
+
+Integer. unsignedLong metric requested.
 
 ### of_PageSetupDlg
 
@@ -379,40 +624,6 @@ instancename.of_PlaySound ( filename {, beeponfailure } )
 **Return value**
 
 Integer. Always returns -1.
-
-**See also**
-
-n_cst_platformsol2 of_PlaySound function (also in n_cst_platformaix and n_cst_platformhpux) n_cst_platformwin32 of_PlaySound function
-
-### of_PrintDlg
-
-**Description**
-
-Virtual function only. By defining virtual functions in this object, you can declare a reference variable of type n_cst_platform for use with all n_cst_platform descendants.
-
-**Access**
-
-Public
-
-**Syntax**
-
-```
-instancename.of_PrintDlg ( printinfo, window )
-```
-
-| Argument | Description |
-| --- | --- |
-| *instancename* | Instance name of n_cst_platform |
-| *printinfo* | S_printdlgattrib instance into which the function places print information (passed by reference) |
-| *window* | Window |
-
-**Return value**
-
-Integer. Always returns -1.
-
-**See also**
-
-n_cst_platformwin32 of_PrintDlg function
 
 ### of_SetFindWindowClasses
 

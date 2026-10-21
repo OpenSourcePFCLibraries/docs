@@ -27,6 +27,14 @@ U_vsb event scripts provide integration with PFC menus.
 
 u_hsb
 
+## Instance variables
+
+U_vsb includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |
+
 ## Events
 
 U_vsb includes one precoded event script:

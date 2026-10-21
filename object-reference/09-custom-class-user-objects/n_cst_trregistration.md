@@ -65,6 +65,7 @@ N_cst_trregistration includes instance variables:
 | ib_destructordestroy | Indicates whether the service destroys registered transactions in the Destructor event | Boolean | Protected | Set with of_SetDestructorDestroy (default is TRUE) |
 | inv_trans[ ] | Structure array that tracks Transaction objects and whether the array slot is used | n_cst_trregistrat ionattrib | Protected | Used to track Transaction objects |
 | ii_count | Number of current transactions registered with the service | Integer | Protected | Used to track the number of registered Transaction objects. This value is not always the same as the upperbound of the istr_trans array |
+| istr_trans[ ] |  | n_cst_trregistrationattrib | Protected |  |
 
 ## Events
 

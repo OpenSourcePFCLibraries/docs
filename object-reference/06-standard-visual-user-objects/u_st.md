@@ -31,6 +31,14 @@ u_st_splitbar
 - [u_sle](u_sle.md)
 - [u_sth](u_sth.md)
 
+## Instance variables
+
+U_st includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |
+
 ## Events
 
 U_st includes one precoded event:

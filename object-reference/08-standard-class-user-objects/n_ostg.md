@@ -21,3 +21,12 @@ Use this nonvisual object instead of the standard PowerBuilder OLEStorage object
 
 - [n_oo](n_oo.md)
 - [n_ostm](n_ostm.md)
+
+## Instance variables
+
+N_ostg includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |
+

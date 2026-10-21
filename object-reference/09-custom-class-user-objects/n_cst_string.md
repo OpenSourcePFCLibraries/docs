@@ -35,15 +35,30 @@ Because PFC defines this object with the autoinstantiate option, you don’t nee
 
 n_cst_conversion
 
+## Instance variables
+
+N_cst_string includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| CST_GLOBALREPLACE_LEGACY | Constant set to 1 | Integer | Public |
+| CST_GLOBALREPLACE_NEW | Constant set to 2 | Integer | Public |
+| CST_HOTMAIL_RULE | Constant set to 1 | Integer | Public |
+| CST_NULL |  | String | Public |
+| CST_RFC_5321 | Constant set to 2 | Integer | Public |
+
 ## Functions
 
 N_cst_string includes precoded object functions:
 
 - of_ArrayToString
 - of_CountOccurrences
+- of_GetGlobalReplaceMethod
 - of_GetKeyValue
 - of_GetToken
 - of_GlobalReplace
+- of_GlobalReplaceLegacy
+- of_GlobalReplaceNew
 - of_IsAlpha
 - of_IsAlphaNum
 - of_IsArithmeticOperator
@@ -54,7 +69,9 @@ N_cst_string includes precoded object functions:
 - of_IsPrintable
 - of_IsPunctuation
 - of_IsSpace
+- of_issurroundedby
 - of_IsUpper
+- of_iswellformedemailaddress
 - of_IsWhiteSpace
 - of_LastPos
 - of_LeftTrim
@@ -63,10 +80,15 @@ N_cst_string includes precoded object functions:
 - of_ParseToArray
 - of_Quote
 - of_RemoveNonPrint
+- of_RemovePunctuation
 - of_RemoveWhiteSpace
 - of_RightTrim
+- of_SetGlobalReplaceMethod
 - of_SetKeyValue
 - of_Trim
+- of_trimspecificleadchars
+- of_trimspecifictrailchars
+- of_URLEncode
 - of_WordCap
 
 ### of_ArrayToString
@@ -155,6 +177,30 @@ MessageBox("String", String(ll_count) &
     " occurrences of " + ls_target &
    + " within " + ls_source )
 ```
+
+### of_GetGlobalReplaceMethod
+
+**Description**
+
+Obtains an integer value that represents which of_GlobalReplace method/technique will be used when of_GlobalReplace is used.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_GetGlobalReplaceMethod ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_string |
+
+**Return value**
+
+Integer. integer CST_GLOBALREPLACE_NEW (= 2) The new, more efficient method will be used. CST_GLOBALREPLACE_LEGACY (= 1) The original method will be used.
 
 ### of_GetKeyValue
 
@@ -296,6 +342,62 @@ ls_new = inv_string.of_GlobalReplace &
 MessageBox("String", "New String is: " &
    + ls_new )
 ```
+
+### of_GlobalReplaceLegacy
+
+**Description**
+
+Replace all occurrences of one string inside another with a new string.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_GlobalReplaceLegacy ( as_source, as_old, as_new, ab_ignorecase )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_string |
+| *as_source* | String. The string being searched. |
+| *as_old* | String. The old string being replaced. |
+| *as_new* | String. The new string. |
+| *ab_ignorecase* | Boolean. A boolean stating to ignore case sensitivity. |
+
+**Return value**
+
+String. as_Source with all occurrences of as_Old replaced with as_New. If any argument's value is NULL, function returns NULL.
+
+### of_GlobalReplaceNew
+
+**Description**
+
+Replace all occurrences of one string inside another with a new string. Usage Notes: This method implements an alternative algoithm that is designed to be more efficient (hence, faster) than the original method. The gain in performance is due to avoidance of the "Replace" PowerScript string function. The original method has been renamed to of_GlobalReplaceLegacy. It can be invoked explicitly, or by first invoking: of_SetGlobalReplaceMethod( lnv_string.CST_GLOBALREPLACE_LEGACY) and then using of_GlobalReplace. The new method appears to be approx. 50-60% faster than the original method. Disclaimer: The above statements are not to be construed as a guarantee of improved performance. Your mileage may vary.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_GlobalReplaceNew ( as_source, as_old, as_new, ab_ignorecase )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_string |
+| *as_source* | String. The string being searched. |
+| *as_old* | String. The old string being replaced. |
+| *as_new* | String. The new string. |
+| *ab_ignorecase* | Boolean. A boolean stating to ignore case sensitivity. |
+
+**Return value**
+
+String. as_Source with all occurrences of as_Old replaced with as_New. If any argument's value is NULL, function returns NULL.
 
 ### of_IsAlpha
 
@@ -700,6 +802,55 @@ END IF
 ...
 ```
 
+### of_issurroundedby
+
+**Description**
+
+Trim specified leading chars from the specified source string.
+
+**Syntax 1**
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_issurroundedby ( as_source, as_begin_surrounding, as_end_surrounding, as_tobe_surrounded )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_string |
+| *as_source* | String. The source string to check. |
+| *as_begin_surrounding* | String. The string that correspond to the beginning of the surrounding characters combinaison. |
+| *as_end_surrounding* | String. Optional string that correspond to the endding of the surrounding characters combinaison (if not specified assume is equal to as_begin_surrounding. |
+| *as_tobe_surrounded* | String. The string that contains the characters to be checked there are found between the specified surrounding characters inside as_source. |
+
+**Return value**
+
+Boolean.
+
+**Syntax 2**
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_issurroundedby ( as_source, as_surroundedby, as_tobe_surrounded )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_string |
+| *as_source* | String. The source string totrim. as_totrim The specific string that contains the leading chars to be trimmed from as_source. |
+| *as_surroundedby* | String. |
+| *as_tobe_surrounded* | String. |
+
+**Return value**
+
+Boolean. String Returns trimmed string, if no error occurs. NULL, if an error occurs.
+
 ### of_IsUpper
 
 **Description**
@@ -739,6 +890,53 @@ IF inv_string.of_IsAlpha(ls_source) THEN
       + " contains only uppercase letters")
 ...
 ```
+
+### of_iswellformedemailaddress
+
+**Description**
+
+Check that the specified Email addres is well formed according to the specified validation rule.
+
+**Syntax 1**
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_iswellformedemailaddress ( as_emailaddress, ai_emailaddresscheckrule )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_string |
+| *as_emailaddress* | String. The Email address to check. |
+| *ai_emailaddresscheckrule* | Integer. The optional Check rule to use, by default it used the hotmail rule. Possible values are : - cst_hotmail_rule, to apply HotMail validation rules, or - cst_rfc_5321, to apply RFC 5321 validation rules. |
+
+**Return value**
+
+Boolean. True, Ok False, Not ok.
+
+**Syntax 2**
+
+Trim specified leading chars from the specified source string.
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_iswellformedemailaddress ( as_emailaddress )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_string |
+| *as_emailaddress* | String. |
+
+**Return value**
+
+Boolean. String Returns trimmed string, if no error occurs. NULL, if an error occurs.
 
 ### of_IsWhiteSpace
 
@@ -1076,6 +1274,31 @@ inv_string.of_RemoveNonPrint &
 ...
 ```
 
+### of_RemovePunctuation
+
+**Description**
+
+No description is available.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_RemovePunctuation ( as_source )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_string |
+| *as_source* | String. |
+
+**Return value**
+
+String.
+
 ### of_RemoveWhiteSpace
 
 **Description**
@@ -1169,6 +1392,31 @@ IF ab_remove_spaces and ab_remove_nonprint THEN
 ...
 ```
 
+### of_SetGlobalReplaceMethod
+
+**Description**
+
+Specifies which of_GlobalReplace method/technique is to be used when the of_GlobalReplace fn is used.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_SetGlobalReplaceMethod ( ai_method )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_string |
+| *ai_method* | Integer. integer CST_GLOBALREPLACE_NEW (= 2) The new, more efficient method is to be used. CST_GLOBALREPLACE_LEGACY (= 1) The original method is to be used. |
+
+**Return value**
+
+Integer. integer SUCCESS (1) - The requested method will be used. FAILURE (-1) - ai_Method is null or not valid.
+
 ### of_SetKeyValue
 
 **Description**
@@ -1259,6 +1507,83 @@ IF Len (ls_key) > 0 THEN
 END IF
 ...
 ```
+
+### of_trimspecificleadchars
+
+**Description**
+
+Trim specified leading chars from the specified source string.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_trimspecificleadchars ( as_source, as_totrim )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_string |
+| *as_source* | String. The source string totrim. |
+| *as_totrim* | String. The specific string that contains the leading chars to be trimmed from as_source. |
+
+**Return value**
+
+String. Returns trimmed string, if no error occurs. NULL, if an error occurs.
+
+### of_trimspecifictrailchars
+
+**Description**
+
+Trim specified trailing chars from the specified source string.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_trimspecifictrailchars ( as_source, as_totrim )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_string |
+| *as_source* | String. The source string to trim. |
+| *as_totrim* | String. The specific string that contains the leading chars to be trimmed from as_source. |
+
+**Return value**
+
+String. Returns trimmed string, if no error occurs. NULL, if an error occurs.
+
+### of_URLEncode
+
+**Description**
+
+Encodes a string to use as parameter in URL. - Not encoded chars (because not reserved for special use): a - z, A - Z, 0 - 9 - _ . ! ~ \* ' ( ) - Space: + - all other ASCII chars: %xy (xy = hex value of the char) - all non ASCII chars: converted into two or thee Bytes, each encoded as %xy.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_URLEncode ( as_value )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_string |
+| *as_value* | String. String value to encode for URL. |
+
+**Return value**
+
+String. String The encoded value.
 
 ### of_WordCap
 

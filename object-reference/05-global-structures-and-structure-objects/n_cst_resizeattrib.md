@@ -33,3 +33,12 @@ Structure object containing information for tracking objects eligible for resizi
 **See also**
 
 n_cst_resize
+
+## Instance variables
+
+N_cst_resizeattrib includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| i_movey |  | Integer | Public |
+

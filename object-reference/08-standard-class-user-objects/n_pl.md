@@ -25,6 +25,14 @@ Use this nonvisual object instead of the standard PowerBuilder pipeline object.
 - [n_msg](n_msg.md)
 - [n_tr](n_tr.md)
 
+## Instance variables
+
+N_pl includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |
+
 ## Functions
 
 N_pl contains one precoded function:

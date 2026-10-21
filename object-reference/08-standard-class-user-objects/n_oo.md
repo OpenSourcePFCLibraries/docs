@@ -21,3 +21,12 @@ Use this nonvisual object instead of the standard PowerBuilder OLEObject object.
 
 - [n_ostg](n_ostg.md)
 - [n_ostm](n_ostm.md)
+
+## Instance variables
+
+N_oo includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |
+

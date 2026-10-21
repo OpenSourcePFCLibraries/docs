@@ -75,6 +75,7 @@ N_cst_debug includes instance variables:
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
 | ib_alwaysontop | Specifies whether the service displays the debug window on top of other windows | Boolean | Protected | Call of_SetAlwaysOnTop and of_GetAlwaysOnTop to access |
+| ids_debugjson |  | n_ds | Public |  |
 | PFC_BUILD_DATE | Build date | Date | Public | Informational |
 | PFC_FIXES | PFC revision level | Integer | Public | Informational |
 | PFC_MAJOR | PFC major revision level | Integer | Public | Informational |
@@ -116,9 +117,12 @@ This event destroys all objects used by the debugging service.
 N_cst_debug includes precoded functions:
 
 - of_ClearLog
+- of_CloseJSON
 - of_GetAlwaysOnTop
+- of_IsDWProperty
 - of_IsLogOpen
 - of_Message
+- of_OpenJSON
 - of_OpenLog
 - of_PrintLog
 - of_SetAlwaysOnTop
@@ -161,6 +165,30 @@ This example is from the w_debuglog cb_clear Clicked event:
 gnv_app.inv_debug.of_ClearLog()
 ```
 
+### of_CloseJSON
+
+**Description**
+
+Closethe DebugJSON window.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_CloseJSON ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_debug |
+
+**Return value**
+
+Integer. Return value of Close PowerBuilder call. 0 if no action to close the window is taken. If any argument's value is NULL, function returns -1.
+
 ### of_GetAlwaysOnTop
 
 **Description**
@@ -195,6 +223,30 @@ Boolean   ib_ontop
 ib_ontop = gnv_app.inv_debug.of_GetAlwaysOnTop()
 ...
 ```
+
+### of_IsDWProperty
+
+**Description**
+
+Determines the state of the Shared DW Property Service.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_IsDWProperty ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_debug |
+
+**Return value**
+
+Boolean.
 
 ### of_IsLogOpen
 
@@ -266,6 +318,31 @@ Integer   li_return
 li_return = gnv_app.inv_debug.of_Message &
    ("Login Error for: " + gnv_app.of_GetUserID())
 ```
+
+### of_OpenJSON
+
+**Description**
+
+Open the DebugJSON window.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_OpenJSON ( anv_json )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_debug |
+| *anv_json* | n_cst_json. |
+
+**Return value**
+
+Integer. Return value of Open or Close PowerBuilder call. 0 if no action to open or close the window is taken. If any argument's value is NULL, function returns -1.
 
 ### of_OpenLog
 

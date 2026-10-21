@@ -26,6 +26,14 @@ Use this visual object in windows instead of the standard PowerBuilder PictureBu
 - [u_cb](u_cb.md)
 - [u_p](u_p.md)
 
+## Instance variables
+
+U_pb includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |
+
 ## Events
 
 U_pb includes a precoded event script:

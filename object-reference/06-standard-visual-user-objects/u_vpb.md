@@ -28,6 +28,14 @@ U_vpb event scripts provide integration with PFC menus.
 - [u_hpb](u_hpb.md)
 - [u_progressbar](../07-custom-visual-user-objects/u_progressbar.md)
 
+## Instance variables
+
+U_vpb includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |
+
 ## Events
 
 U_vpb includes one precoded event script:

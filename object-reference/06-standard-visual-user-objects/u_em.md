@@ -40,6 +40,7 @@ U_em has instance variables:
 | Instance variable | Description | Data type | Ancestry | Usage |
 | --- | --- | --- | --- | --- |
 | ib_autoselect | Indicates whether PFC selects text when the control receives focus | Boolean | Protected | Set to FALSE to disable autoselect |
+| ib_IsObsolete |  | Boolean | Protected |  |
 | ib_rmbmenu | Indicates whether the m_edit menu displays when the user presses the right mouse button | Boolean | Protected | Set to FALSE to disable right mouse button support |
 | iuo_calculator | Reference variable for dropdown calculator | u_calculator | Public | Use in dot notation to access u_calculator events, functions, and attributes |
 | iuo_calendar | Reference variable for dropdown calendar | u_calendar | Public | Use in dot notation to access u_calendar events, functions, and attributes |

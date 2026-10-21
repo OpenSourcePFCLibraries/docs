@@ -69,6 +69,7 @@ N_cst_dwsrv_dropdownsearch includes instance variables:
 | ii_currentindex | Current index value | Integer | Protected | Internal |
 | inv_columns [ ] | Column and text information for dropdown DataWindows | n_cst_dwsrv _dropdowns earchattrib | Protected | Internal |
 | is_textprev | Previously typed text | String | Protected | Internal |
+| istr_columns[ ] |  | n_cst_dwsrv_dropdownsearchattrib | Protected |  |
 
 ## Events
 

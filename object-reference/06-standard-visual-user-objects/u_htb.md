@@ -26,6 +26,24 @@ Use this visual object in windows instead of the standard PowerBuilder Horizonal
 - [w_master](../02-window-objects/w_master.md)
 - [u_vtb](u_vtb.md)
 
+## Instance variables
+
+U_htb includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| CST_LINE_LEFT | Constant set to 1 | Integer | Public |
+| CST_LINE_RIGHT | Constant set to 2 | Integer | Public |
+| CST_MOVED | Constant set to 5 | Integer | Public |
+| CST_PAGE_LEFT | Constant set to 3 | Integer | Public |
+| CST_PAGE_RIGHT | Constant set to 4 | Integer | Public |
+| ib_IsObsolete |  | Boolean | Protected |
+| LP_MW_down | Constant set to 18023255 | Long | Public |
+| LP_MW_UP | Constant set to 18285400 | Long | Public |
+| WM_MOUSEWHEEL | Constant set to 522 | Integer | Public |
+| WP_MW_down | Constant set to 4287102976 | Long | Public |
+| WP_MW_UP | Constant set to 7864320 | Long | Public |
+
 ## Events
 
 U_htb includes one precoded event:
@@ -41,6 +59,148 @@ Updates the parent window so it can set MicroHelp.
 **Usage**
 
 This event calls the pfc_ControlGotFocus event in the parent.
+
+### Lineleft
+
+**Description**
+
+Propagates event to pfc_positionchanged() event.
+
+**Syntax**
+
+```
+instancename.EVENT Lineleft ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_htb |
+
+**Return value**
+
+None.
+
+### Lineright
+
+**Description**
+
+Propagates event to pfc_positionchanged() event.
+
+**Syntax**
+
+```
+instancename.EVENT Lineright ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_htb |
+
+**Return value**
+
+None.
+
+### Moved
+
+**Description**
+
+Propagates event to pfc_positionchanged() event.
+
+**Syntax**
+
+```
+instancename.EVENT Moved ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_htb |
+
+**Return value**
+
+None.
+
+### Other
+
+**Description**
+
+Handle Mouse Wheel actions and propagates results to pfc_positionchanged() event with type = CST_MOVED.
+
+**Syntax**
+
+```
+instancename.EVENT Other ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_htb |
+
+**Return value**
+
+None.
+
+### Pageleft
+
+**Description**
+
+Propagates event to pfc_positionchanged() event.
+
+**Syntax**
+
+```
+instancename.EVENT Pageleft ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_htb |
+
+**Return value**
+
+None.
+
+### Pageright
+
+**Description**
+
+Propagates event to pfc_positionchanged() event.
+
+**Syntax**
+
+```
+instancename.EVENT Pageright ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_htb |
+
+**Return value**
+
+None.
+
+### pfc_positionchanged
+
+**Description**
+
+No description is available.
+
+**Syntax**
+
+```
+instancename.EVENT pfc_positionchanged ( ai_type, ai_scrollpos )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_htb |
+| *ai_type* | Integer. |
+| *ai_scrollpos* | Integer. |
+
+**Return value**
+
+None.
 
 ## Functions
 

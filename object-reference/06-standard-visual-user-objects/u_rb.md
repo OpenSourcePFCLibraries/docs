@@ -25,6 +25,14 @@ Use this visual object in windows instead of the standard PowerBuilder RadioButt
 
 u_cbx
 
+## Instance variables
+
+U_rb includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |
+
 ## Events
 
 U_rb includes a precoded event script:

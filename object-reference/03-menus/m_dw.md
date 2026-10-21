@@ -48,7 +48,32 @@ M_dw includes one instance variable:
 
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
+| ib_isobsolete |  | Boolean | Protected |  |
 | idw_parent | Owning DataWindow control. | DataWindow | Protected | Used to access the current DataWindow control |
+
+## Events
+
+M_dw includes these events:
+
+### pfc_isobsolete
+
+**Description**
+
+No description is available.
+
+**Syntax**
+
+```
+instancename.EVENT pfc_isobsolete ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of m_dw |
+
+**Return value**
+
+Boolean.
 
 ## Functions
 

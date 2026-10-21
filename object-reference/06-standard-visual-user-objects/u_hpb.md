@@ -27,6 +27,14 @@ Use this visual object in windows instead of the standard PowerBuilder Horizonal
 - [u_vpb](u_vpb.md)
 - [w_master](../02-window-objects/w_master.md)
 
+## Instance variables
+
+U_hpb includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |
+
 ## Events
 
 U_hpb includes one precoded event:

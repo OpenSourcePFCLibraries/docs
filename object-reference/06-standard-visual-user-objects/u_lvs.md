@@ -100,6 +100,7 @@ U_lvs includes instance variables:
 | --- | --- | --- | --- | --- |
 | CONTINUE_ACTION | Constant set to 1 | Integer | Public | Internal |
 | ib_alwaysvalidate | Controls whether the save process includes all objects in the validation process | Boolean | Protected | Set with of_SetAlwaysValidate (default is FALSE) |
+| ib_IsObsolete |  | Boolean | Protected |  |
 | ib_isupdateable | Indicates whether the ListView can be updated | Boolean | Protected | Set with of_SetUpdateable (default is FALSE) |
 | ib_rmbmenu | Controls right mouse button support | Boolean | Protected | Use to enable or disable right mouse button support (default is TRUE) |
 |  |  |  |  | Set with of_SetRMBMenu |
@@ -122,6 +123,7 @@ U_lvs includes instance variables:
 U_lvs includes precoded event scripts:
 
 - ColumnClick
+- Constructor
 - ContextMenu
 - Destructor
 - EndLabelEdit
@@ -165,6 +167,26 @@ Sorts the ListView contents, using the column whose heading was clicked. If the 
 **Usage**
 
 To use this event, n_cst_lvsrv_sort must be enabled. This event executes when the user clicks a ListView control’s column heading.
+
+### Constructor
+
+**Description**
+
+Service Based ListView Control.
+
+**Syntax**
+
+```
+instancename.EVENT Constructor ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_lvs |
+
+**Return value**
+
+None.
 
 ### ContextMenu
 

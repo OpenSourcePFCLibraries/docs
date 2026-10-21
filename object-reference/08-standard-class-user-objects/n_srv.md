@@ -23,3 +23,12 @@ Use this nonvisual object instead of the standard PowerBuilder Service object. T
 - [n_cxk](n_cxk.md)
 - [n_inet](n_inet.md)
 - [n_ir](n_ir.md)
+
+## Instance variables
+
+N_srv includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |
+

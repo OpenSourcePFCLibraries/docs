@@ -25,6 +25,14 @@ Use this nonvisual object instead of the standard PowerBuilder MailSession objec
 - [n_pl](n_pl.md)
 - [n_tr](n_tr.md)
 
+## Instance variables
+
+N_ms includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |
+
 ## Functions
 
 N_ms contains one precoded function:

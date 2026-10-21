@@ -87,6 +87,7 @@ N_cst_dwsrv_sort includes instance variables:
 | ib_displayvalues | Tracks whether display values are used for sorting | Boolean | Protected | Internal |
 | ib_visibleonly | Tracks whether sort dialog boxes display visible columns only | Boolean | Protected | Internal |
 | ii_style | Tracks sort style | Integer | Protected | Internal |
+| invo_sortDraw |  | n_cst_dwsrv_sortdraw | Protected |  |
 | is_excludecolumns[ ] | Contains a list of columns not displayed in sort dialog boxes | String | Protected | Internal |
 | is_sortcolumn | Indicates the sort column when sorting by clicking headings | String | Protected | Internal |
 | is_sortorder | Indicates sort order when the user sorts by clicking headings | String | Protected | Internal |
@@ -96,8 +97,29 @@ N_cst_dwsrv_sort includes instance variables:
 
 N_cst_dwsrv_sort includes user events:
 
+- Destructor
 - pfc_Clicked
 - pfc_SortDlg
+
+### Destructor
+
+**Description**
+
+Clean up to avoid memory leaks.
+
+**Syntax**
+
+```
+instancename.EVENT Destructor ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_dwsrv_sort |
+
+**Return value**
+
+None.
 
 ### pfc_Clicked
 
@@ -164,6 +186,8 @@ N_cst_dwsrv_sort includes precoded object functions:
 - of_SetUseDisplay
 - of_SetVisibleOnly
 - of_Sort
+- of_sortIndicatorDraw
+- of_sortIndicatorNone
 - of_UsesDisplayValue
 
 ### of_BuildSortAttrib
@@ -907,6 +931,54 @@ If li_rc < 0 Then Return li_rc
 li_rc = of_Sort()
 ...
 ```
+
+### of_sortIndicatorDraw
+
+**Description**
+
+Grants pfc_u_dw access to of_draw() in the sub-service n_cst_sortDraw.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_sortIndicatorDraw ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_dwsrv_sort |
+
+**Return value**
+
+None.
+
+### of_sortIndicatorNone
+
+**Description**
+
+Grants pfc_u_dw access to of_drawNone() in the sub-service n_cst_sortDraw. It also keeps instance variable in this service in sync with n_cst_sortDraw.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_sortIndicatorNone ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_dwsrv_sort |
+
+**Return value**
+
+None.
 
 ### of_UsesDisplayValue
 

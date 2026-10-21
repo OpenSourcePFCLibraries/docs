@@ -74,22 +74,51 @@ N_cst_apppreference includes instance variables:
 
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
+| CST_FILETYPE_INI | Constant set to 2 | Integer | Public |  |
+| CST_FILETYPE_REG | Constant set to 1 | Integer | Public |  |
+| CST_FILETYPE_XML | Constant set to 3 | Integer | Public |  |
 | ib_restoreapp | Controls whether the service saves and restores application-wide settings | Boolean | Protected | Set with of_SetRestoreApp |
 | ib_restoreuser | Controls whether the service saves and restores user-specific settings | Boolean | Protected | Set with of_SetRestoreUser |
+| ii_filetype |  | Integer | Protected |  |
 | inv_appmanager | Reference to application manager | n_cst_appmanager | Protected | Used to access application information |
+| inv_context |  | n_cst_list | Protected |  |
 | is_appinifile | INI file that contains application information | String | Protected | Set with of_SetAppINIFile |
 | is_appkey | Registry key that contains application information | String | Protected | Set with of_SetAppKey |
 | is_appprefsection | INI file section or registry key for application information | String | Protected | Internal. Default is AppPref |
+| is_appxmlfile |  | String | Protected |  |
 | is_userinifile | INI file that contains user information | String | Protected | Set with of_SetUserINIFile |
 | is_userkey | Registry key that contains application information | String | Protected | Set with of_SetUserKey |
 | is_userpref | INI file or registry key for user information | String | Protected | Internal. Default is AppUserPref |
+| is_userprefsection |  | String | Protected |  |
+| is_userxmlfile |  | String | Protected |  |
 
 ## Events
 
 N_cst_apppreference includes precoded events:
 
+- Constructor
 - pfc_Close
 - pfc_Open
+
+### Constructor
+
+**Description**
+
+Application Manager preference service.
+
+**Syntax**
+
+```
+instancename.EVENT Constructor ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_apppreference |
+
+**Return value**
+
+None.
 
 ### pfc_Close
 
@@ -146,6 +175,8 @@ This event executes when the application opens; it is called by the n_cst_appman
 
 N_cst_apppreference contains precoded object functions:
 
+- of_getcontext
+- of_getfiletype
 - of_IsRestoreApp
 - of_RestoreUser
 - of_Restore
@@ -156,11 +187,68 @@ N_cst_apppreference contains precoded object functions:
 - of_SaveUser
 - of_SetAppIniFile
 - of_SetAppKey
+- of_SetAppXmlFile
+- of_setcontext
 - of_SetRequestor
 - of_SetRestoreApp
 - of_SetRestoreUser
 - of_SetUserIniFile
 - of_SetUserKey
+- of_SetuserXmlFile
+
+### of_getcontext
+
+**Description**
+
+Perform the actual Get from the Registry, .Ini or .Xml File.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_getcontext ( as_key, aa_value )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_apppreference |
+| *as_key* | String. |
+| *aa_value* | Any, passed by reference. |
+
+**Return value**
+
+Integer. 1 if it succeeds. 0 if the default value was used. -1 if an error occurs.
+
+### of_getfiletype
+
+**Description**
+
+Return the actual file type used to store Preferences Informations.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_getfiletype ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_apppreference |
+
+**Return value**
+
+Integer. CST_FILETYPE_REG (1) - Regsitry Used CST_FILETYPE_INI (2) - INI file used CST_FILETYPE_XML (3) - XML file used.
+
+**Usage**
+
+Call this method to know the file type used to store prefrences.
 
 ### of_IsRestoreApp
 
@@ -770,6 +858,57 @@ END IF
 ...
 ```
 
+### of_SetAppXmlFile
+
+**Description**
+
+Sets the filename of the application's XML file.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_SetAppXmlFile ( as_appxmlfile )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_apppreference |
+| *as_appxmlfile* | String. the full pathname of the application XML file. |
+
+**Return value**
+
+Integer. Returns 1 = success, -1 = error.
+
+### of_setcontext
+
+**Description**
+
+Perform the actual Get from the Registry, .Ini or .Xml File.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_setcontext ( as_key, aa_value )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_apppreference |
+| *as_key* | String. |
+| *aa_value* | Any. |
+
+**Return value**
+
+Integer. 1 if it succeeds. 0 if the default value was used. -1 if an error occurs.
+
 ### of_SetRequestor
 
 **Description**
@@ -1020,3 +1159,28 @@ ELSE
 END IF
 ...
 ```
+
+### of_SetuserXmlFile
+
+**Description**
+
+Sets the filename of the use's XML file.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_SetuserXmlFile ( as_userxmlfile )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_apppreference |
+| *as_userxmlfile* | String. the full pathname of the use XML file. |
+
+**Return value**
+
+Integer. Returns 1 = success, -1 = error.

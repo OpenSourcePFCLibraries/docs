@@ -108,25 +108,36 @@ U_tvs includes instance variables:
 
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
+| CONTINUE_ACTION | Constant set to 1 | Integer | Public |  |
+| FIND_DATA | Constant set to "data" | String | Public |  |
+| FIND_LABEL | Constant set to "label" | String | Public |  |
 | ib_alwaysvalidate | Controls whether the save process includes all objects in the validation process | Boolean | Protected | Set with of_SetAlwaysValidate (default is FALSE) |
+| ib_IsObsolete |  | Boolean | Protected |  |
 | ib_isupdateable | Indicates whether the TreeView can be updated | Boolean | Protected | Set with of_SetUpdateable (default is FALSE) |
 | ib_rmbmenu | Controls right mouse button support | Boolean | Protected | Set with of_SetRmbMenu |
 | il_dragsource | Handle of the dragged item | Long | Public | PFC uses this instance variable to track a dragged TreeView item |
 | il_dragtarget | Handle of drag target | Long | Public | PFC uses this instance variable to track a dragged TreeView item |
 | il_rightclicked | Item clicked with the right mouse button | Long | Protected | Internal |
 | im_view | Popup menu | m_tvs | Protected | Internal |
+| INSERT_AFTER | Constant set to "after" | String | Public |  |
+| INSERT_FIRST | Constant set to "first" | String | Public |  |
+| INSERT_LAST | Constant set to "last" | String | Public |  |
+| INSERT_SORT | Constant set to "sort" | String | Public |  |
 | inv_base | Reference variable for basic TreeView services | n_cst_tvsrv | Public | Use in dot notation to access n_cst_tvsrv functions and attributes |
 | inv_levelsource | Reference variable for the TreeView data source service | n_cst_tvsrv_levelsource | Public | Use in dot notation to access n_cst_tvsrv_levelsource functions and attributes |
 | inv_luw | Reference variable for logical unit of work service | n_cst_luw | Protected | Implements the save process |
 | inv_print | Reference variable for TreeView print service | n_cst_tvsrv_print | Public | Use in dot notation to access n_cst_tvsrv_print functions and attributes |
 | ipo_pendingupdates[ ] | Objects that could be updated | PowerObject | Protected | Internal |
 | ipo_updaterequestor | Owner of the save process | PowerObject | Protected | Internal |
+| NO_ACTION | Constant set to 0 | Integer | Public |  |
+| PREVENT_ACTION | Constant set to 0 | Integer | Public |  |
 
 ## Events
 
 U_tvs includes precoded events:
 
 - BeginDrag
+- Constructor
 - Destructor
 - DragDrop
 - EndLabelEdit
@@ -169,6 +180,26 @@ Saves the handle of a dragged item in the il_dragsource public instance variable
 **Usage**
 
 This event executes when the user drags a label.
+
+### Constructor
+
+**Description**
+
+Service Based TreeView Control.
+
+**Syntax**
+
+```
+instancename.EVENT Constructor ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_tvs |
+
+**Return value**
+
+None.
 
 ### Destructor
 

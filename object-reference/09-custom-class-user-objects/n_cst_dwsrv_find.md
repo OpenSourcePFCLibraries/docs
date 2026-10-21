@@ -64,11 +64,32 @@ N_cst_dwsrv_find includes instance variables:
 
 N_cst_dwsrv_find includes precoded events:
 
+- Destructor
 - pfc_FindDlg
 - pfc_FindNext
 - pfc_Replace
 - pfc_ReplaceAll
 - pfc_ReplaceDlg
+
+### Destructor
+
+**Description**
+
+Perform cleanup.
+
+**Syntax**
+
+```
+instancename.EVENT Destructor ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_dwsrv_find |
+
+**Return value**
+
+None.
 
 ### pfc_FindDlg
 

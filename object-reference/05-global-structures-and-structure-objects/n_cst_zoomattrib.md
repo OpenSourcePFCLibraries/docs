@@ -17,3 +17,12 @@ Structure object containing information used in n_cst_dwsrv_printpreview and w_z
 **See also**
 
 n_cst_dwsrv_printpreview
+
+## Instance variables
+
+N_cst_zoomattrib includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ids_obj |  | DataStore | Public |
+

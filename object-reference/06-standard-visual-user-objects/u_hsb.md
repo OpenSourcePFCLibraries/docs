@@ -26,6 +26,14 @@ Use this visual object in windows instead of the standard PowerBuilder Horizonal
 - [w_master](../02-window-objects/w_master.md)
 - [u_vsb](u_vsb.md)
 
+## Instance variables
+
+U_hsb includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |
+
 ## Events
 
 U_hsb includes one precoded event:

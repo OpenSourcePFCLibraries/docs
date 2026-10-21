@@ -59,6 +59,7 @@ U_progressbar includes instance variables:
 | --- | --- | --- | --- | --- |
 | BAR | Constant set to 0 | Integer | Public | Use with of_SetDisplayStyle |
 | BOTTOMTOP | Constant set to 3 | Integer | Public | Use with of_SetFillStyle |
+| BOTTOMUP | Constant set to 3 | Integer | Public |  |
 | ib_autoreset | Controls autoreset | Boolean | Protected | Set with of_SetAutoReset. Default is TRUE |
 | ii_displaystyle | Controls test displayed on progress bar | Integer | Protected | Set with of_DisplayStyle. Default is BAR |
 | ii_fillstyle | Controls the direction in which the progress bar fills | Integer | Protected | Set with of_SetFillStyle. Default is LEFTRIGHT |

@@ -4,9 +4,8 @@
 
 Enables or disables platform-specific services. The platform service is implemented through the n_cst_platform user object and its descendants.
 
-This function creates a descendant of n_cst_platform:
+On Windows, when the application uses a Unicode character set, this function creates [n_cst_platformunicode](../09-custom-class-user-objects/n_cst_platformunicode.md), a descendant of n_cst_platform. Otherwise it creates n_cst_platform.
 
-- [n_cst_platformwin32](../09-custom-class-user-objects/n_cst_platformwin32.md)
 
 **Access**
 

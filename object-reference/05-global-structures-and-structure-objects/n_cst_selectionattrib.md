@@ -22,3 +22,12 @@ Structure object containing information used in n_cst_selection and w_selection.
 **See also**
 
 n_cst_selection
+
+## Instance variables
+
+N_cst_selectionattrib includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ia_argument[ ] |  | Any | Public |
+
