@@ -46,6 +46,7 @@ n_cst_tvsrv_levelsource
 N_cst_tvsrv_print includes precoded functions:
 
 - of_BuildTree
+- of_buildtreeparentsiblings
 - of_PrintTree
 
 ### of_BuildTree
@@ -93,6 +94,31 @@ If lds_Print.ImportString(of_buildtree(al_Handle,  &
 li_RC = lds_Print.Print(ab_CancelDialog)
 ...
 ```
+
+### of_buildtreeparentsiblings
+
+**Description**
+
+Function added by Vipul. The function recursively goes through ancestors of an item and builds a string of flags indicating whether they had siblings or not. These flags would be picked by d_printree's parentsiblings field which helps display lines beween nodes. The Lines between nodes should only appear if there is a sibling waiting to be printed (NextTreeItem)
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_buildtreeparentsiblings ( al_handle )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_tvsrv_print |
+| *al_handle* | Long. The handle of the TreeView item to start building the tree. |
+
+**Return value**
+
+String. The ImportString data to populate the DataWindow that will be printed.
 
 ### of_PrintTree
 

@@ -16,3 +16,12 @@ GroupBox visual user object ancestor.
 **Usage**
 
 Use this visual object in windows instead of the standard PowerBuilder GroupBox.
+
+## Instance variables
+
+U_gb includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |
+

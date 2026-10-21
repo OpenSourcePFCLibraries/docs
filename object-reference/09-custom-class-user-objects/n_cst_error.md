@@ -96,6 +96,8 @@ N_cst_error includes instance variables:
 | FILE | Constant set to "File" | String | Protected | Internal |
 | ib_beep | Indicates whether PFC beeps when displaying a message box | Boolean | Protected | Set with of_SetBeep |
 | ib_unattended | Indicates whether the unattended option is enabled | Boolean | Protected | Set with of_SetUnattended |
+| ics_database | Obsoleted in 6.0. | String | Protected |  |
+| ics_file | Obsoleted in 6.0. | String | Protected |  |
 | ids_messages | DataStore that caches all messages at runtime | n_ds | Protected | Internal |
 | ii_logfilestyle | Controls format of log file text | Integer | Protected | Set with of_SetLogFileStyle |
 | ii_logseverity | Error logging threshold | Integer | Protected | Set with of_SetLogSeverity |

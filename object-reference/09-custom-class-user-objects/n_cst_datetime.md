@@ -49,6 +49,25 @@ To use date/time functions:
 - [n_cst_sql](n_cst_sql.md)
 - [n_cst_string](n_cst_string.md)
 
+## Instance variables
+
+N_cst_datetime includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| 28 |  | Integer | Protected |
+| 30 |  | Integer | Protected |
+| 30 |  | Integer | Protected |
+| 30 |  | Integer | Protected |
+| 30 |  | Integer | Protected |
+| 31 |  | Integer | Protected |
+| 31 |  | Integer | Protected |
+| 31 |  | Integer | Protected |
+| 31 |  | Integer | Protected |
+| 31 |  | Integer | Protected |
+| ii_DaysInMonth[ ] |  | Integer | Protected |
+| is_month[ ] |  | String | Protected |
+
 ## Functions
 
 N_cst_datetime includes precoded object functions:

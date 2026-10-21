@@ -4,9 +4,8 @@
 
 Enables or disables the platform-specific file-handling service. The file service is implemented through the n_cst_filesrv user object and its descendants.
 
-This function creates a descendant of n_cst_filesrv:
+On Windows, when the application uses a Unicode character set, this function creates [n_cst_filesrvunicode](../09-custom-class-user-objects/n_cst_filesrvunicode.md), a descendant of n_cst_filesrv. Otherwise it creates n_cst_filesrv.
 
-- [n_cst_filesrvwin32](../09-custom-class-user-objects/n_cst_filesrvwin32.md)
 
 **Access**
 

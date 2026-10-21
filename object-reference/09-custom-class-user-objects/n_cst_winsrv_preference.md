@@ -54,6 +54,9 @@ N_cst_winsrv_preference includes instance variables:
 
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
+| CST_FILETYPE_INI | Constant set to 2 | Integer | Public |  |
+| CST_FILETYPE_REG | Constant set to 1 | Integer | Public |  |
+| CST_FILETYPE_XML | Constant set to 3 | Integer | Public |  |
 | ib_menuitems | Controls whether the service restores menu item properties | Boolean | Protected | Access through of_GetMenuItems and of_SetMenuItems |
 | ib_toolbaritemorder | Controls whether the service restores toolbar item order | Boolean | Protected | Access through of_GetToolbarItemOrder and of_SetToolbarItemOrder |
 | ib_toolbaritemspace | Controls whether the service restores the ToolbarItemSpace property | Boolean | Protected | Access through of_GetToolbarItemSpace and of_SetToolbarItemSpace |
@@ -65,6 +68,30 @@ N_cst_winsrv_preference includes instance variables:
 | ii_normalstate_width | Stores the window’s width in normal display | Integer | Protected | Internal |
 | ii_normalstate_x | Stores the window’s *x* position in normal display | Integer | Protected | Internal |
 | ii_normalstate_y | Stores the window’s *y* position in normal display | Integer | Protected | Internal |
+
+## Events
+
+N_cst_winsrv_preference includes these events:
+
+### Constructor
+
+**Description**
+
+Window's preference service.
+
+**Syntax**
+
+```
+instancename.EVENT Constructor ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_winsrv_preference |
+
+**Return value**
+
+None.
 
 ## Functions
 

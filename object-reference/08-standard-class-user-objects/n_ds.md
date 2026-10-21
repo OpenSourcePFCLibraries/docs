@@ -31,7 +31,6 @@ N_ds is a self-updating object.
 - [n_cst_platform](../09-custom-class-user-objects/n_cst_platform.md)
 - [n_tr](n_tr.md)
 - [s_pagesetupattrib](../05-global-structures-and-structure-objects/s_pagesetupattrib.md)
-- [s_printdlgattrib](../05-global-structures-and-structure-objects/s_printdlgattrib.md)
 - [w_master](../02-window-objects/w_master.md)
 
 **Usage**
@@ -94,15 +93,23 @@ N_ds contains instance variables.
 
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
+| CONTINUE_ACTION | Constant set to 1 | Integer | Public |  |
+| FAILURE | Constant set to -1 | Integer | Public |  |
 | ib_append | Indicates whether the Retrieve function appends | Boolean | Protected | Set with of_SetAppend |
+| ib_IsObsolete |  | Boolean | Protected |  |
 | ib_isupdateable | Indicates whether the DataStore is updatable | Boolean | Protected | Set with of_SetUpdateable |
 | inv_base | Reference variable for basic DataStore service | n_cst_dssrv | Public | Use in dot notation to access n_cst_dssrv functions and events |
 | inv_multitable | Reference variable for multitable update service | n_cst_dssrv_multitable | Public | Use in dot notation to access n_cst_dssrv_multitable functions and events |
 | inv_printpreview | Reference variable for print preview service | n_cst_dssrv_printpreview | Public | Use in dot notation to access n_cst_dssrv_printpreview functions and events |
 | inv_report | Reference variable for report service | n_cst_dssrv_report | Public | Use in dot notation to access n_cst_dssrv_report functions and events |
+| ipo_parent |  | PowerObject | Protected |  |
 | ipo_updaterequestor | Update requestor | PowerObject | Protected | Set with of_SetUpdateRequestor |
 | is_updatesallowed | Specifies allowable updates | String | Protected | Internal |
 | itr_object | Transaction object used by the DataStore | n_tr | Public | Set with of_SetTransObject |
+| iw_parentwindow |  | Window | Protected |  |
+| NO_ACTION | Constant set to 0 | Integer | Public |  |
+| PREVENT_ACTION | Constant set to 0 | Integer | Public |  |
+| SUCCESS | Constant set to 1 | Integer | Public |  |
 
 ## Events
 
@@ -110,13 +117,12 @@ N_ds includes precoded event scripts:
 
 - DBError
 - Destructor
+- pfc_accepttext
 - pfc_PageSetup
 - pfc_PageSetupDlg
 - pfc_PostUpdate
 - pfc_PrePageSetupDlg
-- pfc_PrePrintDlg
 - pfc_Print
-- pfc_PrintDlg
 - pfc_PrintImmediate
 - pfc_PrintPreview
 - pfc_ResetUpdate
@@ -127,6 +133,7 @@ N_ds includes precoded event scripts:
 - pfc_UpdatesPending
 - pfc_Validation
 - pfc_Zoom
+- RetrieveEnd
 - RetrieveStart
 - SQLPreview
 
@@ -151,6 +158,27 @@ Destroys all existing DataStore service objects.
 **Usage**
 
 This event executes when the DataStore is destroyed.
+
+### pfc_accepttext
+
+**Description**
+
+No description is available.
+
+**Syntax**
+
+```
+instancename.EVENT pfc_accepttext ( ab_focusonerror )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_ds |
+| *ab_focusonerror* | Boolean. |
+
+**Return value**
+
+Integer.
 
 ### pfc_PageSetup
 
@@ -241,40 +269,6 @@ This example contains code you might add to the pfc_PrePageSetupDlg event:
 astr_pagesetup.b_portraitorientation = TRUE
 ```
 
-### pfc_PrePrintDlg
-
-**Description**
-
-Empty user event allowing you to modify the properties passed to the n_cst_platform of_PrintDlg function.
-
-**Syntax**
-
-```
-instancename.Event pfc_PrePrintDlg ( attributes )
-```
-
-| Argument | Description |
-| --- | --- |
-| *instancename* | Instance name of n_ds |
-| *attributes* | S_printdlgattrib variable into which the event places additional printing information. This argument is accessed through the *astr_printdlg* argument (passed by reference) |
-
-**Return value**
-
-None
-
-**Usage**
-
-Use this event to modify or extend the information passed in the s_printdlgattrib structure.
-
-**Examples**
-
-This example contains code you might add to the pfc_PrePrintDlg event:
-
-```
-// Default copies to 1
-astr_printdlg.l_copies = 1
-```
-
 ### pfc_Print
 
 **Description**
@@ -284,31 +278,6 @@ Calls the pfc_PrintDlg function and prints the DataStore, as specified in the Pr
 **Return value**
 
 Integer. Returns 1 if the event succeeds and -1 if an error occurs.
-
-### pfc_PrintDlg
-
-**Description**
-
-Initializes the s_printdlgattrib structure with the DataStore’s current settings, displays the Print dialog box by calling the n_cst_platform of_PrintDlg function, and resets the DataWindow’s settings as specified by the user.
-
-**Syntax**
-
-```
-instancename.Event pfc_PrintDlg ( attributes )
-```
-
-| Argument | Description |
-| --- | --- |
-| *instancename* | Instance name of n_ds |
-| *attributes* | S_printdlgattrib variable into which the event places printing information. This argument is accessed through the *astr_printdlg* argument (passed by reference) |
-
-**Return value**
-
-Integer. Returns 1 if the event succeeds and -1 if an error occurs.
-
-**Usage**
-
-This event is called by the pfc_Print event.
 
 ### pfc_PrintImmediate
 
@@ -479,6 +448,26 @@ Integer. Returns the zoom level chosen by the user if the event succeeds, 0 if t
 
 To use this event, you must enable the print preview service by calling the of_SetPrintPreview function.
 
+### RetrieveEnd
+
+**Description**
+
+Allow for SQLSpy service.
+
+**Syntax**
+
+```
+instancename.EVENT RetrieveEnd ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_ds |
+
+**Return value**
+
+None.
+
 ### RetrieveStart
 
 **Description**
@@ -506,6 +495,7 @@ N_ds includes precoded object functions:
 - of_AcceptText
 - of_CheckRequired
 - of_GetAppend
+- of_getparent
 - of_GetParentWindow
 - of_IsUpdateable
 - of_MessageBox
@@ -513,7 +503,9 @@ N_ds includes precoded object functions:
 - of_Retrieve
 - of_SetAppend
 - of_SetBase
+- of_setlegacyprint
 - of_SetMultiTable
+- of_SetParent
 - of_SetParentWindow
 - of_SetPrintPreview
 - of_SetReport
@@ -653,6 +645,31 @@ Boolean  lb_append
 lb_append = ids_datasource.of_GetAppend()
 ...
 ```
+
+### of_getparent
+
+**Description**
+
+Gets the Parent for this Dynamically created object.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_getparent ( apo_parent )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_ds |
+| *apo_parent* | PowerObject, passed by reference. (by ref) The Parent for this Dynamically created object. |
+
+**Return value**
+
+Integer. Returns 1 = success, -1 = error.
 
 ### of_GetParentWindow
 
@@ -942,6 +959,31 @@ IF li_return = -1 THEN
 END IF
 ```
 
+### of_setlegacyprint
+
+**Description**
+
+No description is available.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_setlegacyprint ( ab_value )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_ds |
+| *ab_value* | Boolean, read-only. |
+
+**Return value**
+
+None.
+
 ### of_SetMultiTable
 
 **Description**
@@ -978,6 +1020,31 @@ This example calls the of_SetMultiTable function:
 ```
 ids_data.of_SetMultiTable(TRUE)
 ```
+
+### of_SetParent
+
+**Description**
+
+Sets the Parent for this Dynamically created object.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_SetParent ( apo_parent )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_ds |
+| *apo_parent* | PowerObject. The Parent Object for this Dynamically created object. |
+
+**Return value**
+
+Integer. Returns 1 = success, -1 = error.
 
 ### of_SetParentWindow
 

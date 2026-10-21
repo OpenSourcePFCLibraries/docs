@@ -17,6 +17,7 @@ PFC was originally developed by Sybase, Inc. and shipped with PowerBuilder. It i
 - Figures and diagrams were taken from the PDFs. They are stored in an `images` folder next to the pages that use them.
 - Page-number cross-references were removed, because pages no longer exist. In the Object Reference, references to other objects are links.
 - Sybase copyright, trademark, support, and ordering information was removed, along with references to the Sybase Technical Library and web site. They were replaced with information about the open source project.
+- The Object Reference has been brought up to date with the current PFC source code. Objects, events, functions, and instance variables added since the PowerBuilder 9 edition were documented from the comments in the source, and objects and events that no longer exist were removed. Pages for objects the original edition did not cover are marked as generated from the source.
 - The content otherwise matches the original PowerBuilder 9 edition. Some version numbers, file names, screenshots, and tool names may be out of date for current PowerBuilder releases. Corrections are welcome.
 
 The original PDF manuals (`pfcug.pdf`, `pfcoref1.pdf`, `pfcoref2.pdf`) are kept in this repository for reference.

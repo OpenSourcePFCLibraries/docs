@@ -88,6 +88,7 @@ N_cst_dwsrv_resize includes instance variables:
 | il_parentprevheight | Original height of DataWindow control | Long | Protected | Set with of_SetOrigSize |
 | il_parentprevwidth | Original width of DataWindow control | Long | Protected | Set with of_SetOrigSize |
 | inv_registered [] | Array of registered columns and text objects | n_cst_dws rv_resizeat trib | Protected | Set with of_Register |
+| istr_registered[ ] |  | n_cst_dwsrv_resizeattrib | Protected |  |
 | LINE | Constant set to "line" | String | Protected | Internal |
 | SCALE | Constant set to "Scale" | String | Public | Use with of_Register |
 | SCALEBOTTOM | Constant set to "ScaleToBottom" | String | Public | Use with of_Register |
@@ -99,6 +100,26 @@ N_cst_dwsrv_resize includes instance variables:
 N_cst_dwsrv_resize includes a precoded event:
 
 pfc_Resize
+
+### Constructor
+
+**Description**
+
+DW Resize service.
+
+**Syntax**
+
+```
+instancename.EVENT Constructor ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_dwsrv_resize |
+
+**Return value**
+
+None.
 
 ### pfc_Resize
 

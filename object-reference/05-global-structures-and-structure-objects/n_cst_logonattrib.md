@@ -21,3 +21,12 @@ Structure object containing information used in n_cst_appmanager.
 **See also**
 
 n_cst_appmanager
+
+## Instance variables
+
+N_cst_logonattrib includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ii_logonattempts |  | Integer | Public |
+

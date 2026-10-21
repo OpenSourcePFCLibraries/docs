@@ -35,6 +35,7 @@ U_oc contains one instance variable:
 
 | Instance variable | Description | Data type | Ancestry | Usage |
 | --- | --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |  |
 | ib_rmbmenu | Indicates whether the m_oc menu displays when the user presses the right mouse button | Boolean | Protected | Set this to FALSE to disable right mouse button support |
 
 ## Events

@@ -109,6 +109,8 @@ N_cst_tvsrv_levelsource includes instance variables:
 | is_undoeditlabeltext | Modified label text | String | Protected | Internal |
 | is_undotype | Undo type | String | Protected | Internal |
 | itvi_undodeleteitem | Deleted item | TreeViewItem | Protected | Internal |
+| TOPDOWN | Constant set to 1 | Integer | Public |  |
+| TOPDOWN_BOTTOMUP | Constant set to 3 | Integer | Public |  |
 | UNDO_DELETE | Constant set to "Delete" | String | Public | Internal |
 | UNDO_EDIT | Constant set to "Edit" | String | Public | Internal |
 | UNDO_INSERT | Constant set to "Insert" | String | Public | Internal |

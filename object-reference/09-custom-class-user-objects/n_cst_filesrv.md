@@ -31,7 +31,7 @@ To use the file service:
 
 **Descendants**
 
-n_cst_filesrvwin32
+- [n_cst_filesrvunicode](n_cst_filesrvunicode.md)
 
 **See also**
 
@@ -44,8 +44,28 @@ N_cst_filesrv includes instance variables:
 
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
+| FILE_ATTRIBUTE_ARCHIVE | (0x20)		A file or directory that is an archive file or directory. | Long | Public |  |
+| FILE_ATTRIBUTE_COMPRESSED | (0x800)		A file or directory that is compressed. | Long | Public |  |
+| FILE_ATTRIBUTE_DEVICE | (0x40)		This value is reserved for system use. | Long | Public |  |
+| FILE_ATTRIBUTE_DIRECTORY | (0x10)		The handle that identifies a directory. | Long | Public |  |
+| FILE_ATTRIBUTE_ENCRYPTED | (0x4000)		A file or directory that is encrypted. | Long | Public |  |
+| FILE_ATTRIBUTE_HIDDEN | (0x2)			The file or directory is hidden. | Long | Public |  |
+| FILE_ATTRIBUTE_INTEGRITY_STREAM | (0x8000)		The directory or user data stream is configured with integrity (only supported on ReFS volumes). | Long | Public |  |
+| FILE_ATTRIBUTE_NO_SCRUB_DATA | (0x20000)	The user data stream not to be read by the background data integrity scanner (AKA scrubber). | Long | Public |  |
+| FILE_ATTRIBUTE_NORMAL | (0x80)		A file that does not have other attributes set. | Long | Public |  |
+| FILE_ATTRIBUTE_NOT_CONTENT_INDEXED | (0x2000)		The file or directory is not to be indexed by the content indexing service. | Long | Public |  |
+| FILE_ATTRIBUTE_OFFLINE | (0x1000)		The data of a file is not available immediately. | Long | Public |  |
+| FILE_ATTRIBUTE_READONLY | (0x1)			A file that is read-only. | Long | Public |  |
+| FILE_ATTRIBUTE_READONLY_ARCHIVE | Constant set to 33 | Long | Public |  |
+| FILE_ATTRIBUTE_READWRITE | Constant set to 0 | Long | Public |  |
+| FILE_ATTRIBUTE_REPARSE_POINT | (0x400)		A file or directory that has an associated reparse point, or a file that is a symbolic link. | Long | Public |  |
+| FILE_ATTRIBUTE_SPARSE_FILE | (0x200)		A file that is a sparse file. | Long | Public |  |
+| FILE_ATTRIBUTE_SYSTEM | (0x4)			A file or directory that the operating system uses a part of, or uses exclusively. | Long | Public |  |
+| FILE_ATTRIBUTE_TEMPORARY | (0x100)		A file that is being used for temporary storage. | Long | Public |  |
+| FILE_ATTRIBUTE_VIRTUAL | (0x10000)	This value is reserved for system use. | Long | Public |  |
 | ids_files | Used for sorting | n_ds | Protected | Internal |
 | is_allfiles | Operating system specific characters to indicate all files (for example, \*.\* in DOS) | String | Protected | Internal |
+| is_FileType |  | String | Protected |  |
 | is_separator | Separator character used by the operating system when specifying a file’s fully qualified pathname | String | Protected | Internal |
 
 ## Functions
@@ -60,6 +80,7 @@ N_cst_filsrv includes precoded object functions:
 - of_CalculateFileAttributes
 - of_ChangeDirectory
 - of_CreateDirectory
+- of_CreateDirectoryTree
 - of_DelTree
 - of_DirAttribToDS
 - of_DirectoryExists
@@ -69,22 +90,34 @@ N_cst_filsrv includes precoded object functions:
 - of_FileRead
 - of_FileRename
 - of_FileWrite
+- of_GetAllFilesSpecifier
 - of_GetAltFilename
 - of_GetCreationDate
 - of_GetCreationDateTime
 - of_GetCreationTime
 - of_GetCurrentDirectory
 - of_GetDiskSpace
+- of_getdiskspaceex
 - of_GetDriveType
 - of_GetFileAttributes
 - of_GetFileSize
+- of_getfiletype
 - of_GetLastAccessDate
 - of_GetLastWriteDate
 - of_GetLastWriteDateTime
 - of_GetLastWriteTime
 - of_GetLongFilename
+- of_getLongPathName
 - of_GetSeparator
+- of_getShortPathName
+- of_getSystemDirectory
+- of_getTempFileName
+- of_getTempPath
+- of_getvolumes
+- of_getWindowsDirectory
 - of_IncludeFile
+- of_maxpath
+- of_moveFile
 - of_ParsePath
 - of_RemoveDirectory
 - of_SetCreationDateTime
@@ -93,6 +126,7 @@ N_cst_filsrv includes precoded object functions:
 - of_SetFileHidden
 - of_SetFileReadonly
 - of_SetFileSystem
+- of_setfiletype
 - of_SetLastAccessDate
 - of_SetLastWriteDateTime
 - of_SortDirList
@@ -169,7 +203,7 @@ UnsignedLong. Returns the new attribute byte if the function succeeds and -1 if 
 
 **Examples**
 
-This example is from the n_cst_filesrvwin32 of_SetFileAttributes function:
+This example is from the original n_cst_filesrvwin32 of_SetFileAttributes function:
 
 ```
 Integer   li_rc
@@ -209,7 +243,7 @@ Integer. Always returns -1.
 
 **See also**
 
-n_cst_filesrvwin32 of_ChangeDirectory function
+[n_cst_filesrvunicode](n_cst_filesrvunicode.md) of_ChangeDirectory function
 
 ### of_CreateDirectory
 
@@ -238,7 +272,54 @@ Integer. Always returns -1.
 
 **See also**
 
-n_cst_filesrvwin32 of_CreateDirectory function
+[n_cst_filesrvunicode](n_cst_filesrvunicode.md) of_CreateDirectory function
+
+### of_CreateDirectoryTree
+
+**Description**
+
+Create all directories specified in the passed directory tree. Restore intial directory afterward, if requested.
+
+**Syntax 1**
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_CreateDirectoryTree ( as_directorytree, ab_restorecurrentdirectory )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_filesrv |
+| *as_directorytree* | String. The directory tree to be created. |
+| *ab_restorecurrentdirectory* | Boolean. Restore or not the current directory at the end. |
+
+**Return value**
+
+Integer. 1, ok or -1 when an error occurs.
+
+**Syntax 2**
+
+Create all directories specified in the passed directory tree.
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_CreateDirectoryTree ( as_directorytree )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_filesrv |
+| *as_directorytree* | String. The directory tree to be created. |
+
+**Return value**
+
+Integer. 1, ok or -1 when an error occurs.
 
 ### of_DelTree
 
@@ -358,7 +439,7 @@ Boolean. Always returns FALSE.
 
 **See also**
 
-n_cst_filesrvwin32 of_DirectoryExists function
+[n_cst_filesrvunicode](n_cst_filesrvunicode.md) of_DirectoryExists function
 
 ### of_DirList
 
@@ -390,7 +471,7 @@ Long. Always returns -1.
 
 **See also**
 
-n_cst_filesrvwin32 of_DirList function
+[n_cst_filesrvunicode](n_cst_filesrvunicode.md) of_DirList function
 
 ### of_DSToDirAttrib
 
@@ -629,7 +710,7 @@ Integer. Always returns -1.
 
 **See also**
 
-n_cst_filesrvwin32 of_FileRename function
+[n_cst_filesrvunicode](n_cst_filesrvunicode.md) of_FileRename function
 
 ### of_FileWrite
 
@@ -725,6 +806,30 @@ IF inv_filesrv.of_FileWrite &
 END IF
 ```
 
+### of_GetAllFilesSpecifier
+
+**Description**
+
+Returns the value of the protected instance Allfiles which specifies the string value needed to retrieve all the files in the current operating system for a directory.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_GetAllFilesSpecifier ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_filesrv |
+
+**Return value**
+
+String. The all files string value.
+
 ### of_GetAltFilename
 
 **Description**
@@ -752,7 +857,7 @@ String. Always returns an empty string.
 
 **See also**
 
-n_cst_filesrvwin32 of_GetAltFilename function
+[n_cst_filesrvunicode](n_cst_filesrvunicode.md) of_GetAltFilename function
 
 ### of_GetCreationDate
 
@@ -826,7 +931,7 @@ Integer. Always returns -1.
 
 **See also**
 
-n_cst_filesrvwin32 of_GetCreationDateTime function
+[n_cst_filesrvunicode](n_cst_filesrvunicode.md) of_GetCreationDateTime function
 
 ### of_GetCreationTime
 
@@ -897,7 +1002,7 @@ String. Always returns an empty string.
 
 **See also**
 
-n_cst_filesrvwin32 of_GetCurrentDirectory function
+[n_cst_filesrvunicode](n_cst_filesrvunicode.md) of_GetCurrentDirectory function
 
 ### of_GetDiskSpace
 
@@ -928,7 +1033,34 @@ Integer. Always returns -1.
 
 **See also**
 
-n_cst_filesrvwin32 of_GetDiskSpace function
+[n_cst_filesrvunicode](n_cst_filesrvunicode.md) of_GetDiskSpace function
+
+### of_getdiskspaceex
+
+**Description**
+
+No description is available.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_getdiskspaceex ( as_drive, adec_totalspace, adec_freespace )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_filesrv |
+| *as_drive* | String. |
+| *adec_totalspace* | Decimal, passed by reference. |
+| *adec_freespace* | Decimal, passed by reference. |
+
+**Return value**
+
+Integer.
 
 ### of_GetDriveType
 
@@ -957,7 +1089,7 @@ Integer. Always returns -1.
 
 **See also**
 
-n_cst_filesrvwin32 of_GetDriveType function
+[n_cst_filesrvunicode](n_cst_filesrvunicode.md) of_GetDriveType function
 
 ### of_GetFileAttributes
 
@@ -992,7 +1124,7 @@ Integer. Always returns -1.
 
 **See also**
 
-n_cst_filesrvwin32 of_GetFileAttributes function
+[n_cst_filesrvunicode](n_cst_filesrvunicode.md) of_GetFileAttributes function
 
 ### of_GetFileSize
 
@@ -1021,7 +1153,35 @@ Double. Always returns -1.
 
 **See also**
 
-n_cst_filesrvwin32 of_GetFileSize function
+[n_cst_filesrvunicode](n_cst_filesrvunicode.md) of_GetFileSize function
+
+### of_getfiletype
+
+**Description**
+
+returns the actual file type used.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_getfiletype ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_filesrv |
+
+**Return value**
+
+String. the actual value of the file type used.
+
+**Usage**
+
+CAll this method to know what file type is acutally used.
 
 ### of_GetLastAccessDate
 
@@ -1051,7 +1211,7 @@ Integer. Always returns -1.
 
 **See also**
 
-n_cst_filesrvwin32 of_GetLastAccessDate function
+[n_cst_filesrvunicode](n_cst_filesrvunicode.md) of_GetLastAccessDate function
 
 ### of_GetLastWriteDate
 
@@ -1125,7 +1285,7 @@ Integer. Always returns -1.
 
 **See also**
 
-n_cst_filesrvwin32 of_GetLastWriteDateTime function
+[n_cst_filesrvunicode](n_cst_filesrvunicode.md) of_GetLastWriteDateTime function
 
 ### of_GetLastWriteTime
 
@@ -1197,7 +1357,32 @@ String. Always returns an empty string.
 
 **See also**
 
-n_cst_filesrvwin32 of_GetLongFilename function
+[n_cst_filesrvunicode](n_cst_filesrvunicode.md) of_GetLongFilename function
+
+### of_getLongPathName
+
+**Description**
+
+Converts the specified path or file to its long form.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_getLongPathName ( as_shortpathname )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_filesrv |
+| *as_shortpathname* | String. Path or file to be converted to its long form. |
+
+**Return value**
+
+String. String Path or file in its long form.
 
 ### of_GetSeparator
 
@@ -1236,6 +1421,174 @@ String    is_separator
 
 is_separator = inv_filesrv.of_GetSeparator( )
 ```
+
+### of_getShortPathName
+
+**Description**
+
+Converts the specified path or file to its short form.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_getShortPathName ( as_longpathname )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_filesrv |
+| *as_longpathname* | String. Path or file to be converted to its short form. |
+
+**Return value**
+
+String. String Path or file in its short form.
+
+### of_getSystemDirectory
+
+**Description**
+
+Gets the system directory.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_getSystemDirectory ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_filesrv |
+
+**Return value**
+
+String. String Path to the system directory.
+
+### of_getTempFileName
+
+**Description**
+
+Returns a name for a temporary file. If a unique file name is generated, an empty file is created and the handle to it is released; otherwise, only a file name is generated.
+
+**Syntax 1**
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_getTempFileName ( vs_directory, vs_prefix, vui_unique )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_filesrv |
+| *vs_directory* | String. |
+| *vs_prefix* | String. |
+| *vui_unique* | UnsignedInteger. |
+
+**Return value**
+
+String. String A unique file name.
+
+**Syntax 2**
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_getTempFileName ( vs_prefix )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_filesrv |
+| *vs_prefix* | String. |
+
+**Return value**
+
+String. String A unique file name.
+
+### of_getTempPath
+
+**Description**
+
+Returns a string specifying the temporary file path. The returned string ends with a backslash.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_getTempPath ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_filesrv |
+
+**Return value**
+
+String. String Path to the file system temporary storage directory.
+
+### of_getvolumes
+
+**Description**
+
+No description is available.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_getvolumes ( as_volumes )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_filesrv |
+| *as_volumes* | String array, passed by reference. |
+
+**Return value**
+
+Integer.
+
+### of_getWindowsDirectory
+
+**Description**
+
+Gets the windows directory.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_getWindowsDirectory ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_filesrv |
+
+**Return value**
+
+String. String Path to the windows directory.
 
 ### of_IncludeFile
 
@@ -1282,6 +1635,56 @@ DO WHILE li_RC = 0
    al_FileType, lui_Attrib) THEN
 ...
 ```
+
+### of_maxpath
+
+**Description**
+
+Gets the windows directory.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_maxpath ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_filesrv |
+
+**Return value**
+
+Long. String Path to the windows directory.
+
+### of_moveFile
+
+**Description**
+
+Renames a file or directory.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_moveFile ( as_existingfilename, as_newfilename )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_filesrv |
+| *as_existingfilename* | String. The current name of the file or directory on the local computer. |
+| *as_newfilename* | String. The new name for the file or directory. The new name must not already exist. A new file may be on a different file system or drive. A new directory must be on the same drive. |
+
+**Return value**
+
+Boolean. Boolean TRUE if successful.
 
 ### of_ParsePath
 
@@ -1354,7 +1757,7 @@ Integer. Always returns -1.
 
 **See also**
 
-n_cst_filesrvwin32 of_RemoveDirectory function
+[n_cst_filesrvunicode](n_cst_filesrvunicode.md) of_RemoveDirectory function
 
 ### of_SetCreationDateTime
 
@@ -1385,7 +1788,7 @@ Integer. Always returns -1.
 
 **See also**
 
-n_cst_filesrvwin32 of_SetCreationDateTime function
+[n_cst_filesrvunicode](n_cst_filesrvunicode.md) of_SetCreationDateTime function
 
 ### of_SetFileArchive
 
@@ -1454,7 +1857,7 @@ Integer. Always returns -1.
 
 **See also**
 
-n_cst_filesrvwin32 of_SetFileAttributes function
+[n_cst_filesrvunicode](n_cst_filesrvunicode.md) of_SetFileAttributes function
 
 ### of_SetFileHidden
 
@@ -1561,6 +1964,35 @@ inv_filesrv.of_SetFileSystem &
    (sle_filename.Text, cbx_system.Checked)
 ```
 
+### of_setfiletype
+
+**Description**
+
+Set current File Type value.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_setfiletype ( as_filetype )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_filesrv |
+| *as_filetype* | String. The file type to set. |
+
+**Return value**
+
+Integer. 1, OK -1, An error occurs.
+
+**Usage**
+
+Call this method in order to se a file type toe be used.
+
 ### of_SetLastAccessDate
 
 **Description**
@@ -1589,7 +2021,7 @@ Integer. Always returns -1.
 
 **See also**
 
-n_cst_filesrvwin32 of_SetLastAccessDate function
+[n_cst_filesrvunicode](n_cst_filesrvunicode.md) of_SetLastAccessDate function
 
 ### of_SetLastWriteDateTime
 
@@ -1620,7 +2052,7 @@ Integer. Always returns -1.
 
 **See also**
 
-n_cst_filesrvwin32 of_SetLastWriteDateTime function
+[n_cst_filesrvunicode](n_cst_filesrvunicode.md) of_SetLastWriteDateTime function
 
 ### of_SortDirList
 

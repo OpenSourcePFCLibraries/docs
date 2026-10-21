@@ -17,3 +17,4 @@ The menus are listed in alphabetical order. The information for each menu includ
 - [m_master](m_master.md)
 - [m_oc](m_oc.md)
 - [m_tvs](m_tvs.md)
+- [m_view](m_view.md)

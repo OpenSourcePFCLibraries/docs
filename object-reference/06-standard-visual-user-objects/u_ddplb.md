@@ -42,6 +42,7 @@ U_ddplb includes instance variables:
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
 | ib_autoselect | Indicates whether PFC selects text automatically when the control receives focus | Boolean | Protected | Set this to TRUE to enable autoselect (default is FALSE) |
+| ib_IsObsolete |  | Boolean | Protected |  |
 | ib_rmbmenu | Controls whether the m_edit menu displays when the user presses the right mouse button | Boolean | Protected | Set this to FALSE to disable right mouse button support (default is TRUE) |
 | ib_search | Controls whether PFC automatically scrolls to matching entries as the user types | Boolean | Protected | Set this to TRUE to enable autoscroll (default is FALSE) |
 
@@ -211,8 +212,107 @@ This event executes when the user releases the right mouse button over a control
 
 U_ddplb includes precoded object functions:
 
+- of_additems
 - of_GetParentWindow
 - of_MessageBox
+
+### of_additems
+
+**Description**
+
+Add the specified list of items using the specified pictures index list, in append mode or not.
+
+**Syntax 1**
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_additems ( as_items, ai_pictures, ab_append )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_ddplb |
+| *as_items* | String array. |
+| *ai_pictures* | Integer array. |
+| *ab_append* | Boolean. TRUE, append entries to the existing ones, FALSE, reset control's contents before adding specifeid entries. |
+
+**Return value**
+
+Integer. The number of added items, or -1, if an error occurs.
+
+**Syntax 2**
+
+Add the specified list of items using the specified picture index list, in append mode or not.
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_additems ( as_items, ai_picture, ab_append )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_ddplb |
+| *as_items* | String array. |
+| *ai_picture* | Integer. The picture indexe of the items to be added. |
+| *ab_append* | Boolean. TRUE, append entries to the existing ones, FALSE, reset control's contents before adding specifeid entries. |
+
+**Return value**
+
+Integer. The number of added items, or -1, if an error occurs.
+
+**Syntax 3**
+
+Add the specified list of items using the specified picture index list, in default append mode.
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_additems ( as_items, ai_picture )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_ddplb |
+| *as_items* | String array. |
+| *ai_picture* | Integer. The picture indexe of the items to be added. |
+
+**Return value**
+
+Integer. The number of added items, or -1, if an error occurs.
+
+**Syntax 4**
+
+Add the specified list of items using the specified pictures index list, in default append mode.
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_additems ( as_items, ai_pictures )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_ddplb |
+| *as_items* | String array. |
+| *ai_pictures* | Integer array. |
+
+**Return value**
+
+Integer. The number of added items, or -1, if an error occurs.
+
+**Usage**
+
+Call this method to add a list of items and their corresponding pictures at once Call this method to add a list of items and their corresponding picture at once Call this method to add a list of items and their corresponding picture at once Call this method to add a list of items and their corresponding pictures at once.
 
 ### of_GetParentWindow
 

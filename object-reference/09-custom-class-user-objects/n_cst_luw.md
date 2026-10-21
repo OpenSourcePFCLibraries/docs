@@ -55,6 +55,7 @@ N_cst_luw includes instance variables:
 | ALL_OBJECTS | Constant set to an empty string | String | Public | This is the default for ib_typetoprocess |
 | ib_accepttext | Indicates whether the of_Save function accepts text by default | Boolean | Protected | The default is TRUE |
 | ib_alwaysvalidate | Indicates whether n_cst_luw validates all controls, even those with no pending updates | Boolean | Protected | Set with of_SetAlwaysValidate (the default is FALSE) |
+| ib_assist |  | Boolean | Public |  |
 | ib_resetflag | Indicates whether the of_Save function resets update flags by default | Boolean | Protected | The default is FALSE |
 | inv_dberrorattrib | Database error information | n_cst_dberrorattrib | Protected | Set with of_SetDBErrorMsg |
 | inv_metaclass | Reference to metaclass service | n_cst_metaclass | Protected | Internal |
@@ -85,10 +86,12 @@ This event executes when the object is created.
 N_cst_luw includes precoded functions:
 
 - of_AcceptText
+- of_Assist
 - of_BeginTran
 - of_DBError
 - of_EndTran
 - of_EndTranError
+- of_GetClassNames
 - of_GetType
 - of_GetTypeToProcess
 - of_GetUpdateRequestor
@@ -146,6 +149,31 @@ This example is from the w_master pfc_AcceptText event:
 Return inv_luw.of_AcceptText(apo_control[ ],  &
    ab_focusonerror)End If...
 ```
+
+### of_Assist
+
+**Description**
+
+Display / Log / Provide assistance. Note: This function should be implemented in descendant object.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_Assist ( as_msg )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_luw |
+| *as_msg* | String. The message to provide assistance with. |
+
+**Return value**
+
+Integer. Returns 1 = successful, 0 = no action, -1 = error.
 
 ### of_BeginTran
 
@@ -321,6 +349,31 @@ li_rc = of_EndTranError(ltr_performed,  &
    ltr_secondary, li_secondaryrc, ai_saverc)
 ...
 ```
+
+### of_GetClassNames
+
+**Description**
+
+Get a name for all the objects passed in.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_GetClassNames ( apo_control )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_luw |
+| *apo_control* | PowerObject array. array of controls to get names. |
+
+**Return value**
+
+String. ClassNames of all the objects passed in. ! = error.
 
 ### of_GetType
 

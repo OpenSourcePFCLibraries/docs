@@ -55,8 +55,21 @@ N_cst_numerical includes precoded object functions:
 - of_BitwiseNot
 - of_BitwiseOr
 - of_BitwiseXor
+- of_CreateLongLong
 - of_Decimal
+- of_decimal_byte
+- of_Decimal_Int
+- of_Decimal_Long
+- of_Decimal_LongLong
+- of_Decimal_UInt
+- of_Decimal_ULong
 - of_GetBit
+- of_GetHiWord
+- of_GetLoWord
+- of_Hex
+- of_NumberBaseString
+- of_Octal
+- of_SetBit
 
 ### of_Binary
 
@@ -276,6 +289,32 @@ MessageBox("Numerical", "Value 1 is " &
    + String(ll_result) )
 ```
 
+### of_CreateLongLong
+
+**Description**
+
+Creates a 64-bit longlong integer from two 32-bit unsignedlong integers.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_CreateLongLong ( aul_hi, aul_lo )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *aul_hi* | UnsignedLong. UnsignedLong: The high-order 32-bit value. Bit 32 will eventually become the sign bit of the new longlong value. |
+| *aul_lo* | UnsignedLong. UnsignedLong: The low-order 32-bit value. |
+
+**Return value**
+
+LongLong. Null will be returned if either argument value is null.
+
 ### of_Decimal
 
 **Description**
@@ -314,6 +353,156 @@ MessageBox("Numerical", &
    sle_binary.text + " in binary is equal to " + &
        String(ll_base10) + " in Base 10.")
 ```
+
+### of_decimal_byte
+
+**Description**
+
+Determines the decimal representation of a character string containing a sequence of binary digit characters ("0" and "1".)
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_decimal_byte ( as_binary )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *as_binary* | String. String: Sequence of 0's and 1's whose decimal representation needs to be determined. (e.g "1010011") |
+
+**Return value**
+
+Byte. The decimal representation of the Binary number (e.g. 83). If any argument's value is null, the function returns null. If any argument's value is not valid, function returns null.
+
+### of_Decimal_Int
+
+**Description**
+
+Determines the decimal representation of a character string containing a sequence of binary digit characters ("0" and "1".)
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_Decimal_Int ( as_binary )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *as_binary* | String. String: Sequence of 0's and 1's whose decimal representation needs to be determined. (e.g "1010011") |
+
+**Return value**
+
+Integer. The decimal representation of the Binary number (e.g. 83). If any argument's value is null, the function returns null. If any argument's value is not valid, function returns null.
+
+### of_Decimal_Long
+
+**Description**
+
+Determines the decimal representation of a character string containing a sequence of binary digit characters ("0" and "1".)
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_Decimal_Long ( as_binary )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *as_binary* | String. String: Sequence of 0's and 1's whose decimal representation needs to be determined. (e.g "1010011") |
+
+**Return value**
+
+Long. The decimal representation of the Binary number (e.g. 83). If any argument's value is null, the function returns null. If any argument's value is not valid, function returns null.
+
+### of_Decimal_LongLong
+
+**Description**
+
+Determines the decimal representation of a character string containing a sequence of binary digit characters ("0" and "1".)
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_Decimal_LongLong ( as_binary )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *as_binary* | String. String: Sequence of 0's and 1's whose decimal representation needs to be determined. (e.g "1010011") |
+
+**Return value**
+
+LongLong. The decimal representation of the Binary number (e.g. 83). If any argument's value is null, the function returns null. If any argument's value is not valid, function returns null.
+
+### of_Decimal_UInt
+
+**Description**
+
+Determines the decimal representation of a character string containing a sequence of binary digit characters ("0" and "1".)
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_Decimal_UInt ( as_binary )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *as_binary* | String. String: Sequence of 0's and 1's whose decimal representation needs to be determined. (e.g "1010011") |
+
+**Return value**
+
+UnsignedInteger. The decimal representation of the Binary number (e.g. 83). If any argument's value is null, the function returns null. If any argument's value is not valid, function returns null.
+
+### of_Decimal_ULong
+
+**Description**
+
+Determines the decimal representation of a character string containing a sequence of binary digit characters ("0" and "1".)
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_Decimal_ULong ( as_binary )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *as_binary* | String. String: Sequence of 0's and 1's whose decimal representation needs to be determined. (e.g "1010011") |
+
+**Return value**
+
+UnsignedLong. The decimal representation of the Binary number (e.g. 83). If any argument's value is null, the function returns null. If any argument's value is not valid, function returns null.
 
 ### of_GetBit
 
@@ -360,3 +549,581 @@ anv_dirlist[li_entries].ib_readonly = &
        (lstr_finddata.ul_fileattributes, 1)
 ...
 ```
+
+### of_GetHiWord
+
+**Description**
+
+Obtains the high-order 32 bits from a 64-bit (longlong) integer.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_GetHiWord ( all_value )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *all_value* | LongLong. LongLong: The value from which the high-order 32 bits is wanted. |
+
+**Return value**
+
+UnsignedLong. Null will be returned if the argument value is null.
+
+### of_GetLoWord
+
+**Description**
+
+Obtains the low-order 32 bits from a 64-bit (longlong) integer.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_GetLoWord ( all_value )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *all_value* | LongLong. LongLong: The value from which the low-order 32 bits is wanted. |
+
+**Return value**
+
+UnsignedLong. Null will be returned if the argument value is null.
+
+### of_Hex
+
+**Description**
+
+Converts an unsigned integer (2-byte) value into a string representing the value in hexadecimal (base 16). Notes: No left-side padding with leading zeroes is performed. Example: 673 (decimal) -> "2a1".
+
+**Syntax 1**
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_Hex ( aui_value )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *aui_value* | UnsignedInteger. UnsignedInteger: The numeric value to be converted into hexadecimal. |
+
+**Return value**
+
+String. Null will be returned if the argument value is null.
+
+**Syntax 2**
+
+Converts a signed integer (2-byte) value into a string representing the value in hexadecimal (base 16). Notes: No left-side padding with leading zeroes is performed. Example: 673 (decimal) -> "2a1" -15 (decimal) -> "fff1" Please refer to the Notes section in the of_NumberBaseString function (for signed integers) for more information about the conversion of negative values to other numeric bases.
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_Hex ( ai_value )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *ai_value* | Integer. Integer: The numeric value to be converted into hexadecimal. |
+
+**Return value**
+
+String. Null will be returned if the argument value is null.
+
+**Syntax 3**
+
+Converts a signed long (4-byte) value into a string representing the value in hexadecimal (base 16). Notes: No left-side padding with leading zeroes is performed. Example: 673 (decimal) -> "2a1" -15 (decimal) -> "fffffff1" Please refer to the Notes section in the of_NumberBaseString function (for signed longs) for more information about the conversion of negative values to other numeric bases.
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_Hex ( al_value )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *al_value* | Long. Long: The numeric value to be converted into hexadecimal. |
+
+**Return value**
+
+String. Null will be returned if the argument value is null.
+
+**Syntax 4**
+
+Converts an unsigned long (4-byte) value into a string representing the value in hexadecimal (base 16). Notes: No left-side padding with leading zeroes is performed. Example: 673 (decimal) -> "2a1".
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_Hex ( aul_value )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *aul_value* | UnsignedLong. UnsignedLong: The numeric value to be converted into hexadecimal. |
+
+**Return value**
+
+String. Null will be returned if the argument value is null.
+
+**Syntax 5**
+
+Converts a signed longlong (8-byte) value into a string representing the value in hexadecimal (base 16). Notes: No left-side padding with leading zeroes is performed. Example: 673 (decimal) -> "2a1" -15 (decimal) -> "fffffffffffffff1".
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_Hex ( all_value )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *all_value* | LongLong. LongLong: The numeric value to be converted into hexadecimal. |
+
+**Return value**
+
+String. Null will be returned if the argument value is null.
+
+**Syntax 6**
+
+Converts an unsigned integer (2-byte) value into a string representing the value in hexadecimal (base 16). Notes: No left-side padding with leading zeroes is performed. Example: 73 (decimal) -> "49".
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_Hex ( abyte_value )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *abyte_value* | Byte. Byte: The numeric value to be converted into hexadecimal. |
+
+**Return value**
+
+String. Null will be returned if the argument value is null.
+
+### of_NumberBaseString
+
+**Description**
+
+Converts an unsigned long (4-byte) value into a string representing the value in the requested numeric base. No left-side padding of zeroes is performed. Example: 5831 (decimal) -> '1011011000111' (base 2) -> '13307' (base 8, or octal) -> '5831' (base 10) -> '16c7' (base 16, or hexadecimal)
+
+**Syntax 1**
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_NumberBaseString ( aul_value, aui_base )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *aul_value* | UnsignedLong. The numeric value to be converted. |
+| *aui_base* | UnsignedInteger. The numeric base (2-16) to convert the value into. |
+
+**Return value**
+
+String. Null will be returned if either argument value is null.
+
+**Syntax 2**
+
+Converts an unsigned integer (2-byte) value into a string representing the value in the requested numeric base. No left-side padding of zeroes is performed. Example: 5831 (decimal) -> '1011011000111' (base 2) -> '13307' (base 8, or octal) -> '5831' (base 10) -> '16c7' (base 16, or hexadecimal)
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_NumberBaseString ( aui_value, aui_base )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *aui_value* | UnsignedInteger. The numeric value to be converted. |
+| *aui_base* | UnsignedInteger. The numeric base (2-16) to convert the value into. |
+
+**Return value**
+
+String. Null will be returned if either argument value is null.
+
+**Syntax 3**
+
+Converts a signed long (4-byte) value into a string representing the value in the requested numeric base. No left-side padding of zeroes is performed. Example: 5831 (decimal) -> (base 2) '1011011000111' -> (base 8) '13307' -> (base 10) '5831' -> (base 16) '16c7' -956 (decimal) -> (base 2) '11111111111111111111110001000100' -> (base 8) '37777776104' -> (base 10) '4294966340' \* SEE NOTE -> (base 16) 'fffffc44' Notes: A PB long is a signed, 4-byte whole number. All possible values are stored in 32 bits. The hi-order bit determines whether the value is positive (bit=0) or negative (bit=1). In addition to the hi-order bit being set to 1, a negative value is stored in "2's complement" form. Thus, the decimal value 15 is stored as the binary pattern: 0000 0000 0000 0000 0000 0000 0000 1111 The decimal value -15 is stored as the binary pattern: 1111 1111 1111 1111 1111 1111 1111 0001 and NOT as the binary pattern for 15 with the sign bit on. In order to faithfully represent the bit pattern for negative values, the memory contents of the 4-byte long integer are first copied into a 4-byte unsignedlong integer, then converted to the requested numeric base. The binary pattern for -15 in a (signed) long is identical to the binary pattern for 4294967281 in an unsignedlong.
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_NumberBaseString ( al_value, aui_base )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *al_value* | Long. The numeric value to be converted. |
+| *aui_base* | UnsignedInteger. The numeric base (2-16) to convert the value into. |
+
+**Return value**
+
+String. Null will be returned if either argument value is null.
+
+**Syntax 4**
+
+Converts a signed integer (2-byte) value into a string representing the value in the requested numeric base. No left-side padding of zeroes is performed. Example: 5831 (decimal) -> (base 2) '1011011000111' -> (base 8) '13307' -> (base 10) '5831' -> (base 16) '16c7' -956 (decimal) -> (base 2) '1111110001000100' -> (base 8) '176104' -> (base 10) '64580' \* SEE NOTES -> (base 16) 'fc44' Notes: A PB integer is a signed, 2-byte whole number. All possible values are stored in 16 bits. The hi-order bit determines whether the value is positive (bit=0) or negative (bit=1). In addition to the hi-order bit being set to 1, a negative value is stored in "2's complement" form. Thus, the decimal value 15 is stored as the binary pattern: 0000 0000 0000 1111 The decimal value -15 is stored as the binary pattern: 1111 1111 1111 0001 and NOT as the binary pattern for 15 with the sign bit on. In order to faithfully represent the bit pattern for negative values, the memory contents of the 2-byte integer are first copied into a 2-byte unsigned integer, then converted to the requested numeric base. The binary pattern for -15 in a signed integer is identical to the binary pattern for 65521 in an unsigned integer.
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_NumberBaseString ( ai_value, aui_base )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *ai_value* | Integer. The numeric value to be converted. |
+| *aui_base* | UnsignedInteger. The numeric base (2-16) to convert the value into. |
+
+**Return value**
+
+String. Null will be returned if either argument value is null.
+
+**Syntax 5**
+
+Converts a (signed) longlong (8-byte) value into a string representing the value in the requested numeric base. No left-side padding of zeroes is performed. Example: 5831 (decimal) -> (base 2) '1011011000111' -> (base 8) '13307' -> (base 10) '5831' -> (base 16) '16c7' Notes: Because there currently is no unsigned version of a longlong, the process used for other integer data types cannot be used for a longlong when the sign bit (bit 64) is 1 (i.e., when the value to be converted is negative... EXCEPT for conversions to base 2, 8 or 16. Therefore, this function returns a value of null when a negative value to be converted is supplied and aui_base is not 2, 8 or 16.
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_NumberBaseString ( all_value, aui_base )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *all_value* | LongLong. The numeric value to be converted. |
+| *aui_base* | UnsignedInteger. The numeric base (2-16) to convert the value into. |
+
+**Return value**
+
+String. Null will be returned if either argument value is null.
+
+**Syntax 6**
+
+Converts a byte (which is unsigned) value into a string representing the value in the requested numeric base. No left-side padding of zeroes is performed. Example: 115 (decimal) -> '1110011' (base 2) -> '163' (base 8, or octal) -> '115' (base 10) -> '73' (base 16, or hexadecimal)
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_NumberBaseString ( abyte_value, aui_base )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *abyte_value* | Byte. Byte: The numeric value to be converted. |
+| *aui_base* | UnsignedInteger. UnsignedInteger: The numeric base (2-16) to convert the value into. |
+
+**Return value**
+
+String. Null will be returned if either argument value is null.
+
+### of_Octal
+
+**Description**
+
+Converts a signed integer (2-byte) value into a string representing the value in octal (base 8). No left-side padding with zeroes is peformed. Example: 673 (decimal) -> "1241" -15 (decimal) -> "177761" Notes: Please refer to the Notes section in the of_NumberBaseString function (for signed integers) for more information about the conversion of negative values to other numeric bases.
+
+**Syntax 1**
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_Octal ( ai_value )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *ai_value* | Integer. Integer: The numeric value to be converted into octal. |
+
+**Return value**
+
+String. Null will be returned if the argument value is null.
+
+**Syntax 2**
+
+Converts a signed long (4-byte) value into a string representing the value in octal (base 8). No left-side padding with zeroes is peformed. Example: 673 (decimal) -> "1241" -15 (decimal) -> "37777777761" Notes: Please refer to the Notes section in the of_NumberBaseString function (for signed longs) for more information about the conversion of negative values to other numeric bases.
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_Octal ( al_value )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *al_value* | Long. Long: The numeric value to be converted into octal. |
+
+**Return value**
+
+String. Null will be returned if the argument value is null.
+
+**Syntax 3**
+
+Converts an unsigned integer (2-byte) value into a string representing the value in octal (base 8). No left-side padding with zeroes is performed. Example: 673 (decimal) -> "1241".
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_Octal ( aui_value )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *aui_value* | UnsignedInteger. UnsignedInteger: The numeric value to be converted into octal. |
+
+**Return value**
+
+String. Null will be returned if the argument value is null.
+
+**Syntax 4**
+
+Converts an unsigned long (4-byte) value into a string representing the value in octal (base 8). No left-side padding with zeroes is performed. Example: 673 (decimal) -> "1241".
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_Octal ( aul_value )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *aul_value* | UnsignedLong. UnsignedLong: The numeric value to be converted into octal. |
+
+**Return value**
+
+String. Null will be returned if the argument value is null.
+
+**Syntax 5**
+
+Converts a byte (unsigned) integer value into a string representing the value in octal (base 8). No left-side padding with zeroes is performed. Example: 73 (decimal) -> "111".
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_Octal ( abyte_value )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *abyte_value* | Byte. Byte: The numeric value to be converted into octal. |
+
+**Return value**
+
+String. Null will be returned if the argument value is null.
+
+**Syntax 6**
+
+Converts a signed longlong (8-byte) value into a string representing the value in octal (base 8). No left-side padding with zeroes is performed. Example: 673 (decimal) -> "1241".
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_Octal ( all_value )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *all_value* | LongLong. LongLong: The numeric value to be converted into octal. |
+
+**Return value**
+
+String. Null will be returned if the argument value is null.
+
+### of_SetBit
+
+**Description**
+
+Sets a specific bit on or off.
+
+**Syntax 1**
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_SetBit ( abyte_value, aui_bit, ab_new )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *abyte_value* | Byte. Byte: The value that is to be manipulated. |
+| *aui_bit* | UnsignedInteger. UnsignedInteger: Requested bit position (from right to left); 1 to 8. |
+| *ab_new* | Boolean. Boolean: The new value for the bit (True=1, False=0). |
+
+**Return value**
+
+Byte. The new value after the requested bit has been set. If any argument's value is null, the function returns null. If aui_bitnumber is not between 1 and 8, the function returns null.
+
+**Syntax 2**
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_SetBit ( ai_value, aui_bit, ab_new )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *ai_value* | Integer. Integer: The value that is to be manipulated. |
+| *aui_bit* | UnsignedInteger. UnsignedInteger: Requested bit position (from right to left); 1 to 16. |
+| *ab_new* | Boolean. Boolean: The new value for the bit (True=1, False=0). |
+
+**Return value**
+
+Integer. The new value after the requested bit has been set. If any argument's value is null, the function returns null. If aui_bitnumber is not between 1 and 16, the function returns null.
+
+**Syntax 3**
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_SetBit ( al_value, aui_bit, ab_new )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *al_value* | Long. Long: The value that is to be manipulated. |
+| *aui_bit* | UnsignedInteger. UnsignedInteger: Requested bit position (from right to left); 1 to 32. |
+| *ab_new* | Boolean. Boolean: The new value for the bit (True=1, False=0). |
+
+**Return value**
+
+Long. The new value after the requested bit has been set. If any argument's value is null, the function returns null. If aui_bitnumber is not between 1 and 32, the function returns null.
+
+**Syntax 4**
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_SetBit ( all_value, aui_bit, ab_new )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *all_value* | LongLong. LongLong: The value that is to be manipulated. |
+| *aui_bit* | UnsignedInteger. UnsignedInteger: Requested bit position (from right to left); 1 to 64. |
+| *ab_new* | Boolean. Boolean: The new value for the bit (True=1, False=0). |
+
+**Return value**
+
+LongLong. The new value after the requested bit has been set. If any argument's value is null, the function returns null. If aui_bitnumber is not between 1 and 64, the function returns null.
+
+**Syntax 5**
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_SetBit ( aui_value, aui_bit, ab_new )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *aui_value* | UnsignedInteger. UnsignedInteger: The value that is to be manipulated. |
+| *aui_bit* | UnsignedInteger. UnsignedInteger: Requested bit position (from right to left); 1 to 16. |
+| *ab_new* | Boolean. Boolean: The new value for the bit (True=1, False=0). |
+
+**Return value**
+
+UnsignedInteger. The new value after the requested bit has been set. If any argument's value is null, the function returns null. If aui_bitnumber is not between 1 and 16, the function returns null.
+
+**Syntax 6**
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_SetBit ( aul_value, aui_bit, ab_new )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_numerical |
+| *aul_value* | UnsignedLong. UnsignedLong: The value that is to be manipulated. |
+| *aui_bit* | UnsignedInteger. UnsignedInteger: Requested bit position (from right to left); 1 to 32. |
+| *ab_new* | Boolean. Boolean: The new value for the bit (True=1, False=0). |
+
+**Return value**
+
+UnsignedLong. The new value after the requested bit has been set. If any argument's value is null, the function returns null. If aui_bitnumber is not between 1 and 32, the function returns null.

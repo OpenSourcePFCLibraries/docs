@@ -52,6 +52,7 @@ U_base includes instance variables:
 | CONTINUE_ACTION | Constant set to 1 | Integer | Public | Internal |
 | FAILURE | Constant set to -1 | Integer | Public | Internal |
 | ib_alwaysvalidate | Controls whether the save process includes all objects in the validation process | Boolean | Protected | Set with of_SetAlwaysValidate (default is FALSE) |
+| ib_IsObsolete |  | Boolean | Protected |  |
 | ib_isupdateable | Indicates whether the object can be updated | Boolean | Protected | Set with of_SetUpdateable (default is FALSE) |
 | inv_luw | Reference variable for logical unit of work service | n_cst_luw | Protected | Set with of_SetLogicalUnitOfWork |
 | inv_resize | Reference variable for resize service | n_cst_resize | Public | Set with of_SetResize |
@@ -67,6 +68,7 @@ U_base includes instance variables:
 
 U_base includes precoded events:
 
+- Constructor
 - Destructor
 - pfc_AcceptText
 - pfc_PostUpdate
@@ -75,6 +77,26 @@ U_base includes precoded events:
 - pfc_UpdatesPending
 - pfc_Validation
 - Resize
+
+### Constructor
+
+**Description**
+
+The ancestor to all PFC object classes.
+
+**Syntax**
+
+```
+instancename.EVENT Constructor ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_base |
+
+**Return value**
+
+None.
 
 ### Destructor
 

@@ -30,3 +30,12 @@ Structure object containing information about registered columns and text object
 **See also**
 
 n_cst_dwsrv_resize
+
+## Instance variables
+
+N_cst_dwsrv_resizeattrib includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| i_movey |  | Integer | Public |
+

@@ -30,7 +30,6 @@ U_dw is a self-updating object.
 - [n_cst_restorerowattrib](../05-global-structures-and-structure-objects/n_cst_restorerowattrib.md)
 - [n_cst_string](../09-custom-class-user-objects/n_cst_string.md)
 - [s_pagesetupattrib](../05-global-structures-and-structure-objects/s_pagesetupattrib.md)
-- [s_printdlgattrib](../05-global-structures-and-structure-objects/s_printdlgattrib.md)
 
 Although u_dw contains substantial standalone functionality, the DataWindow services user objects (those objects whose name starts with n_cst_dwsrv) must be available to get the most out of it.
 
@@ -71,6 +70,7 @@ U_dw contains instance variables and one shared variable:
 | --- | --- | --- | --- | --- |
 | CONTINUE_ACTION | Constant set to 1 | Integer | Public | Internal |
 | FAILURE | Constant set to -1 | Integer | Public | Internal |
+| ib_IsObsolete |  | Boolean | Protected |  |
 | ib_isupdateable | Indicates whether the DataWindow can be updated | Boolean | Protected | Access through the of_GetUpdateable and of_SetUpdateable functions. Default is TRUE |
 | ib_rmbfocuschange | Used to track focus change while the right mouse button is down | Boolean | Protected | Internal |
 | ib_rmbmenu | Controls whether the m_dw menu displays when the user presses the right mouse button over the DataWindow control | Boolean | Protected | Set FALSE in the DataWindow’s Constructor event to disable right mouse button support |
@@ -78,6 +78,7 @@ U_dw contains instance variables and one shared variable:
 | inv_dropdownsearch | Reference variable for the dropdown DataWindow search service | n_cst_dwsrv_dropdownsearch | Public | Use in dot notation to access dropdown DataWindow search functions and attributes |
 | inv_filter | Reference variable for the DataWindow filter service | n_cst_dwsrv_filter | Public | Use in dot notation to access DataWindow filter service functions and attributes |
 | inv_find | Reference variable for the DataWindow find service | n_cst_dwsrv_find | Public | Use in dot notation to access DataWindow find service functions and attributes |
+| inv_Grid |  | n_cst_dwsrv_grid | Public |  |
 | inv_linkage | Reference variable for the DataWindow linkage service | n_cst_dwsrv_linkage | Public | Use in dot notation to access n_cst_dwsrv_linkage functions and attributes |
 | inv_multitable | Reference variable for the DataWindow multitable update service | n_cst_dwsrv_multitable | Public | Use in dot notation to access n_cst_dwsrv_multitable functions and attributes |
 | inv_printpreview | Reference variable for the DataWindow print preview service | n_cst_dwsrv_printpreview | Public | Use in dot notation to access n_cst_dwsrv_printpreview functions and attributes |
@@ -89,6 +90,7 @@ U_dw contains instance variables and one shared variable:
 | inv_rowmanager | Reference variable for the row manager service | n_cst_dwsrv_rowmanager | Public | Use in dot notation to access n_cst_dwsrv_rowmanager functions and attributes |
 | inv_rowselect | Reference variable for the row selection service | n_cst_dwsrv_rowselection | Public | Use in dot notation to access n_cst_dwsrv_rowselection functions and attributes |
 | inv_sort | Reference variable for the sort service | n_cst_dwsrv_sort | Public | Use in dot notation to access n_cst_dwsrv_sort functions and attributes |
+| ipo_UpdateRequestor |  | PowerObject | Protected |  |
 | is_updatesallowed | Specifies allowable update types | String | Protected | Internal |
 | itr_object | Transaction object used by the DataWindow | n_tr | Public | DataWindow services use this instance variable to track the transaction object |
 |  |  |  |  | Set with of_SetTransObject |
@@ -118,6 +120,7 @@ U_dw contains two types of events/user events:
 - LButtonUp
 - pfc_AcceptText
 - pfc_AddRow
+- pfc_checkrequirederror
 - pfc_Clear
 - pfc_Copy
 - pfc_Cut
@@ -138,20 +141,20 @@ U_dw contains two types of events/user events:
 - pfc_Paste
 - pfc_PopulateDDDW
 - pfc_PostInsertRow
+- pfc_postlbuttonup
 - pfc_PostUpdate
 - pfc_PreDeleteRow
 - pfc_PreFindDlg
 - pfc_PreInsertRow
 - pfc_PrePageSetupDlg
-- pfc_PrePrintDlg
 - pfc_PreProperties
 - pfc_PreReplaceDlg
 - pfc_PreRestoreRow
 - pfc_PreRmbMenu
+- pfc_prermbmenuproperty
 - pfc_PreUpdate
 - pfc_PreviousPage
 - pfc_Print
-- pfc_PrintDlg
 - pfc_PrintImmediate
 - pfc_PrintPreview
 - pfc_Properties
@@ -178,6 +181,7 @@ U_dw contains two types of events/user events:
 - RetrieveEnd
 - RetrieveStart
 - RowFocusChanged
+- Rowfocuschanging
 - SQLPreview
 
 ### Clicked
@@ -333,6 +337,28 @@ Long. Returns the number of the new row if the event succeeds and -1 if an error
 **Usage**
 
 This event also calls the pfc_PreInsertRow and pfcPostInsertRow events.
+
+### pfc_checkrequirederror
+
+**Description**
+
+No description is available.
+
+**Syntax**
+
+```
+instancename.EVENT pfc_checkrequirederror ( al_row, as_columnname )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_dw |
+| *al_row* | Long. |
+| *as_columnname* | String, passed by reference. |
+
+**Return value**
+
+Integer.
 
 ### pfc_Clear
 
@@ -678,6 +704,29 @@ instancename.Event pfc_PostInsertRow ( row )
 
 This event is posted from the pfc_AddRow and pfc_InsertRow events.
 
+### pfc_postlbuttonup
+
+**Description**
+
+No description is available.
+
+**Syntax**
+
+```
+instancename.EVENT pfc_postlbuttonup ( flags, xpos, ypos )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_dw |
+| *flags* | UnsignedLong. |
+| *xpos* | Integer. |
+| *ypos* | Integer. |
+
+**Return value**
+
+None.
+
 ### pfc_PostUpdate
 
 **Description**
@@ -807,42 +856,6 @@ This example contains code you might add to the pfc_PrePageSetupDlg event:
 astr_pagesetup.b_portraitorientation = TRUE
 ```
 
-### pfc_PrePrintDlg
-
-**Description**
-
-Empty user event allowing you to modify the properties passed to the n_cst_platform of_PrintDlg function.
-
-**Syntax**
-
-```
-instancename.Event pfc_PrePrintDlg ( attributes )
-```
-
-| Argument | Description |
-| --- | --- |
-| *instancename* | Instance name of u_dw |
-| *attributes* | S_printdlgattrib variable into which the event places additional printing information. This argument is accessed through the *astr_printdlg* argument (passed by reference) |
-
-**Return value**
-
-None
-
-**Usage**
-
-This event is called by pfc_PrintDlg before calling the n_cst_platform of_PrintDlg function.
-
-You can use this event to modify or extend the information passed in the s_printdlgattrib structure.
-
-**Examples**
-
-This example contains code you might add to the pfc_PrePrintDlg event:
-
-```
-// Default copies to 1
-astr_printdlg.l_copies = 1
-```
-
 ### pfc_PreProperties
 
 **Description**
@@ -958,6 +971,27 @@ This example contains code you might add to the pfc_PreRmbMenu event:
 am_dw.m_table.m_delete.Enabled = FALSE
 ```
 
+### pfc_prermbmenuproperty
+
+**Description**
+
+No description is available.
+
+**Syntax**
+
+```
+instancename.EVENT pfc_prermbmenuproperty ( am_dw )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_dw |
+| *am_dw* | m_dw, passed by reference. |
+
+**Return value**
+
+None.
+
 ### pfc_PreUpdate
 
 **Description**
@@ -1018,31 +1052,6 @@ Integer. Returns 1 if the event succeeds and -1 if an error occurs.
 **Usage**
 
 This event is triggered when the DataWindow has focus and the user selects File>Print from the menu bar of a menu descended from the PFC m_master menu.
-
-### pfc_PrintDlg
-
-**Description**
-
-Initializes the s_printdlgattrib structure with the DataWindow’s current settings, displays the Print dialog box by calling the n_cst_platform of_PrintDlg function, and resets the DataWindow’s settings, as specified by the user.
-
-**Syntax**
-
-```
-instancename.Event pfc_PrintDlg ( attributes )
-```
-
-| Argument | Description |
-| --- | --- |
-| *instancename* | Instance name of u_dw |
-| *attributes* | S_printdlgattrib variable into which the event places printing information. This argument, which is accessed through the *astr_printdlg* argument, is passed by reference |
-
-**Return value**
-
-Integer. Returns 1 if the event succeeds and -1 if an error occurs.
-
-**Usage**
-
-This event is called by the pfc_Print event.
 
 ### pfc_PrintImmediate
 
@@ -1434,6 +1443,26 @@ This event executes when the DataWindow first displays and again when the user c
 
 This event calls the n_cst_dwsrv_linkage pfc_RowFocusChanged event.
 
+### Rowfocuschanging
+
+**Description**
+
+Send rowfocuschanging notification to services.
+
+**Syntax**
+
+```
+instancename.EVENT Rowfocuschanging ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_dw |
+
+**Return value**
+
+None.
+
 ### SQLPreview
 
 **Description**
@@ -1465,6 +1494,7 @@ U_dw includes precoded object functions to control DataWindow services:
 - of_SetDropDownSearch
 - of_SetFilter
 - of_SetFind
+- of_SetGrid
 - of_SetLinkage
 - of_SetMultiTable
 - of_SetPrintPreview
@@ -2142,6 +2172,31 @@ This example calls the of_SetFind function to enable the DataWindow find service
 ```
 dw_employee.of_SetFind(TRUE)
 ```
+
+### of_SetGrid
+
+**Description**
+
+Starts or stops theGrid Service. This service provides the ability to store/restore columns visibility, order & width.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_SetGrid ( ab_switch )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_dw |
+| *ab_switch* | Boolean. |
+
+**Return value**
+
+Integer. 1 if Successful operation, 0 = No action taken and -1 if an error occured.
 
 ### of_SetLinkage
 

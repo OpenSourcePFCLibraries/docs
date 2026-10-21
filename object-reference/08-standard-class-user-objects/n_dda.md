@@ -23,3 +23,12 @@ Use this nonvisual object instead of the standard PowerBuilder DynamicDescriptio
 - [n_err](n_err.md)
 - [n_msg](n_msg.md)
 - [n_tr](n_tr.md)
+
+## Instance variables
+
+N_dda includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |
+

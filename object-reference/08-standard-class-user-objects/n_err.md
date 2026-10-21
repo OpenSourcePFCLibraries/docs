@@ -24,6 +24,14 @@ Use this nonvisual object instead of the standard PowerBuilder error object.
 - [n_msg](n_msg.md)
 - [n_tr](n_tr.md)
 
+## Instance variables
+
+N_err includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |
+
 ## Functions
 
 N_err contains one precoded function:

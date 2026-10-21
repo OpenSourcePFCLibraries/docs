@@ -41,6 +41,14 @@ Because PFC defines this object with the autoinstantiate option, you don’t nee
 
 n_cst_string
 
+## Instance variables
+
+N_cst_inifile includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| is_lineend |  | String | Protected |
+
 ## Events
 
 N_cst_inifile contains a precoded event:
@@ -61,11 +69,38 @@ This event executes when the object is created.
 
 N_cst_inifile contains object functions:
 
+- of_Create
 - of_Delete
 - of_GetKeys
 - of_GetLineEnding
 - of_GetSections
 - of_SetLineEnding
+
+### of_Create
+
+**Description**
+
+Create the specified INI file and add the initial section specified.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_Create ( as_file, as_section )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_inifile |
+| *as_file* | String. The .ini file. |
+| *as_section* | String. The initial section name to be adde in the INI file. (Do not include the brackets with this argument.) |
+
+**Return value**
+
+Integer. 1 success -1 error.
 
 ### of_Delete
 

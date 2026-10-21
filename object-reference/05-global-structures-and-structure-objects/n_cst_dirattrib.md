@@ -29,4 +29,3 @@ Structure object containing information used in n_cst_filesrv and its descendant
 **See also**
 
 - [n_cst_filesrv](../09-custom-class-user-objects/n_cst_filesrv.md)
-- [n_cst_filesrvwin32](../09-custom-class-user-objects/n_cst_filesrvwin32.md)

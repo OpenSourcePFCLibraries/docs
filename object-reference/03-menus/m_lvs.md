@@ -50,7 +50,32 @@ M_lvs includes one instance variable:
 
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |  |
 | ilv_parent | ListView control displaying the popup menu. | ListView | Protected | Used to access the associated ListView control |
+
+## Events
+
+M_lvs includes these events:
+
+### pfc_isobsolete
+
+**Description**
+
+No description is available.
+
+**Syntax**
+
+```
+instancename.EVENT pfc_isobsolete ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of m_lvs |
+
+**Return value**
+
+Boolean.
 
 ## Functions
 

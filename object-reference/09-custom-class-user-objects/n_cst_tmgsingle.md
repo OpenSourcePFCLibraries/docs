@@ -83,6 +83,26 @@ N_cst_tmgsingle includes a precoded event:
 
 pfc_Timer
 
+### Constructor
+
+**Description**
+
+The Timing Single the service.
+
+**Syntax**
+
+```
+instancename.EVENT Constructor ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_tmgsingle |
+
+**Return value**
+
+None.
+
 ### pfc_Timer
 
 **Description**

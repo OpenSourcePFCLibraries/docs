@@ -25,6 +25,14 @@ Use this visual object in windows instead of the standard PowerBuilder PictureLi
 
 u_lb
 
+## Instance variables
+
+U_plb includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |
+
 ## Events
 
 U_plb includes precoded events:

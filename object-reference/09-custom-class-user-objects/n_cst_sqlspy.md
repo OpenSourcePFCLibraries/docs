@@ -57,16 +57,173 @@ You typically call most n_cst_sqlspy functions from within the application manag
 - [n_cst_appmanager](n_cst_appmanager.md)
 - [n_cst_debug](n_cst_debug.md)
 
+## Instance variables
+
+N_cst_sqlspy includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_allowinspect | Should service allow anything other than batchmode? | Boolean | Protected |
+| ib_alwaysontop | Will window always be on top? | Boolean | Protected |
+| ib_batchmode | Current mode of service. | Boolean | Protected |
+| is_currentheading | SQL Current Heading. | String | Protected |
+| is_currentsyntax | SQL Current Syntax. | String | Protected |
+| is_history | Contains the current history. | String | Protected |
+| is_logfile | The path and name of the logfile. | String | Protected |
+| iw_sqlspy | Reference to the SQLSpy equivalent window. | w_sqlspy | Protected |
+| iw_sqlspyinspect | Reference to the SQLSpyInspect equivalent window. | w_sqlspyinspect | Protected |
+
+## Events
+
+N_cst_sqlspy includes these events:
+
+### Destructor
+
+**Description**
+
+Perform cleanup.
+
+**Syntax**
+
+```
+instancename.EVENT Destructor ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_sqlspy |
+
+**Return value**
+
+None.
+
 ## Functions
 
 N_cst_sqlspy includes many precoded object functions. The functions you call from an application are documented here:
 
+- of_AddToHistory
+- of_AddTologfile
+- of_clearhistory
+- of_GetAllowInspect
 - of_GetAlwaysOnTop
+- of_GetBatchmode
+- of_GetCurrentHeading
+- of_GetCurrentSyntax
+- of_GetHistory
+- of_GetLogfile
+- of_IsOpen
 - of_OpenSQLSpy
+- of_OpenSQLSpyInspect
+- of_PreventHistoryOverflow
+- of_PrintHistory
+- of_SaveHistoryToFile
+- of_SetAllowInspect
 - of_SetAlwaysOnTop
 - of_SetBatchMode
+- of_SetCurrentHeading
+- of_SetCurrentSyntax
 - of_SetLogFile
+- of_SQLPreview
 - of_SQLSyntax
+
+### of_AddToHistory
+
+**Description**
+
+Add a history entry into the RichTextControl.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_AddToHistory ( as_heading, as_syntax )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_sqlspy |
+| *as_heading* | String. The header information to be added. |
+| *as_syntax* | String. The detail information to be added. |
+
+**Return value**
+
+Integer. 1 if it succeeds. -1 if an error occurs. If any argument's value is NULL, function returns NULL.
+
+### of_AddTologfile
+
+**Description**
+
+Add a history entry into the RichTextControl.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_AddTologfile ( as_newentry )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_sqlspy |
+| *as_newentry* | String. The new entry to be added to the logfile. |
+
+**Return value**
+
+Integer. 1 if it succeeds. -1 if an error occurs.
+
+### of_clearhistory
+
+**Description**
+
+Clear the visual history.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_clearhistory ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_sqlspy |
+
+**Return value**
+
+Integer. 1 if it succeeds. -1 if an error occurs.
+
+### of_GetAllowInspect
+
+**Description**
+
+Gets the current allowinspect mode of the SQLSpy service.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_GetAllowInspect ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_sqlspy |
+
+**Return value**
+
+Boolean. Returns True if service is on allowinspect.
 
 ### of_GetAlwaysOnTop
 
@@ -106,6 +263,150 @@ ib_ontop = &
 ...
 ```
 
+### of_GetBatchmode
+
+**Description**
+
+Gets the current mode of the SQLSpy service.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_GetBatchmode ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_sqlspy |
+
+**Return value**
+
+Boolean. Returns True if service is on BatchMode.
+
+### of_GetCurrentHeading
+
+**Description**
+
+Gets the current SQL Heading from the SQLSpy service.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_GetCurrentHeading ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_sqlspy |
+
+**Return value**
+
+String. Returns the current SQL Heading.
+
+### of_GetCurrentSyntax
+
+**Description**
+
+Gets the current syntax on the SQLSpy service.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_GetCurrentSyntax ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_sqlspy |
+
+**Return value**
+
+String. strins Returns the current syntax.
+
+### of_GetHistory
+
+**Description**
+
+Gets the current history from the SQLSpy service.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_GetHistory ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_sqlspy |
+
+**Return value**
+
+String. Returns the current history. (i.e., 'c:\appl\logfile.asc')
+
+### of_GetLogfile
+
+**Description**
+
+Gets the log filename for the SQLSpy service. Note: An empty string means there is no log file.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_GetLogfile ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_sqlspy |
+
+**Return value**
+
+String. Returns the log file name (if any)
+
+### of_IsOpen
+
+**Description**
+
+Reports if the SQLSpy window is currently opened.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_IsOpen ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_sqlspy |
+
+**Return value**
+
+Boolean. True if the SQLSpy window is currently opened. False otherwise.
+
 ### of_OpenSQLSpy
 
 **Description**
@@ -140,6 +441,129 @@ This example calls the of_OpenSQLSpy function:
 ```
 gnv_app.inv_debug.inv_sqlspy.of_OpenSQLSpy(TRUE)
 ```
+
+### of_OpenSQLSpyInspect
+
+**Description**
+
+Open the SQLSpyInspect window.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_OpenSQLSpyInspect ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_sqlspy |
+
+**Return value**
+
+Integer. 0 if it succeeds and the caller's processing should continue as normal. 1 if it suceeds but the caller's proccessing should stop. 2 if it succeeds but the caller's processing should skip this request and execute the next request (if any). -1 if an error occurs.
+
+### of_PreventHistoryOverflow
+
+**Description**
+
+Prevent the history string from growing past the maximum supported by the Operating Environment.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_PreventHistoryOverflow ( as_history, al_newentry )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_sqlspy |
+| *as_history* | String. The history string. |
+| *al_newentry* | String. The latest new entry to be added to the history string. |
+
+**Return value**
+
+String. The manipulated string. If any argument's value is NULL, function returns NULL.
+
+### of_PrintHistory
+
+**Description**
+
+Prints the current history.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_PrintHistory ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_sqlspy |
+
+**Return value**
+
+Integer. Returns 1 if it succeeds and -1 if an error occurs.
+
+### of_SaveHistoryToFile
+
+**Description**
+
+Saves the current history to a file. Opens the GetFileSaveName dialog window, gets a filename, and allows for the saving of the SQL history to the file.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_SaveHistoryToFile ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_sqlspy |
+
+**Return value**
+
+Integer. Returns 1 if it succeeds and -1 if an error occurs.
+
+### of_SetAllowInspect
+
+**Description**
+
+Sets the mode of the SQLSpy service. If this mode is True then inspect capabilities are available. If the the mode is False then the service will have no inspect capabilities.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_SetAllowInspect ( ab_allowinspect )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_sqlspy |
+| *ab_allowinspect* | Boolean. Mode of the service. |
+
+**Return value**
+
+Integer. Returns 1 if it succeeds and -1 if an error occurs.
 
 ### of_SetAlwaysOnTop
 
@@ -215,6 +639,56 @@ gnv_app.inv_debug.inv_sqlspy.of_SetBatchMode &
    (FALSE)
 ```
 
+### of_SetCurrentHeading
+
+**Description**
+
+Sets the current heading for the SQLSpy service.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_SetCurrentHeading ( as_currentheading )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_sqlspy |
+| *as_currentheading* | String. String containing the current heading. |
+
+**Return value**
+
+Integer. Returns 1 if it succeeds and -1 if an error occurs.
+
+### of_SetCurrentSyntax
+
+**Description**
+
+Sets the current syntax for the SQLSpy service.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_SetCurrentSyntax ( as_currentsyntax )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_sqlspy |
+| *as_currentsyntax* | String. |
+
+**Return value**
+
+Integer. Returns 1 if it succeeds and -1 if an error occurs.
+
 ### of_SetLogFile
 
 **Description**
@@ -254,6 +728,36 @@ This example calls the of_SetLogFile function:
 this.inv_debug.inv_sqlspy.of_SetLogFile &
    ("c:\debug\temp\appdbug.log")
 ```
+
+### of_SQLPreview
+
+**Description**
+
+Called from a datawindow's SQLPreview event. Receive all the arguments from the SQLPreview event of the calling datawindow. Create the appropriate heading and then call the function to process the SQL syntax.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_SQLPreview ( as_controlname, a_sqlpreviewfunction, a_sqlpreviewtype, as_sqlsyntax, a_dwbuffer, al_row )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_sqlspy |
+| *as_controlname* | String. Control name. (i.e.,dw_1.ClassName() or ds_1.ClassName()) |
+| *a_sqlpreviewfunction* | Sqlpreviewfunction. SQLPreview arg from control: sqlpreviewfunction. |
+| *a_sqlpreviewtype* | Sqlpreviewtype. SQLPreview arg from control: sqlpreviewtype. |
+| *as_sqlsyntax* | String, passed by reference. SQLPreview arg from control: sqlsyntax by Reference. |
+| *a_dwbuffer* | Dwbuffer. SQLPreview arg from control: dwbuffer. |
+| *al_row* | Long. SQLPreview arg from control: row. |
+
+**Return value**
+
+Integer. 0 if it succeeds and the caller's processing should continue as normal. 1 if it suceeds but the caller's proccessing should stop. 2 if it succeeds but the caller's processing should skip this request and execute the next request (if any). -1 if an error occurs. If any argument's value is NULL, function returns NULL.
 
 ### of_SQLSyntax
 

@@ -28,6 +28,14 @@ Use this visual user object in windows instead of the standard PowerBuilder List
 - [u_ddplb](u_ddplb.md)
 - [u_plb](u_plb.md)
 
+## Instance variables
+
+U_lb includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |
+
 ## Events
 
 U_lb includes precoded events:

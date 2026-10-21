@@ -132,9 +132,14 @@ N_cst_dwsrv_linkage includes instance variables for Internal:
 | DISCARD_ROWS | Constant set to 2 | Integer | Public | Use with of_SetDeleteStyle |
 | FAILURE | Constant set to -1 | Integer | Public | Internal |
 | FILTER | Constant set to 1 | Integer | Public | Use with of_SetStyle |
+| ib_allowfocuschange |  | Boolean | Protected |  |
+| ib_cascadingdelete |  | Boolean | Protected |  |
 | ib_confirmondelete | Indicates whether the user is prompted to confirm deletions | Boolean | Protected | Set with of_SetConfirmOn Delete |
 | ib_confirmonrowchange | Indicates whether the user is prompted to confirm modifications | Boolean | Protected | Set with of_SetConfirmOn RowChange |
+| ib_insertingrow |  | Boolean | Protected |  |
+| ib_preventfocuschanged |  | Boolean | Protected |  |
 | ib_retrieving | Indicates whether the DataWindow is retrieving data | Boolean | Protected | Internal |
+| ib_statusoninsertrow |  | Boolean | Protected |  |
 | ib_synconkeychange | Indicates whether the linkage service cascades key changes to detail DataWindows | Boolean | Protected | Set with of_SetSyncOn KeyChange |
 | ib_updatebottomup | Obsolete. Use ii_updatestyle | Boolean | Protected | Obsolete |
 | ib_updateonrowchange | Indicates whether the service updates details when the master’s row changes (retrieval style only) | Boolean | Protected | Set with of_SetUpdateOn RowChange |
@@ -146,12 +151,15 @@ N_cst_dwsrv_linkage includes instance variables for Internal:
 |  | • 3 Scroll |  |  |  |
 | ii_customupdate | Custom update indicator | Integer | Protected | Set with of_SetCustom Update |
 | ii_deletestyle | Delete style indicator | Integer | Protected | Set with of_SetDeleteStyle |
+| ii_keysync | Default. | Integer | Protected |  |
 | ii_updatestyle | Indicates how PFC performs updates | Integer | Protected | Internal |
 | il_priorrow | Tracks rows | Long | Protected | Internal |
 | inv_linkargs | Structure object containing linkage information | n_cst_linkageattrib | Protected | Internal |
 | inv_platform | Platform services | n_cst_platform | Protected | Internal |
 | ipo_othersaveobjects[ ] | Additional controls to be updated when row focus changes | PowerObject | Protected | Set with of_SetOther SaveObjects |
 | is_filterexp | Expression used to filter rows in detail DataWindows. This is used if ii_collinkuse is set to 1 | String | Protected | Internal |
+| is_focuscol | Last column to get focus. | String | Protected |  |
+| is_focusval | Last value to get focus (in Find exp.) | String | Protected |  |
 | is_keycols[ ] | Column that controls Master/Detail refresh processing. This is used if ii_collinkuse is set to 2 | String | Protected | Internal |
 | is_keycolsvalue[ ] | Saves keys | String | Protected | Internal |
 | is_savesound | Sound file to be played for a successful save | String | Protected | Set with of_SetSaveSound |
@@ -164,6 +172,7 @@ N_cst_dwsrv_linkage includes instance variables for Internal:
 
 N_cst_dwsrv_linkage contains precoded user events:
 
+- Constructor
 - Destructor
 - pfc_Clicked
 - pfc_DeleteRow
@@ -178,6 +187,26 @@ N_cst_dwsrv_linkage contains precoded user events:
 - pfc_RowChanged
 - pfc_RowFocusChanged
 - pfc_RowFocusChanging
+
+### Constructor
+
+**Description**
+
+Linkage Service.
+
+**Syntax**
+
+```
+instancename.EVENT Constructor ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_dwsrv_linkage |
+
+**Return value**
+
+None.
 
 ### Destructor
 
@@ -570,6 +599,7 @@ N_cst_dwsrv_linkage includes precoded object functions:
 - of_IsKey
 - of_IsLinked
 - of_IsRoot
+- of_IsStatusOnInsertRow
 - of_IsSyncOnKeyChange
 - of_IsUpdateOnRowChange
 - of_ItemFocusChanged
@@ -599,6 +629,7 @@ N_cst_dwsrv_linkage includes precoded object functions:
 - of_SetOtherSaveObjects
 - of_SetRedraw
 - of_SetSaveSound
+- of_SetStatusOnInsertRow
 - of_SetStyle
 - of_SetSyncOnKeyChange
 - of_SetTransObject
@@ -1855,6 +1886,30 @@ IF of_IsRoot() THEN Return -1
 ...
 ```
 
+### of_IsStatusOnInsertRow
+
+**Description**
+
+Reports whether the row status will be set to New! on inserted rows.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_IsStatusOnInsertRow ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_dwsrv_linkage |
+
+**Return value**
+
+Boolean. specifies whether the row status will be set to New! on inserted rows.
+
 ### of_IsSyncOnKeyChange
 
 **Description**
@@ -3023,6 +3078,31 @@ This example calls the of_SetSaveSound function:
 ```
 dw_cust.inv_linkage.of_SetSaveSound("slurp.wav")
 ```
+
+### of_SetStatusOnInsertRow
+
+**Description**
+
+Sets whether the row status will be set to New! on inserted rows.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_SetStatusOnInsertRow ( ab_switch )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_dwsrv_linkage |
+| *ab_switch* | Boolean. specifies whether the row status will be set to New! on inserted rows. |
+
+**Return value**
+
+Integer. Returns 1 = success, -1 = error.
 
 ### of_SetStyle
 

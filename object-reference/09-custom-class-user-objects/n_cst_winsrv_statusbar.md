@@ -61,6 +61,9 @@ N_cst_winsrv_statusbar includes instance variables:
 | ib_mem | Indicates whether memory is displayed | Boolean | Protected | Set with of_SetMem |
 | ib_timer | Indicates whether time is displayed | Boolean | Protected | Set with of_SetTimer |
 | ib_user | Indicates whether user memory is displayed | Boolean | Protected | Set with of_SetUser |
+| ics_typebitmap | Obsoleted in 6.0. | String | Protected |  |
+| ics_typepredefined | Obsoleted in 6.0. | String | Protected |  |
+| ics_typetext | Obsoleted in 6.0. | String | Protected |  |
 | ienv_object | Environment object | Environment | Protected | Internal |
 | ii_bardisplaystyle | Bar display style | Integer | Protected | Set with of_SetBarDisplayStyle (default is BAR) |
 | ii_barfillstyle | Bar fill style | Integer | Protected | Set with of_SetBarFillStyle (default is LEFTRIGHT) |
@@ -79,6 +82,10 @@ N_cst_winsrv_statusbar includes instance variables:
 | ii_gapwidth | Gap width | Integer | Protected | Set with of_SetGapWidth (default is 15) |
 | ii_gdiwidth | Width of GDI item | Integer | Protected | Set with of_SetGDIWidth (default is 250) |
 | ii_memwidth | Width of memory item | Integer | Protected | Set with of_SetMemWidth (default is 350) |
+| ii_microhelpstartvalue |  | Integer | Protected |  |
+| ii_microhelpsubtractvalue |  | Integer | Protected |  |
+| ii_microhelpwin3xsubtractvalue |  | Integer | Protected |  |
+| ii_microhelpwinnt3xsubtractvalue |  | Integer | Protected |  |
 | ii_refreshrate | Number of seconds between refreshes | Integer | Protected | Set with of_SetRefreshRate (default is 60) |
 | ii_timerwidth | Width of timer item | Integer | Protected | Set with of_SetTimerWidth (default is 400) |
 | ii_userwidth | Width of user memory item | Integer | Protected | Set with of_SetUserWidth (default is 270) |
@@ -88,8 +95,10 @@ N_cst_winsrv_statusbar includes instance variables:
 | il_memthreshold | Threshold under which a warning displays | Long | Protected | Set with of_SetMemThreshold |
 | il_timerinterval | In milliseconds | Long | Protected | Set with of_SetTimerInterval (default is 1000) |
 | il_userthreshold | Threshold under which a warning displays | Long | Protected | Set with of_SetUserThreshold |
+| ill_memthreshold |  | LongLong | Protected |  |
 | inv_dwobjects [ ] | Status bar items | n_cst_winsrv_statusbar attrib | Protected | Internal |
 | is_timerformat | Timer format | String | Protected | Set with of_SetTimerFormat (default is m-d-yy h:mm:ss) |
+| istr_dwobjects[ ] |  | n_cst_winsrv_statusbarattrib | Protected |  |
 | iw_statusbar | Status bar window | w_statusbar | Protected | Internal |
 | LEFTRIGHT | Constant set to 0 | Integer | Public | Use with of_SetBarFillStyle |
 | PCTCOMPLETE | Constant set to 1 | Integer | Public | Use with of_SetBarStyle |

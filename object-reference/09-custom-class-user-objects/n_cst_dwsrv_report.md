@@ -59,6 +59,7 @@ N_cst_dwsrv_report contains instance variables:
 | il_defaultbackcolor | Default background color | Long | Protected | Internal |
 | il_defaultcolor | Default color | Long | Protected | Internal |
 | inv_platform | Reference variable for platform services | n_cst_platform | Protected | Internal |
+| is_DefaultFontFace |  | String | Protected |  |
 | is_undo[ ] | Array containing changed or deleted DataWindow columns and text fields | String | Protected | Internal (used by of_ResetUndo and of_Undo) |
 
 ## Events

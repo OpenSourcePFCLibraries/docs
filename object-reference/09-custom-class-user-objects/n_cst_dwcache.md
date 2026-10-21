@@ -58,6 +58,11 @@ N_cst_dwcache includes instance variables:
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
 | DATAOBJECTDATA | Constant that indicates original data location and refresh functionality | String | Public | Internal |
+| EMPTY | Constant set to '' | String | Protected |  |
+| ics_dataobjectdata | Obsoleted in 6.0. | String | Protected |  |
+| ics_powerobject | Obsoleted in 6.0. | String | Protected |  |
+| ics_retrieve | Obsoleted in 6.0. | String | Protected |  |
+| istr_cachelist[ ] |  | n_cst_dwcacheattrib | Protected |  |
 | POWEROBJECT | Constant that indicates original data location and refresh functionality | String | Public | Internal |
 | RETRIEVE | Constant that indicates original data location and refresh functionality | String | Public | Internal |
 | inv_cachelist [ ] | Custom class user object containing cached data | n_cst_dwcache attrib | Protected | Internal |
@@ -71,6 +76,26 @@ N_cst_dwcache includes instance variables:
 N_cst_dwcache includes one precoded event:
 
 Destructor
+
+### Constructor
+
+**Description**
+
+DataWindow/DataStore caching.
+
+**Syntax**
+
+```
+instancename.EVENT Constructor ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_dwcache |
+
+**Return value**
+
+None.
 
 ### Destructor
 

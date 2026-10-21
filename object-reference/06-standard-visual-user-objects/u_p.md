@@ -27,6 +27,14 @@ Use this visual object in windows instead of the standard PowerBuilder Picture c
 - [u_phl](u_phl.md)
 - [u_plb](u_plb.md)
 
+## Instance variables
+
+U_p includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |
+
 ## Events
 
 U_p includes a precoded event script:

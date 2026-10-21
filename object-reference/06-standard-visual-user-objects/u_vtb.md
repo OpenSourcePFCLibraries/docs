@@ -27,6 +27,24 @@ U_vtb event scripts provide integration with PFC menus.
 
 u_htb
 
+## Instance variables
+
+U_vtb includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| CST_LINE_DOWN | Constant set to 2 | Integer | Public |
+| CST_LINE_UP | Constant set to 1 | Integer | Public |
+| CST_MOVED | Constant set to 5 | Integer | Public |
+| CST_PAGE_DOWN | Constant set to 4 | Integer | Public |
+| CST_PAGE_UP | Constant set to 3 | Integer | Public |
+| ib_IsObsolete |  | Boolean | Protected |
+| LP_MW_down | Constant set to 18023255 | Long | Public |
+| LP_MW_UP | Constant set to 18285400 | Long | Public |
+| WM_MOUSEWHEEL | Constant set to 522 | Integer | Public |
+| WP_MW_down | Constant set to 4287102976 | Long | Public |
+| WP_MW_UP | Constant set to 7864320 | Long | Public |
+
 ## Events
 
 U_vtb includes one precoded event script:
@@ -42,6 +60,148 @@ Updates the parent window so it can set MicroHelp.
 **Usage**
 
 This event calls the pfc_ControlGotFocus event in the parent.
+
+### lineDOWN
+
+**Description**
+
+Propagates event to pfc_positionchanged() event.
+
+**Syntax**
+
+```
+instancename.EVENT lineDOWN ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_vtb |
+
+**Return value**
+
+None.
+
+### lineUP
+
+**Description**
+
+Propagates event to pfc_positionchanged() event.
+
+**Syntax**
+
+```
+instancename.EVENT lineUP ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_vtb |
+
+**Return value**
+
+None.
+
+### Moved
+
+**Description**
+
+Propagates event to pfc_positionchanged() event.
+
+**Syntax**
+
+```
+instancename.EVENT Moved ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_vtb |
+
+**Return value**
+
+None.
+
+### Other
+
+**Description**
+
+Handle Mouse Wheel actions and propagates results to pfc_positionchanged() event with type = CST_MOVED.
+
+**Syntax**
+
+```
+instancename.EVENT Other ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_vtb |
+
+**Return value**
+
+None.
+
+### pageDOWN
+
+**Description**
+
+Propagates event to pfc_positionchanged() event.
+
+**Syntax**
+
+```
+instancename.EVENT pageDOWN ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_vtb |
+
+**Return value**
+
+None.
+
+### pageUP
+
+**Description**
+
+Propagates event to pfc_positionchanged() event.
+
+**Syntax**
+
+```
+instancename.EVENT pageUP ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_vtb |
+
+**Return value**
+
+None.
+
+### pfc_positionchanged
+
+**Description**
+
+No description is available.
+
+**Syntax**
+
+```
+instancename.EVENT pfc_positionchanged ( ai_type, ai_scrollpos )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_vtb |
+| *ai_type* | Integer. |
+| *ai_scrollpos* | Integer. |
+
+**Return value**
+
+None.
 
 ## Functions
 

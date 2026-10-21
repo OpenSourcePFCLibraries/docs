@@ -43,6 +43,7 @@ U_ddlb includes instance variables:
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
 | ib_autoselect | Indicates whether PFC selects text automatically when the control receives focus | Boolean | Protected | Set this to TRUE to enable autoselect (default is FALSE) |
+| ib_IsObsolete |  | Boolean | Protected |  |
 | ib_rmbmenu | Indicates whether the m_edit menu displays when the user presses the right mouse button | Boolean | Protected | Set this to FALSE to disable right mouse button support (default is TRUE) |
 | ib_search | Controls whether PFC automatically scrolls to matching entries as the user types | Boolean | Protected | Set this to TRUE to enable autoscroll (default is FALSE) |
 
@@ -212,8 +213,60 @@ This event executes when the user releases the right mouse button over a control
 
 U_ddlb includes precoded object functions:
 
+- of_additems
 - of_GetParentWindow
 - of_MessageBox
+
+### of_additems
+
+**Description**
+
+Add the specified list of items in append mode or not.
+
+**Syntax 1**
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_additems ( as_items, ab_append )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_ddlb |
+| *as_items* | String array. |
+| *ab_append* | Boolean. TRUE, append entries to the existing ones, FALSE, reset control's contents before adding specifeid entries. |
+
+**Return value**
+
+Integer. The number of added items, or -1, if an error occurs.
+
+**Syntax 2**
+
+Add the specified list of items in default append mode.
+
+Access: Public
+
+**Syntax**
+
+```
+instancename.of_additems ( as_items )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_ddlb |
+| *as_items* | String array. |
+
+**Return value**
+
+Integer. The number of added items, or -1, if an error occurs.
+
+**Usage**
+
+Call this method to add a list of items at once Call this method to add a list of items at once.
 
 ### of_GetParentWindow
 

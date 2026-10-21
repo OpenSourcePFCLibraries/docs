@@ -86,6 +86,22 @@ U_st_splitbar has instance variables:
 | TOPMOST | Constant set to 3 | Integer | Protected | Internal |
 | VERTICAL | Constant set to 1 | Integer | Public | Vertical |
 
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ABOVE_ANCHORED | Constant set to 7 | Integer | Public |
+| BELOW_ANCHORED | Constant set to 8 | Integer | Public |
+| ib_supported |  | Boolean | Protected |
+| ii_LeftTopPosition[ ] |  | Integer | Protected |
+| ii_rightbottombound |  | Integer | Protected |
+| ii_RightBottomPosition[ ] |  | Integer | Protected |
+| ii_XRounding |  | Integer | Protected |
+| ii_YRounding |  | Integer | Protected |
+| iwo_lefttop[ ] |  | WindowObject | Protected |
+| iwo_rightbottom[ ] |  | WindowObject | Protected |
+| LEFT_ANCHORED | Constant set to 5 | Integer | Public |
+| RIGHT_ANCHORED | Constant set to 6 | Integer | Public |
+| UNITIALIZED | Constant set to -32000 | Integer | Protected |
+
 ## Events
 
 U_st_splitbar includes precoded events:
@@ -146,8 +162,10 @@ U_st_splitbar contains precoded object functions:
 - of_GetInfo
 - of_GetMinObjectSize
 - of_GetVerticalPointer
+- of_IsSupported
 - of_LButtonUp
 - of_MouseMove
+- of_Move
 - of_Redraw
 - of_Register
 - of_SetBarColor
@@ -155,6 +173,8 @@ U_st_splitbar contains precoded object functions:
 - of_SetHorizontalPointer
 - of_SetMinObjectSize
 - of_SetVerticalPointer
+- of_unRegister
+- of_unRegister_all
 - of_UpdateObjectData
 
 ### of_GetBarColor
@@ -417,6 +437,30 @@ MessageBox("Splitbar", &
   "Vertical pointer is " + ls_pointer)
 ```
 
+### of_IsSupported
+
+**Description**
+
+Dtermines if object is running in a supported environment.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_IsSupported ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_st_splitbar |
+
+**Return value**
+
+Boolean. True if running in a supported environment.
+
 ### of_LButtonUp
 
 **Description**
@@ -497,6 +541,32 @@ IF NOT KeyDown(keyLeftButton!) THEN
 END IF
 of_MouseMove(flags, xpos, ypos)
 ```
+
+### of_Move
+
+**Description**
+
+Provides the ability to programmatically move a splitBar.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_Move ( al_newx, al_newy )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_st_splitbar |
+| *al_newx* | Long. New X postion. |
+| *al_newy* | Long. New Y postion. |
+
+**Return value**
+
+None.
 
 ### of_Redraw
 
@@ -808,6 +878,55 @@ this.of_Register(lv_1, RIGHT)
 this.of_SetBarColor(RGB(192,192,192))
 this.of_SetVerticalPointer("SizeWE!")
 ```
+
+### of_unRegister
+
+**Description**
+
+UnRegister an object currently registered.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_unRegister ( awo_object )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_st_splitbar |
+| *awo_object* | WindowObject. |
+
+**Return value**
+
+Integer. Returns 1 if it succeeds and -1 if an error occurs.
+
+### of_unRegister_all
+
+**Description**
+
+UnRegister all objects currently registered.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_unRegister_all ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_st_splitbar |
+
+**Return value**
+
+Integer. Returns 1 if it succeeds and -1 if an error occurs.
 
 ### of_UpdateObjectData
 

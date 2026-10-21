@@ -39,7 +39,32 @@ M_oc includes one instance variable:
 
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |  |
 | ioc_parent | OLE control displaying the popup menu. | OLEControl | Protected | Used to access the associated OLE control. |
+
+## Events
+
+M_oc includes these events:
+
+### pfc_isobsolete
+
+**Description**
+
+No description is available.
+
+**Syntax**
+
+```
+instancename.EVENT pfc_isobsolete ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of m_oc |
+
+**Return value**
+
+Boolean.
 
 ## Functions
 

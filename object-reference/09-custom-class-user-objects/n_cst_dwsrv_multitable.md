@@ -68,6 +68,8 @@ N_cst_dwsrv_multitable includes the following instance variable:
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
 | inv_newupdate [ ] (replaces istr_newupdate[ ] ) | Used to control multiple updates | n_cst_dwsrv_multitableattrib (n_cst_dssrv_multitableattrib for n_cst_dssrv_multitable) | Protected | Internal |
+| inv_newupdate[ ] |  | n_cst_dwsrv_multitableattrib | Protected |  |
+| istr_newupdate[ ] |  | n_cst_dwsrv_multitableattrib | Protected |  |
 
 ## Functions
 

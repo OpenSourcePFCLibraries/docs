@@ -47,6 +47,7 @@ N_cst_lvsrv includes instance variables:
 
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
+| is_delimiter |  | String | Protected |  |
 | is_displayitem | Controls message text displayed for a single row | String | Protected | Call of_SetDisplayItem and of_GetDisplayItem to access |
 | is_displayunits | Controls message text displayed for multiple rows | String | Protected | Call of_SetDisplayUnits and of_GetDisplayUnits to access |
 | ilv_requestor | ListView control that owns the n_cst_lvsrv instance | u_lvs | Protected | Used to access and control the associated ListView control |
@@ -57,8 +58,10 @@ N_cst_lvsrv includes precoded functions:
 
 - of_FindNext
 - of_FindSelected
+- of_GetDelimiter
 - of_GetDisplayItem
 - of_GetDisplayUnits
+- of_SetDelimiter
 - of_SetDisplayItem
 - of_SetDisplayUnits
 - of_SetRequestor
@@ -160,6 +163,30 @@ lv_list.inv_base.of_FindSelected(0,  &
    DirectionDown!)
 ```
 
+### of_GetDelimiter
+
+**Description**
+
+Gets the delimiter character used to separate items in the data attribute of the listview item.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_GetDelimiter ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_lvsrv |
+
+**Return value**
+
+String.
+
 ### of_GetDisplayItem
 
 **Description**
@@ -249,6 +276,31 @@ ls_units = lv_1.inv_base.of_GetDisplayUnits( )
 MessageBox("ListView", "Unit label is: " &
    + ls_units)
 ```
+
+### of_SetDelimiter
+
+**Description**
+
+Sets delimiter used to differentiate the keys placed in the data attribute of the listview item.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_SetDelimiter ( as_delimiter )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_lvsrv |
+| *as_delimiter* | String. The delimiter used to differentiate the keys of the compound key. |
+
+**Return value**
+
+Integer. SUCCESS = 1 ERROR = -1.
 
 ### of_SetDisplayItem
 

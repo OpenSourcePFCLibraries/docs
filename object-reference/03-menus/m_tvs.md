@@ -48,7 +48,32 @@ M_tvs includes one instance variable:
 
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |  |
 | itv_parent | TreeView control displaying the popup menu. | TreeView | Protected | Used to access the associated TreeView control |
+
+## Events
+
+M_tvs includes these events:
+
+### pfc_isobsolete
+
+**Description**
+
+No description is available.
+
+**Syntax**
+
+```
+instancename.EVENT pfc_isobsolete ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of m_tvs |
+
+**Return value**
+
+Boolean.
 
 ## Functions
 

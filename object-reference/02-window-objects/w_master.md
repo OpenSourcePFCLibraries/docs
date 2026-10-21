@@ -60,6 +60,7 @@ W_master includes instance variables:
 | ib_alwaysvalidate | Controls whether the save process includes all objects in the validation process | Boolean | Protected | Set with of_SetAlwaysValidate (default is FALSE) |
 | ib_closestatus | Indicates whether the window is closing | Boolean | Protected | Internal |
 | ib_disableclosequery | Indicates whether CloseQuery processing is enabled | Boolean | Protected | Internal |
+| ib_IsObsolete |  | Boolean | Protected |  |
 | ib_isupdateable | Indicates whether the window can be updated | Boolean | Protected | Set with of_SetUpdateable (default is TRUE) |
 | ib_savestatus | Controls whether message display during the save process | Boolean | Protected | Internal |
 | idw_active | Current DataWindow | U_dw | Protected | Internal |
@@ -68,10 +69,12 @@ W_master includes instance variables:
 | inv_luw | Reference variable for logical unit of work service | n_cst_luw | Protected | Set with of_SetLogicalUnitOfWork |
 | inv_preference | Reference variable for window preference service | n_cst_winsrv_preference | Public | Set with of_SetPreference |
 | inv_resize | Reference variable for resize service | n_cst_resize | Public | Set with of_SetResize |
+| inv_style |  | n_cst_winsrv_style | Public |  |
 | ipo_pendingupdates[ ] | Default list of objects to be updated | PowerObject | Protected | Internal |
 | ipo_updateobjects[ ] | Customized list of objects to be updated | PowerObject | Protected | Internal |
 | ipo_tempupdateobjects[ ] | One-time list of objects to be updated | PowerObject | Protected | Internal |
 | ipo_updaterequestor | Owner of the save process | PowerObject | Protected | Internal |
+| is_dberrormsg | Obsoleted in 6.0. | String | Protected |  |
 | NO_ACTION | Constant set to 0 | Integer | Public | Internal |
 | PREVENT_ACTION | Constant set to 0 | Integer | Public | Internal |
 | SUCCESS | Constant set to 1 | Integer | Public | Internal |
@@ -103,10 +106,12 @@ W_master includes precoded events:
 - pfc_Open
 - pfc_PageSetup
 - pfc_PostOpen
+- pfc_postprint
 - pfc_PostUpdate
 - pfc_PreClose
 - pfc_PreMRUSave
 - pfc_PreOpen
+- pfc_preprint
 - pfc_PreUpdate
 - pfc_Print
 - pfc_PrintImmediate
@@ -614,6 +619,26 @@ ELSE
 END IF
 ```
 
+### pfc_postprint
+
+**Description**
+
+No description is available.
+
+**Syntax**
+
+```
+instancename.EVENT pfc_postprint ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of w_master |
+
+**Return value**
+
+None.
+
 ### pfc_PostUpdate
 
 **Description**
@@ -744,6 +769,26 @@ IF ll_return <> 0 THEN
   MessageBox("PBApp", "Connect error")
 END IF
 ```
+
+### pfc_preprint
+
+**Description**
+
+No description is available.
+
+**Syntax**
+
+```
+instancename.EVENT pfc_preprint ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of w_master |
+
+**Return value**
+
+None.
 
 ### pfc_PreUpdate
 
@@ -1124,6 +1169,7 @@ W_master includes precoded object functions:
 - of_SetLogicalUnitOfWork
 - of_SetPreference
 - of_SetResize
+- of_SetStyle
 - of_SetUpdateable
 - of_SetUpdateObjects
 - of_SetUpdateRequestor
@@ -1787,6 +1833,31 @@ This example calls the of_SetResize function:
 ```
 this.of_SetResize(TRUE)
 ```
+
+### of_SetStyle
+
+**Description**
+
+Starts or stops the window style service.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_SetStyle ( ab_switch )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of w_master |
+| *ab_switch* | Boolean. starts/stops the window style service. |
+
+**Return value**
+
+Integer. Returns 1 = Successful operation, 0 = No action necessary, -1 = An error was encountered.
 
 ### of_SetUpdateable
 

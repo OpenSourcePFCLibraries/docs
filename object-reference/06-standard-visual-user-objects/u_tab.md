@@ -32,7 +32,10 @@ U_tab includes instance variables:
 
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
+| CONTINUE_ACTION | Constant set to 1 | Integer | Public |  |
+| FAILURE | Constant set to -1 | Integer | Public |  |
 | ib_alwaysvalidate | Controls whether the save process includes all objects in the validation process | Boolean | Protected | Set with of_SetAlwaysValidate (default is FALSE) |
+| ib_IsObsolete |  | Boolean | Protected |  |
 | ib_isupdateable | Indicates whether the Tab control can be updated | Boolean | Protected | Set with of_SetUpdateable (default is FALSE) |
 | inv_luw | Reference variable for logical unit of work service | n_cst_luw | Protected | Implements the update process |
 | inv_resize | Reference variable for the resize service | n_cst_resize | Public | Use in dot notation to access n_cst_resize functions and attributes |
@@ -40,11 +43,14 @@ U_tab includes instance variables:
 | ipo_updateobjects[ ] | Objects to be updated | PowerObject | Protected | Internal |
 | ipo_updaterequestor | Owner of the save process | PowerObject | Protected | Internal |
 | NO_ACTION | Constant set to 0 | Integer | Public | Internal |
+| PREVENT_ACTION | Constant set to 0 | Integer | Public |  |
+| SUCCESS | Constant set to 1 | Integer | Public |  |
 
 ## Events
 
 U_tab includes a precoded event:
 
+- Destructor
 - pfc_AcceptText
 - pfc_PostUpdate
 - pfc_Update
@@ -52,6 +58,26 @@ U_tab includes a precoded event:
 - pfc_UpdatesPending
 - pfc_Validation
 - Resize
+
+### Destructor
+
+**Description**
+
+Perform cleanup.
+
+**Syntax**
+
+```
+instancename.EVENT Destructor ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_tab |
+
+**Return value**
+
+None.
 
 ### pfc_AcceptText
 

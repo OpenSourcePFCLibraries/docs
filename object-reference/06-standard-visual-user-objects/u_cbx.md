@@ -26,6 +26,14 @@ Use this visual object in windows instead of the standard PowerBuilder CheckBox.
 - [m_master](../03-menus/m_master.md)
 - [w_master](../02-window-objects/w_master.md)
 
+## Instance variables
+
+U_cbx includes instance variables:
+
+| Instance variable | Description | Data type | Access |
+| --- | --- | --- | --- |
+| ib_IsObsolete |  | Boolean | Protected |
+
 ## Events
 
 U_cbx includes a precoded event script:
