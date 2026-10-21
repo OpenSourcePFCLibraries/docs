@@ -1,0 +1,59 @@
+# Global Structures and Structure Objects
+
+**About this chapter**
+
+This chapter describes the global structures and structure objects in the PowerBuilder Foundation Class Library (PFC).
+
+Structure objects are autoinstantiated custom class user objects that consist solely of instance variables. These objects provide all the functionality of global structures and they also allow you to extend them by adding instance variables, events, and object functions.
+
+**Contents**
+
+The global structures and structure objects are listed alphabetically.
+
+## In this chapter
+
+- [n_cst_aboutattrib](n_cst_aboutattrib.md)
+- [n_cst_baseattrib](n_cst_baseattrib.md)
+- [n_cst_calculatorattrib](n_cst_calculatorattrib.md)
+- [n_cst_calendarattrib](n_cst_calendarattrib.md)
+- [n_cst_columnattrib](n_cst_columnattrib.md)
+- [n_cst_dberrorattrib](n_cst_dberrorattrib.md)
+- [n_cst_dirattrib](n_cst_dirattrib.md)
+- [n_cst_dssrv_multitableattrib](n_cst_dssrv_multitableattrib.md)
+- [n_cst_dwcacheattrib](n_cst_dwcacheattrib.md)
+- [n_cst_dwobjectattrib](n_cst_dwobjectattrib.md)
+- [n_cst_dwpropertyattrib](n_cst_dwpropertyattrib.md)
+- [n_cst_dwsrv_dropdownsearchattrib](n_cst_dwsrv_dropdownsearchattrib.md)
+- [n_cst_dwsrv_multitableattrib](n_cst_dwsrv_multitableattrib.md)
+- [n_cst_dwsrv_querymodeattrib](n_cst_dwsrv_querymodeattrib.md)
+- [n_cst_dwsrv_resizeattrib](n_cst_dwsrv_resizeattrib.md)
+- [n_cst_errorattrib](n_cst_errorattrib.md)
+- [n_cst_filterattrib](n_cst_filterattrib.md)
+- [n_cst_findattrib](n_cst_findattrib.md)
+- [n_cst_infoattrib](n_cst_infoattrib.md)
+- [n_cst_itemattrib](n_cst_itemattrib.md)
+- [n_cst_linkageattrib](n_cst_linkageattrib.md)
+- [n_cst_logonattrib](n_cst_logonattrib.md)
+- [n_cst_lvsrvattrib](n_cst_lvsrvattrib.md)
+- [n_cst_mruattrib](n_cst_mruattrib.md)
+- [n_cst_propertyattrib](n_cst_propertyattrib.md)
+- [n_cst_resizeattrib](n_cst_resizeattrib.md)
+- [n_cst_restorerowattrib](n_cst_restorerowattrib.md)
+- [n_cst_returnattrib](n_cst_returnattrib.md)
+- [n_cst_selectionattrib](n_cst_selectionattrib.md)
+- [n_cst_sortattrib](n_cst_sortattrib.md)
+- [n_cst_splashattrib](n_cst_splashattrib.md)
+- [n_cst_sqlattrib](n_cst_sqlattrib.md)
+- [n_cst_textstyleattrib](n_cst_textstyleattrib.md)
+- [n_cst_tmgregisterattrib](n_cst_tmgregisterattrib.md)
+- [n_cst_toolbarattrib](n_cst_toolbarattrib.md)
+- [n_cst_trregistration](n_cst_trregistration.md)
+- [n_cst_tvattrib](n_cst_tvattrib.md)
+- [n_cst_tvsrvattrib](n_cst_tvsrvattrib.md)
+- [n_cst_winsrv_sheetmanagerattrib](n_cst_winsrv_sheetmanagerattrib.md)
+- [n_cst_winsrv_statusbarattrib](n_cst_winsrv_statusbarattrib.md)
+- [n_cst_zoomattrib](n_cst_zoomattrib.md)
+- [s_pagesetupattrib](s_pagesetupattrib.md)
+- [s_paperattrib](s_paperattrib.md)
+- [s_printdlgattrib](s_printdlgattrib.md)
+- [s_svalue](s_svalue.md)
