@@ -270,6 +270,15 @@ You use the security administration utility to define users and groups, as well 
 2. Click OK.
 3. Select File>Save from the menu bar.
 
+**When group membership comes from an identity provider (PFC 2025 and later)** If your applications take each user's groups from an identity provider, such as an OpenID Connect server, instead of from the security database (see "Security service" in Chapter 4), set this option in the `[Options]` section of `pfcsecad.ini`:
+
+```
+[Options]
+ExternalGroupMembership=1
+```
+
+The Users and Groups window then shows users and groups without their memberships, and you can't drag users onto groups. You still define the groups, their priorities, and the settings for users and groups. The report by user shows only the user's own settings, not the settings of groups. This option is available in PFC 2025 and later; it is not available in the 2019 and 2022 versions of PFC.
+
 **To modify a previously defined user or group:**
 
 1. Right-click on the item and select Edit Item.

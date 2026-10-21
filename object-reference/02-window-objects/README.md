@@ -26,6 +26,7 @@ The windows are listed in alphabetical order. The information for each window in
 - [w_main](w_main.md)
 - [w_master](w_master.md)
 - [w_message](w_message.md)
+- [w_openid_logon](w_openid_logon.md) (PFC 2025 and later)
 - [w_pagesetup](w_pagesetup.md)
 - [w_popup](w_popup.md)
 - [w_replace](w_replace.md)

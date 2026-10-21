@@ -68,6 +68,12 @@ To use n_cst_security in an application:
    END IF
    ```
 
+**PFC 2025 and later** These features are available in PFC 2025 and later, and not in the 2019 and 2022 versions of PFC:
+
+- Group membership from an identity provider: see the of_InitSecurity syntax that takes an array of groups, and of_GetGroups and of_IsExternalGroups.
+- Keeping restrictions in place after application code enables or shows controls: see of_ApplyRestrictions, of_IsEnabledAllowed, and of_IsVisibleAllowed.
+- Controls of types the service doesn't list are secured through their Visible property instead of ending the application: see of_SetControlStatus.
+
 **See also**
 
 n_cst_appmanager
@@ -81,8 +87,10 @@ N_cst_security includes instance variables:
 | DISABLE | Constant set to 'D' | String | Public |
 | ENABLE | Constant set to 'E' | String | Public |
 | ib_initscanning |  | Boolean | Protected |
+| ib_externalgroups | True when the user's groups were passed to of_InitSecurity (PFC 2025 and later) | Boolean | Protected |
 | ib_initsecurity |  | Boolean | Protected |
 | ib_precache |  | Boolean | Protected |
+| ib_restrictonly | True while of_ApplyRestrictions runs (PFC 2025 and later) | Boolean | Protected |
 | ids_apps |  | n_ds | Protected |
 | ids_groups |  | n_ds | Protected |
 | ids_info |  | n_ds | Protected |
@@ -97,9 +105,11 @@ N_cst_security includes instance variables:
 | is_currfilter |  | String | Protected |
 | is_defaultgroup |  | String | Protected |
 | is_disabledborder |  | String | Protected |
+| is_groups[ ] | Groups whose settings apply to the user (PFC 2025 and later) | String | Protected |
 | is_enabledborder |  | String | Protected |
 | is_keyword |  | String | Protected |
 | is_liblist[ ] |  | String | Protected |
+| is_loadedobjects | Objects whose settings have been retrieved (PFC 2025 and later) | String | Protected |
 | is_separator |  | String | Protected |
 | is_userID |  | String | Protected |
 | itr_trans |  | n_tr | Protected |
@@ -154,18 +164,28 @@ None.
 N_cst_security includes many precoded object functions. The functions you call from an application are documented here:
 
 - of_addobject
+- of_ApplyRestrictions (PFC 2025 and later)
 - of_FindEntry
+- of_GetControlName (PFC 2025 and later)
+- of_GetGroups (PFC 2025 and later)
 - of_GetPermissions
+- of_GetStatus (PFC 2025 and later)
+- of_GetSystemType (PFC 2025 and later)
 - of_GetTag
 - of_GetType
 - of_InitScanProcess
 - of_InitSecurity
+- of_IsA (PFC 2025 and later)
+- of_IsEnabledAllowed (PFC 2025 and later)
+- of_IsExternalGroups (PFC 2025 and later)
+- of_IsVisibleAllowed (PFC 2025 and later)
 - of_LoadSecurity
 - of_ScanControlArray
 - of_ScanDatawindow
 - of_ScanWindow
 - of_SetControlArray
 - of_SetControlStatus
+- of_SetControlStatus_Generic (PFC 2025 and later)
 - of_SetDataWindowColumns
 - of_SetMenu
 - of_SetMenuStatus
@@ -201,6 +221,87 @@ instancename.of_addobject ( as_app, as_winname, as_object, as_objecttype, as_des
 
 Integer. integer; Return code from import string.
 
+### of_ApplyRestrictions
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Applies the Disable and Invisible settings for the user again, without enabling or showing anything.
+
+**Access**
+
+Public
+
+**Syntax 1** For a window, its controls, and its menu
+
+```
+application.instancename.of_ApplyRestrictions ( window )
+```
+
+| Argument | Description |
+| --- | --- |
+| *application* | Global variable of type n_cst_appmanager (this must be gnv_app) |
+| *instancename* | Instance name of n_cst_security (the n_cst_appmanager default for this is inv_security) |
+| *window* | Window to apply the restrictions to |
+
+**Return value**
+
+Boolean. Returns TRUE if there are settings for the window, FALSE otherwise.
+
+**Syntax 2** For an object secured on its own (a user object, tab, menu, or other control)
+
+```
+application.instancename.of_ApplyRestrictions ( object )
+```
+
+| Argument | Description |
+| --- | --- |
+| *application* | Global variable of type n_cst_appmanager (this must be gnv_app) |
+| *instancename* | Instance name of n_cst_security |
+| *object* | GraphicObject to apply the restrictions to |
+
+**Return value**
+
+Boolean. Returns TRUE if there are settings for the object, FALSE otherwise.
+
+**Syntax 3** For one menu
+
+```
+application.instancename.of_ApplyRestrictions ( window, menu )
+```
+
+| Argument | Description |
+| --- | --- |
+| *application* | Global variable of type n_cst_appmanager (this must be gnv_app) |
+| *instancename* | Instance name of n_cst_security |
+| *window* | Window whose settings apply (the window the menu belongs to) |
+| *menu* | Menu or menu item to apply the restrictions to, together with its items |
+
+**Return value**
+
+Integer. Returns the number of menu items set, 0 if there are no settings, and -1 if an argument is not valid.
+
+**Usage**
+
+of_SetSecurity applies the settings when you call it, and code that later sets a control's Enabled or Visible property can undo them. Call of_ApplyRestrictions after such code to apply the Disable and Invisible settings again. Unlike calling of_SetSecurity again, it doesn't enable or show controls whose setting is Enable, so your application's own state is kept.
+
+Use Syntax 3 after code that enables or shows menu items, so that the whole window isn't processed. As with of_SetSecurity, the settings stored for the menu itself are used when the window has none for it. PFC's Window menu (pfc_m_master) and MRU service call this syntax after they enable or show items.
+
+**Examples**
+
+This example enables controls according to the state of the window, then applies the user's restrictions again:
+
+```
+cb_save.Enabled = lb_changed
+cb_delete.Enabled = (dw_1.RowCount() > 0)
+gnv_app.inv_security.of_ApplyRestrictions(this)
+```
+
+**See also**
+
+of_IsEnabledAllowed, of_IsVisibleAllowed, of_SetSecurity
+
 ### of_FindEntry
 
 **Description**
@@ -227,6 +328,67 @@ instancename.of_FindEntry ( as_win, as_object )
 
 Boolean. boolean (true if found otherwise false)
 
+### of_GetControlName
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Gets the window a control is on and the control's name as the security service names it.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_GetControlName ( control, window, name )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_security |
+| *control* | DragObject. The control |
+| *window* | Window, passed by reference. The window the control is on |
+| *name* | String, passed by reference. The names of the user objects, tabs, and tab pages the control is inside, followed by the control's own name, separated by periods (for example, `tab_1.tabpage_1.cb_save`) |
+
+**Return value**
+
+Integer. Returns 1 if the function succeeds and -1 if the control is not on a window.
+
+### of_GetGroups
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Gets the groups whose settings apply to the current user.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+application.instancename.of_GetGroups ( groups )
+```
+
+| Argument | Description |
+| --- | --- |
+| *application* | Global variable of type n_cst_appmanager (this must be gnv_app) |
+| *instancename* | Instance name of n_cst_security |
+| *groups* | String array, passed by reference. The group names |
+
+**Return value**
+
+Integer. Returns the number of groups.
+
+**Usage**
+
+Returns the groups determined by of_InitSecurity, whether they came from the security database or from an identity provider. Use of_IsExternalGroups to find out which.
+
 ### of_GetPermissions
 
 **Description**
@@ -252,6 +414,69 @@ instancename.of_GetPermissions ( as_object, as_control )
 **Return value**
 
 String. ENABLED, DISABLED, NOTSET, INVISIBLE '!' = Error.
+
+### of_GetStatus
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Gets the setting that applies to the user for a control, loading the window's settings if necessary.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_GetStatus ( window, control )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_security |
+| *window* | String. Name of the window (or object) |
+| *control* | String. Name of the control |
+
+**Return value**
+
+String. Returns ENABLE, DISABLE, or INVISIBLE, or NOTSET if there is no setting, of_InitSecurity hasn't been called, or the lookup fails.
+
+**Usage**
+
+Used by of_IsEnabledAllowed and of_IsVisibleAllowed. The settings of a window are retrieved from the database only once.
+
+### of_GetSystemType
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Gets the name of the PowerBuilder system type an object is or inherits from.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_GetSystemType ( object )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_security |
+| *object* | PowerObject |
+
+**Return value**
+
+String. The system type name in lowercase (for example, `commandbutton` for a u_cb), or an empty string if it can't be determined.
+
+**Usage**
+
+Identifies control types through their class definition, for example to name a control type that of_SetControlStatus doesn't list.
 
 ### of_GetTag
 
@@ -392,6 +617,217 @@ li_return = this.inv_security.of_InitSecurity &
 ...
 ```
 
+**Syntax for group membership from an identity provider**
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+```
+application.instancename.of_InitSecurity ( transaction, appname, user,
+groups[ ], defaultgroup {, precache } )
+```
+
+| Argument | Description |
+| --- | --- |
+| *application* | Global variable of type n_cst_appmanager (this must be gnv_app) |
+| *instancename* | Instance name of n_cst_security (the n_cst_appmanager default is inv_security) |
+| *transaction* | N_tr variable for the security database connection. You must connect to the database before calling this function |
+| *appname* | String specifying the application name, as defined in the security database |
+| *user* | String specifying the user ID. The user doesn't need to be defined in the security database |
+| *groups[ ]* | String array of the groups the user belongs to, as reported by an identity provider (for example, the groups claim of an OpenID Connect provider). Names are trimmed and converted to lowercase; duplicates and groups that aren't defined in the security database are ignored |
+| *defaultgroup* | String specifying the group to use if none of *groups* is defined in the security database |
+| *precache* (optional) | Boolean specifying whether to preload all security settings for the user (the default is FALSE) |
+
+**Return value**
+
+Integer. Returns values as follows:
+
+- **1** Success
+- **-1** Transaction not connected, or error retrieving settings
+- **-2** Application not in database
+- **-4** None of the groups is defined and the specified default group does not exist
+- **-5** None of the groups is defined and no default group was specified
+- **-6** Retrieval error
+
+**Usage**
+
+Use this syntax when users sign in through an identity provider, so that the provider is the only source of group membership: the security_groupings table isn't read. Group definitions (name and priority) and the settings for windows and controls still come from the security database. Settings for the user ID itself also still apply.
+
+Group names in the security database are limited to 16 characters, so you may need to map longer identity provider group names to PFC group names before calling this function. The n_cst_appmanager of_OpenIDLogonDlg function signs a user in with OpenID Connect and returns the groups. Use of_GetGroups and of_IsExternalGroups to check the result.
+
+**Examples**
+
+This example signs the user in with OpenID Connect and initializes security with the groups the provider reports:
+
+```
+n_cst_openidattrib lnv_openid
+
+IF this.of_OpenIDLogonDlg(lnv_openid) = 1 THEN
+   li_return = this.inv_security.of_InitSecurity &
+      (itr_sec, "EISAPP", this.of_GetUserID(), &
+       lnv_openid.is_groups, "")
+END IF
+```
+
+### of_IsA
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Determines whether an object is of a PowerBuilder system type or inherits from it.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_IsA ( object, systemtype )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_security |
+| *object* | PowerObject |
+| *systemtype* | String. Name of a PowerBuilder system type, for example `dragobject` |
+
+**Return value**
+
+Boolean. Returns TRUE if the object is of that type or inherits from it, FALSE otherwise.
+
+### of_IsEnabledAllowed
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Determines whether the user's settings allow a control to be enabled.
+
+**Access**
+
+Public
+
+**Syntax 1** For a window and control name
+
+```
+application.instancename.of_IsEnabledAllowed ( window, control )
+```
+
+| Argument | Description |
+| --- | --- |
+| *application* | Global variable of type n_cst_appmanager (this must be gnv_app) |
+| *instancename* | Instance name of n_cst_security (the n_cst_appmanager default for this is inv_security) |
+| *window* | String. Name of the window (or object), as in the security database |
+| *control* | String. Name of the control, as in the security database (for example, `cb_save` or `uo_1.cb_save`) |
+
+**Syntax 2** For a control
+
+```
+application.instancename.of_IsEnabledAllowed ( control )
+```
+
+| Argument | Description |
+| --- | --- |
+| *application* | Global variable of type n_cst_appmanager (this must be gnv_app) |
+| *instancename* | Instance name of n_cst_security |
+| *control* | DragObject. The control, directly on a window or inside user objects and tabs. The window and the control's name are worked out from it |
+
+**Return value**
+
+Boolean. Returns FALSE if the user's settings disable or hide the control, TRUE otherwise. Controls without settings, and all controls before of_InitSecurity is called, are allowed.
+
+**Usage**
+
+Use this function in code that enables controls after of_SetSecurity has been called, so that the code doesn't undo the user's settings. To apply the settings again after several controls have changed, use of_ApplyRestrictions.
+
+**Examples**
+
+```
+cb_save.Enabled = lb_changed AND &
+   gnv_app.inv_security.of_IsEnabledAllowed(cb_save)
+```
+
+**See also**
+
+of_ApplyRestrictions, of_IsVisibleAllowed
+
+### of_IsExternalGroups
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Reports where the current user's group membership came from.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+application.instancename.of_IsExternalGroups ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *application* | Global variable of type n_cst_appmanager (this must be gnv_app) |
+| *instancename* | Instance name of n_cst_security |
+
+**Return value**
+
+Boolean. Returns TRUE if the groups were passed to of_InitSecurity (from an identity provider), FALSE if they were read from the security database.
+
+### of_IsVisibleAllowed
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Determines whether the user's settings allow a control to be shown.
+
+**Access**
+
+Public
+
+**Syntax 1** For a window and control name
+
+```
+application.instancename.of_IsVisibleAllowed ( window, control )
+```
+
+| Argument | Description |
+| --- | --- |
+| *application* | Global variable of type n_cst_appmanager (this must be gnv_app) |
+| *instancename* | Instance name of n_cst_security |
+| *window* | String. Name of the window (or object), as in the security database |
+| *control* | String. Name of the control, as in the security database |
+
+**Syntax 2** For a control
+
+```
+application.instancename.of_IsVisibleAllowed ( control )
+```
+
+| Argument | Description |
+| --- | --- |
+| *application* | Global variable of type n_cst_appmanager (this must be gnv_app) |
+| *instancename* | Instance name of n_cst_security |
+| *control* | DragObject. The control, directly on a window or inside user objects and tabs |
+
+**Return value**
+
+Boolean. Returns FALSE if the user's settings hide the control, TRUE otherwise. Controls without settings, and all controls before of_InitSecurity is called, are allowed.
+
+**Usage**
+
+Use this function in code that shows controls after of_SetSecurity has been called.
+
+**See also**
+
+of_ApplyRestrictions, of_IsEnabledAllowed
+
 ### of_LoadSecurity
 
 **Description**
@@ -529,6 +965,8 @@ Integer. The number of controls set 0 = Nothing set.
 
 Figure out the kind of control that was passed and then set it's status as needed.
 
+**PFC 2025 and later** The status bar and the MDI tabbed bar are never secured, like the MDI client. A control of a type this function doesn't list (for example, one added in a later PowerBuilder release) is passed to of_SetControlStatus_Generic, which secures it through its Visible property. In the 2019 and 2022 versions of PFC, such a control displays a message and ends the application.
+
 **Syntax 1**
 
 Access: Protected
@@ -571,6 +1009,39 @@ instancename.of_SetControlStatus ( ago_item, as_window, as_object, as_itemname )
 **Return value**
 
 Integer. The number of controls set 0 = Nothing was set -1 = an error occurred.
+
+### of_SetControlStatus_Generic
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Sets the status of a control whose type of_SetControlStatus doesn't list, for example a control type added in a later PowerBuilder release.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_SetControlStatus_Generic ( control, window, itemname )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_security |
+| *control* | GraphicObject. The control |
+| *window* | String. Name of the window the control is on |
+| *itemname* | String. Name of the control in the security database |
+
+**Return value**
+
+Integer. Returns the number of controls set (0 or 1).
+
+**Usage**
+
+Only the Visible property is common to all controls, so a setting of Enable shows the control, and Invisible or Disable hide it: the control can't be disabled without knowing its type. When the debug service is enabled, the control is reported in the debug log.
 
 ### of_SetDataWindowColumns
 
@@ -679,6 +1150,8 @@ Boolean. Returns TRUE if the function succeeds and FALSE if an error occurs.
 **Usage**
 
 Call this function in a window Open or pfc_PreOpen event to apply security to a window, hiding and/or disabling controls, as specified for the user in the security database.
+
+The settings are applied when you call this function. Code that later sets a control's Enabled or Visible property can undo them. Calling this function again also enables and shows controls whose setting is Enable; to apply only the Disable and Invisible settings again, use of_ApplyRestrictions (PFC 2025 and later).
 
 **Examples**
 

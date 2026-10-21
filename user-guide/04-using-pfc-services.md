@@ -469,6 +469,39 @@ To use the PFC security system, you must first define users and groups, associat
 
 **Other places to call of_SetSecurity** You might also call the n_cst_security of_SetSecurity function from the Constructor event of a DataWindow, visual user object, or menu for which you want to implement security.
 
+The rest of this section describes features that are available in PFC 2025 and later. They are not available in the 2019 and 2022 versions of PFC.
+
+**Group membership from an identity provider (PFC 2025 and later)** By default, of_InitSecurity reads the groups a user belongs to from the security database. If users sign in through an identity provider, such as an OpenID Connect server, you can pass the groups the provider reports instead, using the of_InitSecurity syntax that takes an array of group names. The identity provider is then the only source of group membership: the user doesn't need to be defined in the security database, and groups that aren't defined there are ignored. Group definitions (name and priority) and the settings for windows and controls still come from the security database.
+
+```
+string ls_groups[]
+// ls_groups holds the user's groups from the identity provider,
+// mapped to the group names in the security database
+this.inv_security.of_InitSecurity &
+   (itr_sec, "EISAPP", gnv_app.of_GetUserID(), ls_groups, "")
+```
+
+Group names in the security database are limited to 16 characters, so you may need to map longer identity provider group names to PFC group names. To sign users in with OpenID Connect and get their groups, use the n_cst_appmanager of_OpenIDLogonDlg function, which opens w_openid_logon (see the *PFC Object Reference*). When membership comes from an identity provider, set the Security Administrator's ExternalGroupMembership option, as described in Chapter 7, "PFC Utilities".
+
+**Keeping restrictions in place (PFC 2025 and later)** of_SetSecurity applies the settings when you call it. Code that later sets a control's Enabled or Visible property, for example to enable a Save button when data changes, can undo them. There are two ways to prevent that:
+
+- Before enabling or showing a control, check whether the user's settings allow it, with of_IsEnabledAllowed or of_IsVisibleAllowed:
+
+  ```
+  cb_save.Enabled = lb_changed AND &
+     gnv_app.inv_security.of_IsEnabledAllowed(cb_save)
+  ```
+
+- After code changes several controls, call of_ApplyRestrictions. It applies the Disable and Invisible settings again, but never enables or shows anything. (Calling of_SetSecurity again is not the same: it also enables and shows controls whose setting is Enable, undoing your application's own state.)
+
+  ```
+  gnv_app.inv_security.of_ApplyRestrictions(this)
+  ```
+
+PFC's Window menu and MRU service call of_ApplyRestrictions themselves after they enable or show menu items.
+
+**Control types PFC doesn't list (PFC 2025 and later)** The security service secures controls of types it doesn't recognize, such as types added in a later PowerBuilder release, through their Visible property only: a setting of Enable shows the control, and Invisible or Disable hide it, because the service can't disable a control without knowing its type. In earlier versions, PFC displays a message and ends the application when it finds such a control.
+
 ### Transaction registration service
 
 **Overview**

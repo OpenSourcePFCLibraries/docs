@@ -37,6 +37,7 @@ The global structures and structure objects are listed alphabetically.
 - [n_cst_logonattrib](n_cst_logonattrib.md)
 - [n_cst_lvsrvattrib](n_cst_lvsrvattrib.md)
 - [n_cst_mruattrib](n_cst_mruattrib.md)
+- [n_cst_openidattrib](n_cst_openidattrib.md) (PFC 2025 and later)
 - [n_cst_platformattrib](n_cst_platformattrib.md)
 - [n_cst_propertyattrib](n_cst_propertyattrib.md)
 - [n_cst_resizeattrib](n_cst_resizeattrib.md)

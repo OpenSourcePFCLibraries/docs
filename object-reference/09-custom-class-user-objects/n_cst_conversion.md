@@ -2433,6 +2433,10 @@ instancename.of_object ( as_source, ae_object )
 
 Integer. 1 if a successful conversion was made. If as_source value is NULL, function returns -1 If as_source value is Invalid, function returns -1.
 
+**Usage**
+
+In PFC 2025 and later, of_object and the of_String syntax for object values handle every object type in PowerBuilder 2025, including types such as TabbedBar, StatusBar, SMTPClient, and the PDF builder classes. In the 2019 and 2022 versions of PFC, some newer types are not handled and of_object returns -1 for them.
+
 ### of_olefunctioncalltype
 
 **Description**

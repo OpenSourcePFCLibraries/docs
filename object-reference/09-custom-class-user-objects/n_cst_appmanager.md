@@ -545,6 +545,7 @@ N_cst_appmanager includes precoded object functions:
 - of_GetVersion
 - of_IsRegistryAvailable
 - of_LogonDlg
+- of_OpenIDLogonDlg (PFC 2025 and later)
 - of_SetAppIniFile
 - of_SetAppKey
 - of_SetAppPreference
@@ -1106,6 +1107,93 @@ IF of_LogonDlg() = 0 THEN
    this.Event pfc_Exit()
 END IF
 ```
+
+### of_OpenIDLogonDlg
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Displays the w_openid_logon dialog box, which signs the user in with an OpenID Connect identity provider and gets the groups the user belongs to.
+
+**Access**
+
+Public
+
+**Syntax 1** Settings from the application INI file
+
+```
+instancename.of_OpenIDLogonDlg ( openidattrib )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Global variable of type n_cst_appmanager (must be gnv_app) |
+| *openidattrib* | n_cst_openidattrib, passed by reference. Settings for the logon on input; the results on return |
+
+**Syntax 2** Settings from another INI file or section
+
+```
+instancename.of_OpenIDLogonDlg ( openidattrib, inifile, inisection )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Global variable of type n_cst_appmanager (must be gnv_app) |
+| *openidattrib* | n_cst_openidattrib, passed by reference. Settings for the logon on input; the results on return |
+| *inifile* | String. INI file with the identity provider settings |
+| *inisection* | String. Section of *inifile* with the settings |
+
+**Return value**
+
+Integer. Returns 1 if the user signs in, 0 if the user cancels out of the dialog box, and -1 if an error occurs.
+
+**Usage**
+
+Settings left empty in *openidattrib* are read from the `[OpenID]` section of the application INI file (Syntax 1) or from the section you specify (Syntax 2):
+
+| Key | Description |
+| --- | --- |
+| TokenEndpoint | URL of the identity provider's token endpoint |
+| UserInfoEndpoint | URL of the identity provider's userinfo endpoint |
+| ClientID | Client ID of the application, as registered with the identity provider |
+| Scope | Scopes to request (the default is `openid profile`) |
+| Client | `OAuthClient` (the default) or `HTTPClient`, the PowerBuilder object used for the token request |
+| ShowResponses | 1 to show the identity provider's responses and the choice of client, for demonstrations |
+
+The dialog box requests a token with the OAuth 2.0 password grant, then reads the user's claims from the userinfo endpoint. If the user signs in, this function sets the user ID with of_SetUserID, and *openidattrib*.is_groups holds the groups from the provider's groups claim, which you can pass to the n_cst_security of_InitSecurity function.
+
+The password grant has been deprecated in OAuth 2.1 and doesn't support multi-factor authentication. Use it only with identity providers and applications where that is acceptable.
+
+**Examples**
+
+This example from an n_cst_appmanager pfc_Open event signs the user in and initializes security with the user's groups:
+
+```
+n_cst_openidattrib lnv_openid
+
+this.of_SetSecurity(TRUE)
+IF this.of_OpenIDLogonDlg(lnv_openid) <> 1 THEN
+   this.Event pfc_Exit()
+   RETURN
+END IF
+this.inv_security.of_InitSecurity &
+   (itr_sec, "EISAPP", this.of_GetUserID(), &
+    lnv_openid.is_groups, "")
+```
+
+The application INI file contains:
+
+```
+[OpenID]
+TokenEndpoint=https://idp.example.com/application/o/token/
+UserInfoEndpoint=https://idp.example.com/application/o/userinfo/
+ClientID=my-client-id
+```
+
+**See also**
+
+of_LogonDlg, [n_cst_openidattrib](../05-global-structures-and-structure-objects/n_cst_openidattrib.md), [w_openid_logon](../02-window-objects/w_openid_logon.md)
 
 ### of_SetAppIniFile
 
