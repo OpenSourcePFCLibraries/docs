@@ -271,6 +271,8 @@ This event executes when the user selects Window>Undo Arrange from the menu bar 
 
 Positions the status bar when the user resizes the window.
 
+In PFC 2019, it also calls of_LayoutClient, which places a ribbon bar on the frame across the top of the window and fits the MDI client area below it.
+
 **Usage**
 
 This event executes when the user resizes the frame window.
@@ -289,8 +291,56 @@ This event executes when the window displays after being hidden.
 
 W_frame includes precoded object functions:
 
+- of_LayoutClient (PFC 2019)
 - of_SetSheetManager
 - of_SetStatusBar
+
+### of_LayoutClient
+
+> Available in PFC 2019. Not available in the 2022 and 2025 versions of PFC.
+
+**Description**
+
+Places a ribbon bar on the frame across the top of the window and fits the MDI client area between the ribbon bar and the MicroHelp bar.
+
+A frame window that contains controls other than the MDI client does not size its client area itself, so a frame with a ribbon bar needs this layout. Frames without a ribbon bar are left unchanged.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+windowname.of_LayoutClient ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *windowname* | Instance name of w_frame |
+
+**Return value**
+
+Integer. Returns 1 if the client area was laid out around a ribbon bar, and 0 if there was nothing to do (the frame has no ribbon bar, or it is minimized).
+
+**Usage**
+
+To add a ribbon bar to a frame, place a u_rbb control on your w_frame descendant. You don't need any code to size it: the frame's Resize event calls of_LayoutClient. The ribbon bar spans the width of the frame; when the frame is narrower than the ribbon bar's content, the ribbon bar collapses its groups. If the ribbon bar is not visible, the client area takes its space.
+
+The height of the ribbon bar depends on its content. Set the ribbon bar's AutoSizeHeight property to TRUE (it is not shown in the Window painter) so that the ribbon bar resizes itself when its content changes. The u_rbb functions of_SetHidePanelText and of_SetHideTabHeader call of_LayoutClient for you. Call of_LayoutClient yourself after anything else that can change the ribbon bar's height, such as setting the HidePanelText or HideTabHeader properties directly, changing the font, or loading a definition with ImportFromXMLFile.
+
+**Examples**
+
+This example loads a ribbon bar definition in the frame's Open event and then lays out the client area for the ribbon bar's new height:
+
+```
+rbb_1.ImportFromXMLFile ("ribbonbar.xml")
+this.of_LayoutClient ()
+```
+
+**See also**
+
+- [u_rbb](../06-standard-visual-user-objects/u_rbb.md)
 
 ### of_SetSheetManager
 
