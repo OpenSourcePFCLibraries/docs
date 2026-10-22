@@ -86,7 +86,7 @@ Display a PowerScript MessageBox. Allow PFC MessageBoxes to be manipulated prior
 
 Protected
 
-**Syntax**
+**Syntax 1**
 
 ```
 instancename.of_MessageBox ( as_id, as_title, as_text, ae_icon, ae_button, ai_default )
@@ -102,6 +102,26 @@ instancename.of_MessageBox ( as_id, as_title, as_text, ae_icon, ae_button, ai_de
 | *ae_button* | Button. Set of CommandButtons you want to display on the MessageBox. |
 | *ai_default* | Integer. The default button. |
 
+**Syntax 2** For a message that contains values (PFC 2025 and later)
+
+```
+instancename.of_MessageBox ( as_id, as_title, as_text, as_parms, ae_icon, ae_button, ai_default )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_am |
+| *as_parms* | String array. The values for the placeholders in *as_text* |
+
+The other arguments are the same as in Syntax 1.
+
 **Return value**
 
 Integer. Return value of the MessageBox.
+
+**Usage**
+
+**PFC 2025 and later** When the language service is enabled (see the n_cst_appmanager of_SetLanguage function), the message comes from the language file if it has an entry for *as_id*: the entry *as_id* replaces *as_text*, and the entry *as_id*.title replaces *as_title*. Without the service, or without an entry, *as_text* and *as_title* are used as they are.
+
+Use Syntax 2 for a message that contains values: *as_text* is the English text with placeholders (%s, or %1 - %9 by position) and *as_parms* holds the values. Syntax 2 calls Syntax 1 to display the message, so an override of Syntax 1 still sees every message.
+

@@ -53,6 +53,7 @@ N_cst_string includes precoded object functions:
 
 - of_ArrayToString
 - of_CountOccurrences
+- of_Format (PFC 2025 and later)
 - of_GetGlobalReplaceMethod
 - of_GetKeyValue
 - of_GetToken
@@ -176,6 +177,51 @@ ll_count = inv_string.of_CountOccurrences &
 MessageBox("String", String(ll_count) &
     " occurrences of " + ls_target &
    + " within " + ls_source )
+```
+
+### of_Format
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Replaces the placeholders in a text with values.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_Format ( text, values )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_string |
+| *text* | String. Text with placeholders: `%s` for the next value, `%1` to `%9` for a value by position, `%%` for a percent sign |
+| *values* | String array. The values |
+
+**Return value**
+
+String. The text with the placeholders replaced. A placeholder without a value is left as it is. The values are not searched for placeholders, so a value can contain `%`.
+
+**Usage**
+
+The PFC language service and the of_MessageBox functions use it for messages with values. Placeholders by position let a translation put the values in another order.
+
+**Examples**
+
+```
+string ls_parms[]
+
+ls_parms[1] = "3"
+ls_parms[2] = "rows"
+// "Delete these 3 rows?"
+ls_text = inv_string.of_Format("Delete these %s %s?", ls_parms)
+// "rows: 3"
+ls_text = inv_string.of_Format("%2: %1", ls_parms)
 ```
 
 ### of_GetGlobalReplaceMethod

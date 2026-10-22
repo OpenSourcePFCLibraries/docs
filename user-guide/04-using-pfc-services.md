@@ -31,7 +31,7 @@ PFC provides the following application services:
 
 DataWindow caching Debugging Error Application preference Most recently used object
 
-Security Transaction registration
+Security Transaction registration Language (PFC 2025 and later)
 
 You control application services through n_cst_appmanager, the application manager. Use application manager functions to enable and disable application services. Because they are scoped to the application manager, which you define as a global variable, application services are available from anywhere within your application.
 
@@ -544,6 +544,74 @@ The default applies to:
 These are left as designed: static text, lines and shapes, group boxes, pictures, progress bars, animations, the MDI client, status bar, MDI tabbed bar, and ribbon bar, user objects and tabs themselves, cascading menu items, menu separators, and DataWindow columns (columns change only with explicit settings). To change which objects the default applies to, override the n_cst_security of_IsDefaultEligible function.
 
 of_ApplyRestrictions, of_IsEnabledAllowed, and of_IsVisibleAllowed use the default too. Calling of_SetSecurity for a single object (for example, from a user object's Constructor event) applies only the settings, not the default.
+
+### Language service
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Overview**
+
+The language service shows PFC in another language: the messages PFC displays, and the captions of its windows, menus and DataWindow objects. It works like PowerBuilder 2025 R2's runtime messages, which come from `lang\default.lng`: the texts come from a language file, `lang\pfc.lng` in the application folder, and replacing that file changes the language. One copy of PFC serves every language, and translations survive PFC fixes. Without a language file, PFC stays in English.
+
+PFC enables the language service through the n_cst_language user object.
+
+**Usage**
+
+PFC ships the English language file (`lang\pfc.lng`). First translations for Danish, Dutch, French, German, Italian, Norwegian, Spanish and Swedish, made from the PowerBuilder Translation Toolkit dictionaries, are in the [localization](https://github.com/OpenSourcePFCLibraries/localization) repository. About 87% of each is translated: review them, and complete the entries left in English at the end of the file.
+
+**To enable the language service:**
+
+1. Copy the language file for your language to the `lang` folder of your application (next to the executable) as `pfc.lng`. When you run the application in the PowerBuilder IDE, the folder is the current folder.
+2. Call the n_cst_appmanager of_SetLanguage function before you open any windows, for example in the pfc_Open event of the application manager:
+
+   ```
+   this.of_SetLanguage(TRUE)
+   ```
+
+Each window is then translated when it opens (in the w_master Open event, before pfc_PreOpen), with its controls and its menu, and the PFC controls translate their popup menus. Messages displayed with of_MessageBox are looked up by their ID.
+
+**The language file**
+
+A language file is UTF-16 text (UTF-8 and ANSI are read too). Each line is an entry:
+
+```
+# Messages, by ID
+pfc_logon_enterid="Bitte geben Sie zum Anmelden eine Benutzer-ID ein."
+pfc_rowmanager_confirmmultipledelete="Möchten Sie diese %s %s wirklich löschen?"
+
+# Captions, by English text
+"&Cancel"="&Abbrechen"
+"Page Setup"="Seite einrichten"
+```
+
+- Messages have an ID: the ID passed to of_MessageBox. `%s` stands for a value, and `%1` to `%9` for a value by position, so a translation can change the order of the values.
+- Captions are identified by their English text, so a caption changes only when the file has an entry for its exact text. A caption your application changed to another text is kept.
+- Comment lines start with `#`. Texts can use the PowerScript escapes, such as `~r~n` for a line break.
+
+List box and drop-down list box items aren't translated, because code often uses them as values, and neither is text the user enters. The error message service keeps its own message table or file.
+
+**Your own texts**
+
+Your application can use the service for its own texts. Keep them in the application's own language file, `lang\<application>.lng` (the name of the application object, for example `lang\peat.lng`), which the service reads after `lang\pfc.lng`. Its entries take precedence, so you can also correct PFC's texts there, and updating PFC's `pfc.lng` never touches your translations. To generate an English starting file from your source:
+
+```
+pwsh -File tools\New-PfcLanguageFile.ps1 -Source C:\MyApp\src -IdPrefix app_ -Except lang\pfc.lng -Output C:\MyApp\lang\myapp.lng
+```
+
+`-IdPrefix` is the prefix of your message IDs, and `-Except` leaves out the captions PFC's file already has.
+
+- Captions of your windows: add entries for their English texts to the application's language file.
+- Messages: call of_MessageBox with your own ID, and add the ID to the language file. For a message with values, use the of_MessageBox syntax that takes the values.
+- Other texts: call of_GetText with an ID and the English text, which is used when the file has no entry.
+- DataStores: call the n_cst_language of_Translate function after setting the DataObject.
+
+```
+st_status.Text = gnv_app.inv_language.of_GetText("app_status_ready", "Ready")
+```
+
+**Generating the language file**
+
+`tools\New-PfcLanguageFile.ps1` generates the English language file from the PFC source, and `tools\New-PfcTranslation.ps1` makes a first translation of it from a Translation Toolkit dictionary. Run them again when PFC changes, to add new texts.
 
 ### Transaction registration service
 
