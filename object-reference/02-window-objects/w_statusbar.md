@@ -27,7 +27,8 @@ W_statusbar includes instance variables:
 | ii_borderwidth |  | Long | Protected |
 | ii_secondstorefresh | one minute. | Integer | Protected |
 | ii_winmaxwidth |  | Integer | Protected |
-| il_buttonface |  | Long | Protected |
+| il_backgroundcolor | Background color: the system ButtonFace color unless n_cst_winsrv_statusbar sets one (PFC 2025 and later; replaces il_buttonface) | Long | Protected |
+| il_textcolor | Text color: Window Text unless n_cst_winsrv_statusbar sets one (PFC 2025 and later) | Long | Protected |
 | il_warningcolor | Red. | Long | Protected |
 | inv_platform |  | n_cst_platform | Protected |
 | iw_parentwindow |  | w_frame | Protected |
@@ -222,11 +223,11 @@ Integer. 1 if it succeeds and -1 if an error occurs.
 
 **Description**
 
-Refreshes the colors of all the appropriate objects to match the desired background color.
+Refreshes the colors of all the appropriate objects to match the desired background and text colors. The progress bar text keeps its own color.
 
 **Access**
 
-Protected
+Public (protected in the 2019 and 2022 versions of PFC)
 
 **Syntax**
 
@@ -339,6 +340,33 @@ instancename.of_SetPosition ( )
 
 Integer. 1 if it succeeds and -1 if an error occurs.
 
+### of_SetBackgroundColor
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Stores the background color; of_RefreshColors and of_CreateVisuals apply it. Called by n_cst_winsrv_statusbar of_SetBackgroundColor.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_SetBackgroundColor ( color )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of w_statusbar |
+| *color* | Long. The background color |
+
+**Return value**
+
+Integer. 1 if it succeeds and -1 if the color isn't valid.
+
 ### of_setrefreshrate
 
 **Description**
@@ -363,6 +391,33 @@ instancename.of_setrefreshrate ( ai_seconds )
 **Return value**
 
 Integer. 1 if it succeeds and -1 if an error occurs.
+
+### of_SetTextColor
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Stores the text color; of_RefreshColors applies it. Called by n_cst_winsrv_statusbar of_SetTextColor.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_SetTextColor ( color )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of w_statusbar |
+| *color* | Long. The text color |
+
+**Return value**
+
+Integer. 1 if it succeeds and -1 if the color isn't valid.
 
 ### of_UpdateDWTimerInterval
 
