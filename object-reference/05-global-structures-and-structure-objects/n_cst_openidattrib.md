@@ -19,7 +19,9 @@ Structure object containing the settings and results of an OpenID Connect logon,
 | is_appname | String | Application name shown in the window |
 | is_client | String | `OAuthClient` (the default) or `HTTPClient`, the PowerBuilder object used for the token request |
 | is_clientid | String | Client ID of the application, as registered with the identity provider |
-| is_groups[ ] | String | Groups from the identity provider's groups claim |
+| is_groups[ ] | String | Groups from the identity provider's groups claim, read from the userinfo response or, if that has none, from the ID token |
+| is_groupsclaim | String | Name of the claim with the user's groups (the default is `groups`; for Microsoft Entra ID app roles, `roles`) |
+| is_idtoken | String | ID token returned by the identity provider, if any |
 | is_scope | String | Scopes to request (the default is `openid profile`) |
 | is_tokenendpoint | String | URL of the token endpoint |
 | is_userid | String | User ID: the initial value for the window on input, the user who signed in on return |
