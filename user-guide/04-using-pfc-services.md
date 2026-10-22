@@ -481,7 +481,23 @@ this.inv_security.of_InitSecurity &
    (itr_sec, "EISAPP", gnv_app.of_GetUserID(), ls_groups, "")
 ```
 
-Group names in the security database are limited to 16 characters, so you may need to map longer identity provider group names to PFC group names. To sign users in with OpenID Connect and get their groups, use the n_cst_appmanager of_OpenIDLogonDlg function, which opens w_openid_logon (see the *PFC Object Reference*). When membership comes from an identity provider, set the Security Administrator's ExternalGroupMembership option, as described in Chapter 7, "PFC Utilities".
+The group names don't need to match the provider's. Group names in the security database are limited to 16 characters, and providers often name groups differently, so you can map the provider's names to PFC group names with the n_cst_security of_MapGroups function. The mapping can be kept in a section of an INI file, one `provider group=PFC group` entry per line:
+
+```
+[GroupMap]
+app-administrators=admin
+app-users=user
+```
+
+```
+string ls_mapped[]
+this.inv_security.of_MapGroups &
+   (lnv_openid.is_groups, ls_inifile, "GroupMap", ls_mapped)
+this.inv_security.of_InitSecurity &
+   (itr_sec, "EISAPP", gnv_app.of_GetUserID(), ls_mapped, "")
+```
+
+Names are compared without regard to case. A group that isn't in the mapping is passed on unchanged, and a group mapped to nothing (`app-guests=`) is dropped. To sign users in with OpenID Connect and get their groups, use the n_cst_appmanager of_OpenIDLogonDlg function, which opens w_openid_logon (see the *PFC Object Reference*). When membership comes from an identity provider, set the Security Administrator's ExternalGroupMembership option, as described in Chapter 7, "PFC Utilities".
 
 **Keeping restrictions in place (PFC 2025 and later)** of_SetSecurity applies the settings when you call it. Code that later sets a control's Enabled or Visible property, for example to enable a Save button when data changes, can undo them. There are two ways to prevent that:
 
@@ -501,6 +517,24 @@ Group names in the security database are limited to 16 characters, so you may ne
 PFC's Window menu and MRU service call of_ApplyRestrictions themselves after they enable or show menu items.
 
 **Control types PFC doesn't list (PFC 2025 and later)** The security service secures controls of types it doesn't recognize, such as types added in a later PowerBuilder release, through their Visible property only: a setting of Enable shows the control, and Invisible or Disable hide it, because the service can't disable a control without knowing its type. In earlier versions, PFC displays a message and ends the application when it finds such a control.
+
+**Deny by default (PFC 2025 and later)** By default, the security service only changes the controls that have a setting for the user; all other controls are left as you designed them. For least-privilege security, you can give a default status to everything that has no setting, so the security database only needs to grant access (Enable). Call the n_cst_security of_SetDefaultStatus function after of_InitSecurity:
+
+```
+gnv_app.inv_security.of_SetDefaultStatus &
+   (gnv_app.inv_security.DISABLE)
+```
+
+With DISABLE, controls and menu items that have no setting for the user are disabled; with INVISIBLE, they're hidden. NOTSET (the default) turns this off. of_SetSecurity then applies the default after the settings, also to windows that have no settings at all. The default only restricts: it never shows a control you hid or enables one you disabled.
+
+The default applies to:
+
+- Interactive controls, such as command buttons, edit controls, list boxes, and DataWindow controls, including the controls inside user objects and tabs
+- Menu items that have no submenu, and their toolbar buttons
+
+These are left as designed: static text, lines and shapes, group boxes, pictures, progress bars, animations, the MDI client, status bar, MDI tabbed bar, and ribbon bar, user objects and tabs themselves, cascading menu items, menu separators, and DataWindow columns (columns change only with explicit settings). To change which objects the default applies to, override the n_cst_security of_IsDefaultEligible function.
+
+of_ApplyRestrictions, of_IsEnabledAllowed, and of_IsVisibleAllowed use the default too. Calling of_SetSecurity for a single object (for example, from a user object's Constructor event) applies only the settings, not the default.
 
 ### Transaction registration service
 
