@@ -1160,13 +1160,22 @@ Settings left empty in *openidattrib* are read from the `[OpenID]` section of th
 | UserInfoEndpoint | URL of the identity provider's userinfo endpoint |
 | ClientID | Client ID of the application, as registered with the identity provider |
 | Scope | Scopes to request (the default is `openid profile`) |
+| Flow | `password` (the default) or `code`: see below |
+| AuthorizationEndpoint | URL of the identity provider's authorization endpoint (for `Flow=code`) |
+| RedirectPath | Path of the redirect URI for `Flow=code` (the default is `/callback`) |
+| Timeout | How long to wait for the user to sign in in the browser with `Flow=code`, in seconds (the default is 300) |
 | Client | `OAuthClient` (the default) or `HTTPClient`, the PowerBuilder object used for the token request |
 | GroupsClaim | Name of the claim with the user's groups (the default is `groups`; for Microsoft Entra ID app roles, `roles`) |
 | ShowResponses | 1 to show the identity provider's responses and the choice of client, for demonstrations |
 
-The dialog box requests a token with the OAuth 2.0 password grant, then reads the user's claims from the userinfo endpoint. If the userinfo response has no groups, as with Microsoft Entra ID, the groups are read from the ID token instead (see w_openid_logon). If the user signs in, this function sets the user ID with of_SetUserID, and *openidattrib*.is_groups holds the groups from the provider's groups claim, which you can pass to the n_cst_security of_InitSecurity function.
+The Flow, RedirectPath, and Timeout keys, when present, replace the values in *openidattrib*.
 
-The password grant has been deprecated in OAuth 2.1 and doesn't support multi-factor authentication. Use it only with identity providers and applications where that is acceptable.
+The dialog box signs the user in with one of two flows:
+
+- **`Flow=code`** (recommended): the user signs in in the web browser, with the OAuth 2.0 authorization code flow and PKCE, so multi-factor authentication and single sign-on work. The identity provider must allow the redirect URI `http://127.0.0.1:port/callback` for any port, and the application must be registered as a public client. See w_openid_logon.
+- **`Flow=password`** (the default): the user types a user ID and password in the dialog box, which requests a token with the OAuth 2.0 password grant. The password grant has been deprecated in OAuth 2.1 and doesn't support multi-factor authentication. Use it only with identity providers and applications where that is acceptable.
+
+The dialog box then reads the user's claims from the userinfo endpoint. If the userinfo response has no groups, as with Microsoft Entra ID, the groups are read from the ID token instead (see w_openid_logon). If the user signs in, this function sets the user ID with of_SetUserID, and *openidattrib*.is_groups holds the groups from the provider's groups claim, which you can pass to the n_cst_security of_InitSecurity function.
 
 **Examples**
 
@@ -1189,6 +1198,8 @@ The application INI file contains:
 
 ```
 [OpenID]
+Flow=code
+AuthorizationEndpoint=https://idp.example.com/application/o/authorize/
 TokenEndpoint=https://idp.example.com/application/o/token/
 UserInfoEndpoint=https://idp.example.com/application/o/userinfo/
 ClientID=my-client-id
