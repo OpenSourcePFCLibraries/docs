@@ -1138,12 +1138,13 @@ Public
 **Syntax**
 
 ```
-instancename.of_SetPageInputField ( )
+instancename.of_SetPageInputField ( pagefield )
 ```
 
 | Argument | Description |
 | --- | --- |
 | *instancename* | Instance name of u_rte |
+| *pagefield* | String specifying the name of the input field used for page numbering |
 
 **Return value**
 

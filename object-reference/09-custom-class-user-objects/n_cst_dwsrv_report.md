@@ -1210,15 +1210,15 @@ Places a picture in the background of the DataWindow. There are two syntaxes:
 
 | To | Use |
 | --- | --- |
-| Add a background picture at its exact size | Syntax 1 |
-| Add a background picture, sizing it to fit the DataWindow | Syntax 2 |
+| Add a background picture, applying the change immediately | Syntax 1 |
+| Add a background picture, controlling every option | Syntax 2 |
 
-| Syntax 1 | Add a background picture at its exact size |
+| Syntax 1 | Add a background picture, applying the change immediately |
 | --- | --- |
 
 **Description**
 
-Add a background picture, displayed at its exact size.
+Add a background picture. When you pass *ycoordinate*, the picture is displayed at its exact size, or at the *height* and *width* you specify. When you pass only *filename*, or *filename* and *xcoordinate*, the picture is sized to fit the DataWindow.
 
 **Access**
 
@@ -1227,8 +1227,7 @@ Public
 **Syntax**
 
 ```
-dwcontrol.instancename.of_SetBackground ( filename {, xcoordinate
-{, ycoordinate {, height, width {, execute } } } } )
+dwcontrol.instancename.of_SetBackground ( filename {, xcoordinate {, ycoordinate {, height, width } } } )
 ```
 
 | Argument | Description |
@@ -1237,23 +1236,22 @@ dwcontrol.instancename.of_SetBackground ( filename {, xcoordinate
 | *instancename* | Instance name of n_cst_dwsrv_report (the u_dw default is inv_report) |
 | *filename* | String specifying the name of the bitmap file |
 |  | If the directory containing the file is not in your system path, you must specify the complete path |
-| *xcoordinate* (optional) | Integer specifying the *x* location of the bitmap. The default is 0 |
-| *ycoordinate* (optional) | Integer specifying the *y* location of the bitmap. The default is 0 |
+| *xcoordinate* (optional) | Integer specifying the *x* location of the bitmap. If you pass 0, the picture is centered horizontally. If you pass only *filename* and *xcoordinate*, the picture is sized to fit the DataWindow and *xcoordinate* is used as the horizontal and vertical margin |
+| *ycoordinate* (optional) | Integer specifying the *y* location of the bitmap. If you pass 0, the picture is centered vertically |
 | *height* (optional) | Integer specifying the height of the bitmap being placed. If you pass 0, the function uses the of_GetPictureSize function to calculate this value. The default is 0 |
 | *width* (optional) | Integer specifying the width of the bitmap being placed. If you pass 0, the function uses the of_GetPictureSize function to calculate this value. The default is 0 |
-| *execute* (optional) | Boolean specifying whether to execute the Modify function that adds the background picture (TRUE) or return a string that you use to execute the Modify function (FALSE). The default is TRUE |
 
 **Return value**
 
-String. If *execute* is TRUE, this function returns the result of the Modify statement that added the background picture; an empty string indicates success. If *execute* is FALSE, this function returns a string that you use as input to a Modify function to add the background picture.
+String. Returns the result of the Modify statement that added the background picture; an empty string indicates success. If the DataWindow units are not PowerBuilder units or pixels, the file does not exist, or the size cannot be calculated, the function returns an error message that starts with "Error!".
 
 **Usage**
 
-A background picture to can provide a watermark effect, enhancing a DataWindow’s online and printed appearance.
+A background picture can provide a watermark effect, enhancing a DataWindow’s online and printed appearance.
 
-Depending on the *execute* argument, the function either adds the background to the DataWindow or returns syntax that you use in a Modify function to add the background picture.
+This syntax always executes the Modify function that adds the background picture. To get the Modify syntax without executing it, use Syntax 2 and pass FALSE for *execute*.
 
-Use Syntax 2 to add a background picture, sizing it to fit the DataWindow.
+Use Syntax 2 to control all of the options, including sizing the picture to fit the DataWindow.
 
 **Examples**
 
@@ -1270,7 +1268,7 @@ IF Trim(ls_Return) <> "" THEN
 END IF
 ```
 
-| Syntax 2 | Add a background picture, sizing it to fit the DataWindow |
+| Syntax 2 | Add a background picture, controlling every option |
 | --- | --- |
 
 **Description**
@@ -1284,8 +1282,7 @@ Public
 **Syntax**
 
 ```
-dwcontrol.instancename.of_SetBackground ( filename , sizetofit,
-xcoordinate, ycoordinate, height, width execute )
+dwcontrol.instancename.of_SetBackground ( filename, sizetofit, xcoordinate, ycoordinate, height, width, execute )
 ```
 
 | Argument | Description |
@@ -1311,7 +1308,7 @@ A background picture can provide a watermark effect, enhancing a DataWindow’s 
 
 Depending on the *execute* argument, the function either adds the background to the DataWindow or returns syntax that you use in a Modify function to add the background picture.
 
-Use Syntax 1 to add a background picture at its exact size.
+Use Syntax 1 for the common cases; it always applies the change.
 
 **Examples**
 

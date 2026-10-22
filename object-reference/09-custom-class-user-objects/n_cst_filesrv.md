@@ -454,16 +454,17 @@ Public
 **Syntax**
 
 ```
-instancename.of_DirList ( filespec, filetype, dirlist, sorttype )
+instancename.of_DirList ( filespec, filetype, dirlist )
 ```
 
 | Argument | Description |
 | --- | --- |
 | *instancename* | Instance name of n_cst_filesrv |
-| *filespec* | String |
-| *filetype* | Long |
-| *dirlist* | N_cst_dirlistattrib structure object (passed by reference) |
-| *sorttype* | Integer |
+| *filespec* | String specifying the files to list (wildcards are allowed) |
+| *filetype* | Long specifying the types of files to list |
+| *dirlist* | Array of n_cst_dirattrib structure objects in which the function returns the list (passed by reference) |
+
+A second syntax, of_DirList ( *filespec*, *dirlist* ), returns the list as a String array. See n_cst_filesrvunicode for the implementation of both syntaxes.
 
 **Return value**
 

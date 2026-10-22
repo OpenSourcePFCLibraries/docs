@@ -97,6 +97,7 @@ N_cst_winsrv_statusbar includes instance variables:
 | ii_memwidth | Width of memory item | Integer | Protected | Set with of_SetMemWidth (default is 350) |
 | ii_microhelpstartvalue |  | Integer | Protected |  |
 | ii_microhelpsubtractvalue |  | Integer | Protected |  |
+| ii_microhelpwin10subtractvalue | Amount subtracted from the MicroHelp height on Windows 10 and later (default 15) (PFC 2025 and later) | Integer | Protected |  |
 | ii_microhelpwin3xsubtractvalue |  | Integer | Protected |  |
 | ii_microhelpwinnt3xsubtractvalue |  | Integer | Protected |  |
 | ii_refreshrate | Number of seconds between refreshes | Integer | Protected | Set with of_SetRefreshRate (default is 60) |

@@ -423,8 +423,7 @@ Protected
 **Syntax**
 
 ```
-tvcontrol.instancename.of_SearchChild ( attribute, target, beginhandle, level
-respectcase, fullcompare )
+tvcontrol.instancename.of_SearchChild ( attribute, target, beginhandle, level, respectcase, fullcompare )
 ```
 
 | Argument | Description |

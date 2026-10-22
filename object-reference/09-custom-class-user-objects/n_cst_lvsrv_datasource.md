@@ -141,18 +141,17 @@ Deletes a row from the DataStore.
 **Syntax**
 
 ```
-lvcontrol.instancename.EVENT pfc_DeleteItem ( index )
+lvcontrol.instancename.EVENT pfc_DeleteItem ( )
 ```
 
 | Argument | Description |
 | --- | --- |
 | *lvcontrol* | Instance name of the u_lvs-based ListView control |
 | *instancename* | Instance name of n_cst_lvsrv_datasource (the u_lvs default for this value is inv_datasource) |
-| *index* | Integer specifying the position of the ListView item to delete |
 
 **Return value**
 
-Integer. Returns 1 if the event succeeds and 0 if no action is taken.
+Integer. Returns 1 if the item was deleted, 0 if nothing was deleted (or the deletion was prevented), and -1 if an error occurs.
 
 **Usage**
 
@@ -164,12 +163,13 @@ This event does not perform processing if refreshing, resetting, or undoing an i
 
 **Examples**
 
-This example is from the u_lvs DeleteItem event:
+This example is from the u_lvs pfc_DeleteItem event. The service deletes the items that are selected in the ListView:
 
 ```
 ...
-If isvalid(inv_datasource) then
-   inv_datasource.event pfc_DeleteItem(index)
+If isvalid(inv_datasource) Then
+   Return inv_datasource.event pfc_DeleteItem()
+End If
 ...
 ```
 
@@ -1622,8 +1622,7 @@ Public
 **Syntax**
 
 ```
-lvcontrol.instancename.of_Register ( labelcolumn, dwobject
-{, trans } )
+lvcontrol.instancename.of_Register ( labelcolumn, dwobject {, trans } )
 ```
 
 | Argument | Description |
@@ -1832,8 +1831,7 @@ Public
 **Syntax**
 
 ```
-lvcontrol.instancename.of_Register ( labelcolumn, dwobject,
-data )
+lvcontrol.instancename.of_Register ( labelcolumn, dwobject, data )
 ```
 
 | Argument | Description |
@@ -1901,8 +1899,7 @@ Public
 **Syntax**
 
 ```
-lvcontrol.instancename.of_Register ( labelcolumn, dwobject,
-file )
+lvcontrol.instancename.of_Register ( labelcolumn, dwobject, file )
 ```
 
 | Argument | Description |

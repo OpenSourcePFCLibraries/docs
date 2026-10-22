@@ -577,12 +577,13 @@ Public
 **Syntax**
 
 ```
-instancename.of_SetSorted ( )
+instancename.of_SetSorted ( switch )
 ```
 
 | Argument | Description |
 | --- | --- |
 | *instancename* | Instance name of n_cst_list |
+| *switch* | Boolean specifying whether the list is sorted (TRUE) or not (FALSE) |
 
 **Return value**
 

@@ -58,8 +58,7 @@ U_progressbar includes instance variables:
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
 | BAR | Constant set to 0 | Integer | Public | Use with of_SetDisplayStyle |
-| BOTTOMTOP | Constant set to 3 | Integer | Public | Use with of_SetFillStyle |
-| BOTTOMUP | Constant set to 3 | Integer | Public |  |
+| BOTTOMUP | Constant set to 3 | Integer | Public | Use with of_SetFillStyle |
 | ib_autoreset | Controls autoreset | Boolean | Protected | Set with of_SetAutoReset. Default is TRUE |
 | ii_displaystyle | Controls test displayed on progress bar | Integer | Protected | Set with of_DisplayStyle. Default is BAR |
 | ii_fillstyle | Controls the direction in which the progress bar fills | Integer | Protected | Set with of_SetFillStyle. Default is LEFTRIGHT |
@@ -947,10 +946,10 @@ instancename.of_SetFillStyle ( style )
 | --- | --- |
 | *instancename* | Instance name of u_progressbar |
 | *style* | Integer or u_progressbar constant specifying the fill style: |
-|  | **• 0 or TOPDOWN** The bar fills from top to bottom |
-|  | **• 1 or BOTTOMUP** The bar fills from bottom to top |
-|  | **• 2 or LEFTRIGHT (default)** The bar fills from left to right |
-|  | **• 3 or RIGHTLEFT** The bar fills from right to left |
+|  | **• 0 or LEFTRIGHT (default)** The bar fills from left to right |
+|  | **• 1 or RIGHTLEFT** The bar fills from right to left |
+|  | **• 2 or TOPDOWN** The bar fills from top to bottom |
+|  | **• 3 or BOTTOMUP** The bar fills from bottom to top |
 
 **Return value**
 
