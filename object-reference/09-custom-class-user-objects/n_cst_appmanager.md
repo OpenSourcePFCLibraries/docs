@@ -75,6 +75,7 @@ N_cst_appmanager includes instance variables:
 | inv_debug | Reference variable for the debug service | n_cst_debug | Public | Use in dot notation to access n_cst_debug functions |
 | inv_dwcache | Reference variable for data caching services | n_cst_dwcache | Public | Use in dot notation to access n_cst_dwcache functions |
 | inv_error | Reference variable for the error service | n_cst_error | Public | Use in dot notation to access n_cst_error functions |
+| inv_language | Reference variable for the language service (PFC 2025 and later) | n_cst_language | Public | Use in dot notation to access n_cst_language functions |
 | inv_mru | Reference variable for the most recently used object service | n_cst_mru | Public | Use in dot notation to access n_cst_mru functions |
 | inv_security | Reference variable for the security service | n_cst_security | Public | Use in dot notation to access n_cst_security functions |
 | inv_trregistration | Reference variable for the transaction registration service | n_cst_trregistration | Public | Use in dot notation to access n_cst_trregistration functions |
@@ -555,6 +556,7 @@ N_cst_appmanager includes precoded object functions:
 - of_SetError
 - of_SetFrame
 - of_SetHelpFile
+- of_SetLanguage (PFC 2025 and later)
 - of_SetLogo
 - of_SetMicrohelp
 - of_SetMRU
@@ -1520,6 +1522,45 @@ This example calls the of_SetHelpFile function in the n_cst_appmanager Construct
 
 ```
 of_SetHelpFile("c:\eis\eisapp.hlp")
+```
+
+### of_SetLanguage
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Enables or disables the language service, which shows PFC messages and the captions of windows, menus and DataWindow objects in another language, from a language file. The language service is implemented through the n_cst_language user object. You reference this instance of n_cst_language through the inv_language instance variable.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_SetLanguage ( boolean )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Global variable of type n_cst_appmanager (must be gnv_app) |
+| *boolean* | Boolean specifying whether to enable (TRUE) or disable (FALSE) the language service |
+
+**Return value**
+
+Integer. Returns 1 if the function succeeds, 0 if no action was necessary, and -1 if an error occurs.
+
+**Usage**
+
+Enable the service before you open any windows, so that they are translated when they open. The service reads `lang\pfc.lng` in the application folder; see [n_cst_language](n_cst_language.md).
+
+**Examples**
+
+This example from an application manager pfc_Open event enables the language service:
+
+```
+this.of_SetLanguage(TRUE)
 ```
 
 ### of_SetLogo

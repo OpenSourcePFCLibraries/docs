@@ -266,7 +266,7 @@ Displays a MessageBox.
 
 Protected
 
-**Syntax**
+**Syntax 1**
 
 ```
 instancename.of_MessageBox ( id, title, message, icon, button, default )
@@ -293,6 +293,19 @@ instancename.of_MessageBox ( id, title, message, icon, button, default )
 |  | • AbortRetryIgnore! |
 | *default* | Integer specifying the number of the button you want to be the default button |
 
+**Syntax 2** For a message that contains values (PFC 2025 and later)
+
+```
+instancename.of_MessageBox ( id, title, message, values, icon, button, default )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_htb |
+| *values* | String array. The values for the placeholders in *message* |
+
+The other arguments are the same as in Syntax 1.
+
 **Return value**
 
 Integer. Returns 1 if the function succeeds and -1 if an error occurs.
@@ -301,7 +314,9 @@ Integer. Returns 1 if the function succeeds and -1 if an error occurs.
 
 Override this function to control MessageBox behavior in HorizontalTrackBars.
 
-The *id* argument is not used in the default implementation.
+**PFC 2025 and later** When the language service is enabled (see the n_cst_appmanager of_SetLanguage function), the message comes from the language file if it has an entry for *id*: the entry *id* replaces *message*, and the entry *id*.title replaces *title*. Without the service, or without an entry, *message* and *title* are used as they are.
+
+Use Syntax 2 for a message that contains values: *message* is the English text with placeholders (%s, or %1 - %9 by position) and *values* holds the values. Syntax 2 calls Syntax 1 to display the message, so an override of Syntax 1 still sees every message.
 
 **Examples**
 
