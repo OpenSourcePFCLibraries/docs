@@ -271,7 +271,7 @@ This event executes when the user selects Window>Undo Arrange from the menu bar 
 
 Positions the status bar when the user resizes the window.
 
-In PFC 2019, it also calls of_LayoutClient, which places a ribbon bar on the frame across the top of the window and fits the MDI client area below it.
+It also calls of_LayoutClient, which places a ribbon bar on the frame across the top of the window and fits the MDI client area below it.
 
 **Usage**
 
@@ -291,13 +291,11 @@ This event executes when the window displays after being hidden.
 
 W_frame includes precoded object functions:
 
-- of_LayoutClient (PFC 2019)
+- of_LayoutClient
 - of_SetSheetManager
 - of_SetStatusBar
 
 ### of_LayoutClient
-
-> Available in PFC 2019. Not available in the 2022 and 2025 versions of PFC.
 
 **Description**
 

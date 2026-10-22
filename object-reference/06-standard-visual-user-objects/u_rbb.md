@@ -17,7 +17,7 @@ Extension RibbonBar class.
 
 **Usage**
 
-Use u_rbb for a ribbon bar. In PFC 2019, a ribbon bar placed on a w_frame descendant is laid out by the frame: it spans the top of the frame, and the MDI client area fits below it (see the w_frame [of_LayoutClient](../02-window-objects/w_frame.md#of_layoutclient) function).
+Use u_rbb for a ribbon bar. A ribbon bar placed on a w_frame descendant is laid out by the frame: it spans the top of the frame, and the MDI client area fits below it (see the w_frame [of_LayoutClient](../02-window-objects/w_frame.md#of_layoutclient) function).
 
 The height of the ribbon bar depends on its content. With the AutoSizeHeight property set to TRUE (it is not shown in the Window painter), the ribbon bar resizes itself when you hide or show the panel text or the tab header. Use of_SetHidePanelText and of_SetHideTabHeader to make those changes: they also lay out the frame's client area for the new height. Setting the HidePanelText and HideTabHeader properties directly does not; call the frame's of_LayoutClient afterwards.
 
@@ -65,8 +65,6 @@ instancename.of_GetParentWindow ( aw_parent )
 Integer. Returns 1 = success, -1 = error.
 
 ### of_LayoutFrame
-
-> Available in PFC 2019. Not available in the 2022 and 2025 versions of PFC.
 
 **Description**
 
@@ -124,8 +122,6 @@ Integer. Return value of the MessageBox.
 
 ### of_SetHidePanelText
 
-> Available in PFC 2019. Not available in the 2022 and 2025 versions of PFC.
-
 **Description**
 
 Hides or shows the text of the ribbon bar's panels (the HidePanelText property) and, when the ribbon bar is on a w_frame descendant, lays out the frame's client area again.
@@ -162,8 +158,6 @@ rbb_1.of_SetHidePanelText (TRUE)
 ```
 
 ### of_SetHideTabHeader
-
-> Available in PFC 2019. Not available in the 2022 and 2025 versions of PFC.
 
 **Description**
 
