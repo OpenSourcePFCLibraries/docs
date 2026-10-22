@@ -70,7 +70,7 @@ To use n_cst_security in an application:
 
 **PFC 2025 and later** These features are available in PFC 2025 and later, and not in the 2019 and 2022 versions of PFC:
 
-- Group membership from an identity provider: see the of_InitSecurity syntax that takes an array of groups, and of_GetGroups and of_IsExternalGroups.
+- Group membership from an identity provider: see the of_InitSecurity syntax that takes an array of groups, and of_GetGroups, of_IsExternalGroups, and of_MapGroups.
 - Keeping restrictions in place after application code enables or shows controls: see of_ApplyRestrictions, of_IsEnabledAllowed, and of_IsVisibleAllowed.
 - Controls of types the service doesn't list are secured through their Visible property instead of ending the application: see of_SetControlStatus.
 - Deny by default (least privilege): controls and menu items without a setting can be disabled or hidden: see of_SetDefaultStatus.
@@ -189,6 +189,7 @@ N_cst_security includes many precoded object functions. The functions you call f
 - of_IsSettled (PFC 2025 and later)
 - of_IsVisibleAllowed (PFC 2025 and later)
 - of_LoadSecurity
+- of_MapGroups (PFC 2025 and later)
 - of_MarkSettled (PFC 2025 and later)
 - of_ScanControlArray
 - of_ScanDatawindow
@@ -1024,6 +1025,88 @@ instancename.of_LoadSecurity ( as_object )
 **Return value**
 
 Integer. 1 if there is security on the object 0 if there is not security -1 for error.
+
+### of_MapGroups
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Translates the group names an identity provider reports into the names of groups in the security database.
+
+**Access**
+
+Public
+
+**Syntax 1** With the mapping in an INI file
+
+```
+application.instancename.of_MapGroups ( groups, inifile, section, mapped )
+```
+
+| Argument | Description |
+| --- | --- |
+| *application* | Global variable of type n_cst_appmanager (this must be gnv_app) |
+| *instancename* | Instance name of n_cst_security (the n_cst_appmanager default for this is inv_security) |
+| *groups* | String array. Group names from the identity provider, for example the n_cst_openidattrib is_groups array |
+| *inifile* | String. INI file that contains the mapping |
+| *section* | String. Section of the INI file with one *provider group*=*security group* entry for each group |
+| *mapped* | String array, passed by reference. The security group names, to pass to of_InitSecurity |
+
+**Return value**
+
+Integer. Returns the number of names in *mapped*, or -1 if the INI file doesn't exist.
+
+**Syntax 2** With the mapping in arrays
+
+```
+application.instancename.of_MapGroups ( groups, from, to, mapped )
+```
+
+| Argument | Description |
+| --- | --- |
+| *application* | Global variable of type n_cst_appmanager (this must be gnv_app) |
+| *instancename* | Instance name of n_cst_security |
+| *groups* | String array. Group names from the identity provider |
+| *from* | String array. Identity provider group names |
+| *to* | String array. The security group each *from* name maps to, in the same position |
+| *mapped* | String array, passed by reference. The security group names, to pass to of_InitSecurity |
+
+**Return value**
+
+Integer. Returns the number of names in *mapped*, or -1 if *from* and *to* don't have the same number of entries.
+
+**Usage**
+
+Use this function when users sign in through an identity provider whose group names differ from the group names in the security database (which are limited to 16 characters). Names are compared without regard to case or leading and trailing spaces. A name that isn't in the mapping is passed on unchanged; of_InitSecurity ignores groups that aren't defined in the security database. A name mapped to an empty string is dropped, so you can exclude a provider group explicitly.
+
+Use Syntax 2 when the mapping is kept somewhere other than an INI file, such as the registry or a database table.
+
+**Examples**
+
+With this section in the INI file:
+
+```
+[GroupMap]
+app-administrators=admin
+app-users=user
+app-guests=
+```
+
+this example maps the groups returned by of_OpenIDLogonDlg and initializes security with them:
+
+```
+string ls_mapped[]
+
+this.inv_security.of_MapGroups &
+   (lnv_openid.is_groups, ls_inifile, "GroupMap", ls_mapped)
+li_return = this.inv_security.of_InitSecurity &
+   (itr_sec, "EISAPP", this.of_GetUserID(), ls_mapped, "")
+```
+
+**See also**
+
+of_GetGroups, of_InitSecurity
 
 ### of_MarkSettled
 

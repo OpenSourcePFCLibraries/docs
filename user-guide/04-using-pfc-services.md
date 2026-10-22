@@ -481,7 +481,23 @@ this.inv_security.of_InitSecurity &
    (itr_sec, "EISAPP", gnv_app.of_GetUserID(), ls_groups, "")
 ```
 
-Group names in the security database are limited to 16 characters, so you may need to map longer identity provider group names to PFC group names. To sign users in with OpenID Connect and get their groups, use the n_cst_appmanager of_OpenIDLogonDlg function, which opens w_openid_logon (see the *PFC Object Reference*). When membership comes from an identity provider, set the Security Administrator's ExternalGroupMembership option, as described in Chapter 7, "PFC Utilities".
+The group names don't need to match the provider's. Group names in the security database are limited to 16 characters, and providers often name groups differently, so you can map the provider's names to PFC group names with the n_cst_security of_MapGroups function. The mapping can be kept in a section of an INI file, one `provider group=PFC group` entry per line:
+
+```
+[GroupMap]
+app-administrators=admin
+app-users=user
+```
+
+```
+string ls_mapped[]
+this.inv_security.of_MapGroups &
+   (lnv_openid.is_groups, ls_inifile, "GroupMap", ls_mapped)
+this.inv_security.of_InitSecurity &
+   (itr_sec, "EISAPP", gnv_app.of_GetUserID(), ls_mapped, "")
+```
+
+Names are compared without regard to case. A group that isn't in the mapping is passed on unchanged, and a group mapped to nothing (`app-guests=`) is dropped. To sign users in with OpenID Connect and get their groups, use the n_cst_appmanager of_OpenIDLogonDlg function, which opens w_openid_logon (see the *PFC Object Reference*). When membership comes from an identity provider, set the Security Administrator's ExternalGroupMembership option, as described in Chapter 7, "PFC Utilities".
 
 **Keeping restrictions in place (PFC 2025 and later)** of_SetSecurity applies the settings when you call it. Code that later sets a control's Enabled or Visible property, for example to enable a Save button when data changes, can undo them. There are two ways to prevent that:
 
