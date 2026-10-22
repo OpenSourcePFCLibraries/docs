@@ -34,6 +34,19 @@ To use this object:
 
 3. Call other n_cst_winsrv_statusbar functions as appropriate.
 
+**Colors and UI themes (PFC 2025 and later)** By default, the status bar uses the system ButtonFace color for its background (no color of its own when a UI theme is applied) and the Window Text color for its text. To use other colors, call of_SetBackgroundColor and of_SetTextColor. The status bar items are drawn by a DataWindow that the service creates at run time, and UI themes don't style it. In a themed application, set the colors of the theme's status bar with these functions, and give the status bar window the same background color in your theme file:
+
+```
+{
+	"w_statusbar.dw_statusbar":
+	{
+		"drawing":true,
+		"background-color-enabled":true,
+		"background-color":"#CCCCCC"
+	}
+}
+```
+
 **PFC 7 custom class extension** To further the extendibility of PFC, a new n_cst_winsrv_statusbarattrib custom class user object replaces the os_dwobjects object structure that is now obsolete.
 
 **See also**
@@ -89,10 +102,12 @@ N_cst_winsrv_statusbar includes instance variables:
 | ii_refreshrate | Number of seconds between refreshes | Integer | Protected | Set with of_SetRefreshRate (default is 60) |
 | ii_timerwidth | Width of timer item | Integer | Protected | Set with of_SetTimerWidth (default is 400) |
 | ii_userwidth | Width of user memory item | Integer | Protected | Set with of_SetUserWidth (default is 270) |
+| il_backgroundcolor | Status bar background color (PFC 2025 and later) | Long | Protected | Set with of_SetBackgroundColor (default is -1 - not set: the system ButtonFace color, or none with a UI theme) |
 | il_barfillcolor | Progress bar fill color | Long | Protected | Set with of_SetBarFillColor (default is 10789024 - medium gray) |
 | il_bartextcolor | Progress bar text | Long | Protected | Set with of_SetBarTextColor (default is 0 - black) |
 | il_gdithreshold | Threshold under which a warning displays | Long | Protected | Set with of_SetGDIThreshold |
 | il_memthreshold | Threshold under which a warning displays | Long | Protected | Set with of_SetMemThreshold |
+| il_textcolor | Status bar text color (PFC 2025 and later) | Long | Protected | Set with of_SetTextColor (default is -1 - not set: the Window Text color) |
 | il_timerinterval | In milliseconds | Long | Protected | Set with of_SetTimerInterval (default is 1000) |
 | il_userthreshold | Threshold under which a warning displays | Long | Protected | Set with of_SetUserThreshold |
 | ill_memthreshold |  | LongLong | Protected |  |
@@ -357,6 +372,7 @@ N_cst_winsrv_statusbar includes precoded object functions:
 - of_Register
 - of_RegisterPredefined
 - of_RestoreFocusPoint
+- of_SetBackgroundColor (PFC 2025 and later)
 - of_SetBar
 - of_SetBarAutoReset
 - of_SetBarDisplayStyle
@@ -379,6 +395,7 @@ N_cst_winsrv_statusbar includes precoded object functions:
 - of_SetMemThreshold
 - of_SetMemWidth
 - of_SetRefreshRate
+- of_SetTextColor (PFC 2025 and later)
 - of_SetTimer
 - of_SetTimerFormat
 - of_SetTimerInterval
@@ -1816,6 +1833,50 @@ IF ab_switch THEN
 ...
 ```
 
+### of_SetBackgroundColor
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Sets the background color of the status bar.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_SetBackgroundColor ( color )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_winsrv_statusbar (the w_frame default is inv_statusbar) |
+| *color* | Long specifying the background color (an RGB value or a system color) |
+
+**Return value**
+
+Integer. Returns 1 if the function succeeds and -1 if the color isn't valid.
+
+**Usage**
+
+Without this function, the status bar uses the system ButtonFace color, or no color of its own when a UI theme is applied. You can call it before or after the status bar opens. UI themes don't style the status bar items: see "Colors and UI themes" in the Usage section above.
+
+**Examples**
+
+This example from a w_frame pfc_PreOpen event gives the status bar a light gray background:
+
+```
+this.inv_statusbar.of_SetBackgroundColor &
+   (RGB(204, 204, 204))
+```
+
+**See also**
+
+of_SetTextColor
+
 ### of_SetBar
 
 **Description**
@@ -2673,6 +2734,52 @@ w_frame   lw_frame
 lw_frame = gnv_app.of_GetFrame()
 lw_frame.inv_statusbar.of_SetRefreshRate(30)
 ```
+
+### of_SetTextColor
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Sets the color of the status bar text.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_SetTextColor ( color )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_winsrv_statusbar (the w_frame default is inv_statusbar) |
+| *color* | Long specifying the text color (an RGB value or a system color) |
+
+**Return value**
+
+Integer. Returns 1 if the function succeeds and -1 if the color isn't valid.
+
+**Usage**
+
+Without this function, the status bar text uses the Window Text color. The color applies to the status bar items (text, the time, and memory and GDI readings), but not to the progress bar text, which you set with of_SetBarTextColor. You can call it before or after the status bar opens. Use it with a dark UI theme, which doesn't style the status bar items: see "Colors and UI themes" in the Usage section above.
+
+**Examples**
+
+This example from a w_frame pfc_PreOpen event gives the status bar a dark background with light text:
+
+```
+this.inv_statusbar.of_SetBackgroundColor &
+   (RGB(38, 38, 38))
+this.inv_statusbar.of_SetTextColor &
+   (RGB(204, 204, 204))
+```
+
+**See also**
+
+of_SetBackgroundColor, of_SetBarTextColor
 
 ### of_SetTimer
 
