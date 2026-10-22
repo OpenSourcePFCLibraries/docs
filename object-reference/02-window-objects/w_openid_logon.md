@@ -4,7 +4,7 @@
 
 **Description**
 
-OpenID Connect logon window. Signs the user in with an OpenID Connect identity provider, using the OAuth 2.0 password grant, and reads the groups the user belongs to from the provider's userinfo endpoint.
+OpenID Connect logon window. Signs the user in with an OpenID Connect identity provider, using the OAuth 2.0 password grant, and reads the groups the user belongs to from the provider's userinfo endpoint or, if that doesn't return them, from the ID token.
 
 **Ancestry**
 
@@ -22,6 +22,10 @@ Open this window with the n_cst_appmanager of_OpenIDLogonDlg function, which pas
 The password is never stored in the attribute object. If the identity provider refuses the logon, the window displays a message and stays open so the user can try again.
 
 When the n_cst_openidattrib ib_showresponses variable is TRUE, the window shows the identity provider's responses and lets the user choose the PowerBuilder object used for the token request (OAuthClient or HTTPClient). This is meant for demonstrations.
+
+**Where the groups come from** The groups are read from the claim named in the n_cst_openidattrib is_groupsclaim variable (`groups` by default). The window reads it from the userinfo response. Some identity providers, such as Microsoft Entra ID, don't return groups or roles from the userinfo endpoint, only in the ID token. When the userinfo response has no groups, the window reads the claim from the ID token that the token endpoint returned with the access token (the `openid` scope must be requested). The ID token is used only if its audience (`aud`) is the application's client ID.
+
+The ID token's signature isn't checked: the token comes directly from the token endpoint, so the connection to the identity provider authenticates it, as OpenID Connect Core 1.0 (section 3.1.3.7) allows. Use HTTPS for the token endpoint.
 
 **See also**
 
@@ -83,7 +87,7 @@ None.
 
 **Description**
 
-Signs the user in with the identity provider and reads the user's groups. On success, the window closes and returns the n_cst_openidattrib object with the user ID, access token, userinfo response, and groups.
+Signs the user in with the identity provider and reads the user's groups, from the userinfo response or, if it has none, from the ID token. On success, the window closes and returns the n_cst_openidattrib object with the user ID, access token, ID token, userinfo response, and groups.
 
 **Syntax**
 
@@ -102,6 +106,66 @@ None.
 ## Functions
 
 W_openid_logon includes these functions:
+
+### of_DecodeIDToken
+
+**Description**
+
+Decodes the claims of an ID token.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_DecodeIDToken ( idtoken )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of w_openid_logon |
+| *idtoken* | String. An ID token (a JSON Web Token: header, payload, and signature separated by periods) |
+
+**Return value**
+
+String. The token's claims (its decoded payload, a JSON object), or an empty string if *idtoken* isn't a JSON Web Token.
+
+**Usage**
+
+The signature isn't checked. See "Where the groups come from" above.
+
+### of_GetGroups
+
+**Description**
+
+Reads a groups claim from a JSON object.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_GetGroups ( json, claim, groups )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of w_openid_logon |
+| *json* | String. A JSON object, such as a userinfo response or the claims of an ID token |
+| *claim* | String. Name of the top-level claim with the groups, for example `groups` or `roles` |
+| *groups* | String array, passed by reference. The groups |
+
+**Return value**
+
+Integer. Returns the number of groups (0 if the claim isn't there) and -1 if *json* isn't a JSON object.
+
+**Usage**
+
+The claim can be an array of strings or, with some providers when there is only one group, a single string.
 
 ### of_JSONString
 
@@ -129,11 +193,40 @@ instancename.of_JSONString ( json, key )
 
 String. The value, or an empty string if it isn't there.
 
+### of_LoadIDTokenGroups
+
+**Description**
+
+Reads the groups claim from the ID token, for identity providers that don't return it from the userinfo endpoint.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_LoadIDTokenGroups ( idtoken )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of w_openid_logon |
+| *idtoken* | String. The ID token from the token endpoint |
+
+**Return value**
+
+Integer. Returns the number of groups (stored in inv_openidattrib) and -1 if there is no ID token, it can't be decoded, or its audience isn't the client ID.
+
+**Usage**
+
+Called by pfc_Default when the userinfo response has no groups. The claim is the one named in the n_cst_openidattrib is_groupsclaim variable.
+
 ### of_LoadUserInfo
 
 **Description**
 
-Reads the user's claims from the userinfo endpoint and keeps the groups claim.
+Reads the user's claims from the userinfo endpoint and keeps the groups claim (named in the n_cst_openidattrib is_groupsclaim variable).
 
 **Access**
 
@@ -178,7 +271,7 @@ instancename.of_Login_HTTPClient ( userid, password )
 
 **Return value**
 
-Integer. Returns 1 if the user signs in (the access token is stored in inv_openidattrib), -1 if the identity provider refuses the logon, and -2 if it can't be reached.
+Integer. Returns 1 if the user signs in (the access token, and the ID token if the provider returned one, are stored in inv_openidattrib), -1 if the identity provider refuses the logon, and -2 if it can't be reached.
 
 ### of_Login_OAuthClient
 
@@ -204,7 +297,7 @@ instancename.of_Login_OAuthClient ( userid, password )
 
 **Return value**
 
-Integer. Returns 1 if the user signs in (the access token is stored in inv_openidattrib), -1 if the identity provider refuses the logon, and -2 if it can't be reached.
+Integer. Returns 1 if the user signs in (the access token, and the ID token if the provider returned one, are stored in inv_openidattrib), -1 if the identity provider refuses the logon, and -2 if it can't be reached.
 
 ### of_UrlEncode
 

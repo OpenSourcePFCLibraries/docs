@@ -1159,9 +1159,10 @@ Settings left empty in *openidattrib* are read from the `[OpenID]` section of th
 | ClientID | Client ID of the application, as registered with the identity provider |
 | Scope | Scopes to request (the default is `openid profile`) |
 | Client | `OAuthClient` (the default) or `HTTPClient`, the PowerBuilder object used for the token request |
+| GroupsClaim | Name of the claim with the user's groups (the default is `groups`; for Microsoft Entra ID app roles, `roles`) |
 | ShowResponses | 1 to show the identity provider's responses and the choice of client, for demonstrations |
 
-The dialog box requests a token with the OAuth 2.0 password grant, then reads the user's claims from the userinfo endpoint. If the user signs in, this function sets the user ID with of_SetUserID, and *openidattrib*.is_groups holds the groups from the provider's groups claim, which you can pass to the n_cst_security of_InitSecurity function.
+The dialog box requests a token with the OAuth 2.0 password grant, then reads the user's claims from the userinfo endpoint. If the userinfo response has no groups, as with Microsoft Entra ID, the groups are read from the ID token instead (see w_openid_logon). If the user signs in, this function sets the user ID with of_SetUserID, and *openidattrib*.is_groups holds the groups from the provider's groups claim, which you can pass to the n_cst_security of_InitSecurity function.
 
 The password grant has been deprecated in OAuth 2.1 and doesn't support multi-factor authentication. Use it only with identity providers and applications where that is acceptable.
 
