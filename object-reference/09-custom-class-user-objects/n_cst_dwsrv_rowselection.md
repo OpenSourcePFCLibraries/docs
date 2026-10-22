@@ -190,18 +190,17 @@ Processes row selection when the user presses the right mouse button.
 **Syntax**
 
 ```
-dwcontrol.instancename.Event pfc_RButtonDown ( flags, x, y )
+dwcontrol.instancename.Event pfc_RButtonDown ( x, y, row, dwo )
 ```
 
 | Argument | Description |
 | --- | --- |
 | *dwcontrol* | Instance name of the u_dw-based DataWindow control |
 | *instancename* | Instance name of n_cst_dwsrv_rowselection (the u_dw default is inv_rowselect) |
-| *flags* | Unsigned Long indicating the modifier keys and mouse buttons that are pressed. Values are: |
-|  | 1—Left mouse button 2—Right mouse button 4— SHIFT key 8— CTRL key 16—Middle mouse button |
-|  | From within the pfc_RButtonDown event, access this value through the *aul_flags* argument |
 | *x* | Integer indicating the *x* position of the mouse click. From within the pfc_RButtonDown event, access this value through the *ai_xpos* argument |
 | *y* | Integer indicating the *y* position of the mouse click. From within the pfc_RButtonDown event, access this value through the *ai_ypos* argument |
+| *row* | Long specifying the row that was clicked. From within the pfc_RButtonDown event, access this value through the *al_row* argument |
+| *dwo* | DWObject that was clicked. From within the pfc_RButtonDown event, access this value through the *dwo_obj* argument |
 
 **Return value**
 
@@ -220,18 +219,17 @@ Processes row selection when the user releases the right mouse button.
 **Syntax**
 
 ```
-dwcontrol.instancename.Event pfc_RButtonUp ( flags, x, y )
+dwcontrol.instancename.Event pfc_RButtonUp ( x, y, row, dwo )
 ```
 
 | Argument | Description |
 | --- | --- |
 | *dwcontrol* | Instance name of the u_dw-based DataWindow control |
 | *instancename* | Instance name of n_cst_dwsrv_rowselection (the u_dw default is inv_rowselect) |
-| *flags* | Unsigned Long indicating the modifier keys and mouse buttons that are pressed. Values are: |
-|  | 1—Left mouse button 2—Right mouse button 4— SHIFT key 8— CTRL key 16—Middle mouse button |
-|  | From within the pfc_RButtonUp event, access this value through the *aul_flags* argument |
 | *x* | Integer indicating the *x* position of the mouse click. From within the pfc_RButtonUp event, access this value through the *ai_xpos* argument |
 | *y* | Integer indicating the *y* position of the mouse click. From within the pfc_RButtonUp event, access this value through the *ai_ypos* argument |
+| *row* | Long specifying the row that was clicked. From within the pfc_RButtonUp event, access this value through the *al_row* argument |
+| *dwo* | DWObject that was clicked. From within the pfc_RButtonUp event, access this value through the *adwo_obj* argument |
 
 **Return value**
 

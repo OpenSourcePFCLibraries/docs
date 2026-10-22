@@ -170,17 +170,19 @@ Calls the n_cst_luw of_Update function, which in turn calls the of_Update functi
 **Syntax**
 
 ```
-instancename.EVENT pfc_Update ( controlarray )
+instancename.EVENT pfc_Update ( controlarray, accepttext, resetflag )
 ```
 
 | Argument | Description |
 | --- | --- |
 | *instancename* | Instance name of the u_base descendant |
 | *controlarray* | PowerObject array containing the controls to be updated. From within the pfc_Update event, access this value through the *apo_control* argument |
+| *accepttext* | Boolean specifying whether a control should perform an AcceptText before the update, where that applies. From within the pfc_Update event, access this value through the *ab_accepttext* argument |
+| *resetflag* | Boolean specifying whether a control should automatically reset its update flags. From within the pfc_Update event, access this value through the *ab_resetflag* argument |
 
 **Return value**
 
-Integer. Returns 1 if the event succeeds and -1 if one or more update errors occur.
+Integer. Returns 1 if all updates succeed, 0 if no action is taken, and -1 if one or more update errors occur.
 
 **Usage**
 
@@ -220,13 +222,14 @@ Calls the n_cst_luw of_UpdatesPending function, which in turn calls the of_Updat
 **Syntax**
 
 ```
-instancename.EVENT pfc_UpdatesPending ( controlarray )
+instancename.EVENT pfc_UpdatesPending ( controlarray, pending )
 ```
 
 | Argument | Description |
 | --- | --- |
 | *instancename* | Instance name of the u_base descendant |
 | *controlarray* | PowerObject array containing controls to be tested for pending updates |
+| *pending* | PowerObject array, passed by reference, in which the event returns the controls that have updates pending. From within the pfc_UpdatesPending event, access this value through the *apo_pending* argument |
 
 **Return value**
 

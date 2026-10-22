@@ -1369,13 +1369,14 @@ Public
 **Syntax**
 
 ```
-dwcontrol.instancename.of_SetDefaultHeaderSuffix ( )
+dwcontrol.instancename.of_SetDefaultHeaderSuffix ( suffix )
 ```
 
 | Argument | Description |
 | --- | --- |
 | *dwcontrol* | Instance name of the u_dw-based DataWindow control |
 | *instancename* | Instance name of n_cst_dwsrv (the u_dw default is inv_base) |
+| *suffix* | String specifying the suffix characters used for column labels and headers |
 
 **Return value**
 

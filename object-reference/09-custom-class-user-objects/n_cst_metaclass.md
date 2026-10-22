@@ -2040,7 +2040,7 @@ Public
 **Syntax**
 
 ```
-instancename.of_IsFunctionDefined (class, function )
+instancename.of_IsFunctionDefined ( class, function, argtypes {, librarylist } )
 ```
 
 | Argument | Description |
@@ -2048,6 +2048,8 @@ instancename.of_IsFunctionDefined (class, function )
 | *instancename* | Instance name of n_cst_metaclass |
 | *class* | String or ClassDefinition to be tested |
 | *function* | String specifying the function |
+| *argtypes* | String array containing the data types of the function's arguments, which identify the overload to look for |
+| *librarylist* (optional) | String array containing the library list from which to read the class information. You can pass it only when *class* is a String |
 
 **Return value**
 

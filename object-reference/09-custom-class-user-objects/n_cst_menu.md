@@ -239,12 +239,13 @@ Public
 **Syntax**
 
 ```
-instancename.of_SendMessage ( message )
+instancename.of_SendMessage ( source, message )
 ```
 
 | Argument | Description |
 | --- | --- |
 | *instancename* | Instance name of n_cst_menu |
+| *source* | Menu that is sending the message |
 | *message* | String specifying the user event to be triggered by the pfc_MessageRouter event |
 
 **Return value**
@@ -261,7 +262,7 @@ This example calls the of_SendMessage function:
 
 ```
 n_cst_menu  lnv_menu
-lnv_menu.of_SendMessage("pfc_Open")
+lnv_menu.of_SendMessage(this, "pfc_Open")
 ```
 
 ### of_ToolbarExists

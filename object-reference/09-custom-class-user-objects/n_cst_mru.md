@@ -1223,7 +1223,7 @@ Public
 **Syntax**
 
 ```
-application.instancename.of_UnRegister ( id )
+application.instancename.of_UnRegister ( id, itemcount )
 ```
 
 | Argument | Description |
@@ -1231,6 +1231,7 @@ application.instancename.of_UnRegister ( id )
 | *application* | Global variable of type n_cst_appmanager (must be gnv_app) |
 | *instancename* | Instance name of n_cst_mru (the n_cst_appmanager default is inv_mru) |
 | *id* | String containing the id to be removed |
+| *itemcount* | Integer. Not used by the function; pass any value, for example 0 |
 
 **Return value**
 
@@ -1241,7 +1242,7 @@ Integer. Returns 1 if the function succeeds and -1 if an error occurs.
 This example calls the of_UnRegister function:
 
 ```
-gmv_app.inv_mru.of_UnRegister("empinfo")
+gnv_app.inv_mru.of_UnRegister("empinfo", 0)
 ```
 
 ### of_UpdateVisuals

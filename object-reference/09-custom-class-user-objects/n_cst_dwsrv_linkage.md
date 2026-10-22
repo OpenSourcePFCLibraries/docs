@@ -3274,13 +3274,14 @@ Public
 **Syntax**
 
 ```
-dwcontrol.instancename.of_SetUpdateOnRowChange ( )
+dwcontrol.instancename.of_SetUpdateOnRowChange ( switch )
 ```
 
 | Argument | Description |
 | --- | --- |
 | *dwcontrol* | Instance name of the u_dw-based DataWindow control |
 | *instancename* | Instance name of n_cst_dwsrv_linkage (the u_dw default is inv_linkage) |
+| *switch* | Boolean specifying whether the retrieval style's update-on-row-change feature is on (TRUE) or off (FALSE) |
 
 **Return value**
 

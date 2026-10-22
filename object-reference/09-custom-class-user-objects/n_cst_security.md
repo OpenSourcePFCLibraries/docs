@@ -180,6 +180,7 @@ N_cst_security includes many precoded object functions. The functions you call f
 - of_GetSystemType (PFC 2025 and later)
 - of_GetTag
 - of_GetType
+- of_InitItems (PFC 2025 and later)
 - of_InitScanProcess
 - of_InitSecurity
 - of_IsA (PFC 2025 and later)
@@ -639,6 +640,37 @@ instancename.of_GetType ( a_object, as_desc )
 **Return value**
 
 String. Name of the object type.
+
+### of_InitItems
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Sets up the item list and stores the settings once the groups the user belongs to (is_groups / ii_numgroups) have been determined. of_InitSecurity calls this function whether the user's groups come from the security database or from an external identity provider.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_InitItems ( atr_trans, as_appname, as_userid, as_defaultgroup, ab_precache )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_security |
+| *atr_trans* | n_tr. Transaction object used to connect to the security database |
+| *as_appname* | String. Application ID (lower case) |
+| *as_userid* | String. User ID (lower case) |
+| *as_defaultgroup* | String. Group to use if the user does not belong to one (lower case) |
+| *ab_precache* | Boolean. Whether to load all of the user's settings now |
+
+**Return value**
+
+Integer. Returns 1 if it succeeds and -1 if an error occurs retrieving the information.
 
 ### of_InitScanProcess
 

@@ -91,8 +91,8 @@ N_cst_tvsrv_levelsource includes instance variables:
 | BOTTOMUP_TOPDOWN | Constant set to 4 | Integer | Public | Use with of_SetUpdateStyle |
 | CACHE_ID | Constant set to "level" | String | Public | Internal |
 | CUSTOM | Constant set to 101 | Integer | Public | Use with of_SetUpdateStyle |
-| DELETE_ROWS | Constant set to 1 | Integer | Public | Internal |
-| DISCARD_ROWS | Constant set to 0 | Integer | Public | Internal |
+| DELETE_ROWS | Constant set to 0 | Integer | Public | Use with of_SetDeleteStyle |
+| DISCARD_ROWS | Constant set to 1 | Integer | Public | Use with of_SetDeleteStyle |
 | ib_confirmondelete | Indicates whether confirm on delete is enabled | Boolean | Protected | Set with of_SetConfirmOnDelete (default is FALSE) |
 | ib_isrefreshing | Indicates whether a refresh is occurring | Boolean | Protected | Internal |
 | ib_isundoing | Indicates whether an undo is occurring | Boolean | Protected | Internal |
@@ -1235,31 +1235,33 @@ Public
 **Syntax**
 
 ```
-tvcontrol.instancename.of_GetDeleteStyle ( )
+tvcontrol.instancename.of_GetDeleteStyle ( level )
 ```
 
 | Argument | Description |
 | --- | --- |
 | *tvcontrol* | Instance name of the u_tvs-based TreeView control |
 | *instancename* | Instance name of n_cst_tvsrv_levelsource (the u_tvs default is inv_levelsource) |
+| *level* | Integer specifying the TreeView level whose delete style you want |
 
 **Return value**
 
-Integer. Returns the current delete style:
+Integer. Returns the delete style for the level:
 
-- **0 or DEFAULT** Default deletion style
-- **1 or DELETE_ROWS** Delete rows from the database
-- **2 or DISCARD_ROWS** Discard rows from the DataStore buffer
+- **0 or DELETE_ROWS** Delete rows from the database (default)
+- **1 or DISCARD_ROWS** Discard rows from the DataStore buffer
+
+Returns -1 if *level* is not valid.
 
 **Examples**
 
-This example calls the of_GetDeleteStyle function:
+This example calls the of_GetDeleteStyle function for level 1:
 
 ```
 Integer  li_style
 
 li_style =  &
-   tv_1.inv_levelsource.of_GetDeleteStyle()
+   tv_1.inv_levelsource.of_GetDeleteStyle(1)
 MessageBox("Delete Style", "Delete style is "  &
    + String(li_style))
 ```
@@ -2871,8 +2873,8 @@ tvcontrol.instancename.of_SetDeleteStyle ( level, style )
 | *instancename* | Instance name of n_cst_tvsrv_levelsource (the u_tvs default is inv_levelsource) |
 | *level* | Integer specifying the TreeView level whose deletion style is specified |
 | *style* | Integer or n_cst_tvsrv_levelsource constant specifying how to handle deleted children: |
-|  | **• DISCARD_ROWS or 0** Discard child rows (default) |
-|  | **• DELETE_ROWS or 1** Delete child rows |
+|  | **• DELETE_ROWS or 0** Delete child rows (default) |
+|  | **• DISCARD_ROWS or 1** Discard child rows from the DataStore buffer |
 
 **Return value**
 
@@ -3265,11 +3267,11 @@ Integer. Returns 1 if the function succeeds and -1 if an error occurs.
 
 **Examples**
 
-This example calls the of_UnRegister function:
+This example calls the of_UnRegister function to unregister level 2:
 
 ```
 ...
-tv_1.inv_levelsource.of_UnRegister()
+tv_1.inv_levelsource.of_UnRegister(2)
 ...
 ```
 

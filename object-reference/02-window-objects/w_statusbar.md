@@ -21,6 +21,7 @@ W_statusbar includes instance variables:
 
 | Instance variable | Description | Data type | Access |
 | --- | --- | --- | --- |
+| ib_win10 | True when running on Windows 10 or later, where the MicroHelp text position is adjusted (PFC 2025 and later) | Boolean | Protected |
 | ib_win95 |  | Boolean | Protected |
 | ienv_object |  | Environment | Protected |
 | ii_borderheight |  | Long | Protected |

@@ -367,18 +367,22 @@ Public
 **Syntax**
 
 ```
-dwcontrol.instancename.of_GetRegistered ( columns )
+dwcontrol.instancename.of_GetRegistered ( table, keycolumns, updateablecolumns, keyinplace, whereoption )
 ```
 
 | Argument | Description |
 | --- | --- |
 | *dwcontrol* | Instance name of the u_dw-based DataWindow control |
 | *instancename* | Instance name of n_cst_dwsrv_multitable (the u_dw default is inv_multitable) |
-| *columns* | String array into which the function places a list of registered columns (passed by reference) |
+| *table* | String specifying the table whose registration information you want |
+| *keycolumns* | String array into which the function places the registered key columns (passed by reference) |
+| *updateablecolumns* | String array into which the function places the registered updatable columns (passed by reference) |
+| *keyinplace* | Boolean into which the function places the registered Update Key In Place setting (passed by reference) |
+| *whereoption* | Integer into which the function places the registered WHERE clause option (passed by reference) |
 
 **Return value**
 
-Integer. Returns the number of entries in the *columns* array.
+Integer. Returns 1 if it succeeds and -1 if an error occurs.
 
 **Examples**
 
@@ -391,10 +395,10 @@ Boolean  lb_keyinplace
 Integer  li_whereoption
 Integer  li_count, li_loop
 
-li_count =  &
-  dw_1.inv_multitable.of_GetRegistered  &
+IF dw_1.inv_multitable.of_GetRegistered  &
     ("employee", ls_empkey, ls_updatable,  &
-      lb_keyinplace, li_whereoption)
+      lb_keyinplace, li_whereoption) < 0 THEN Return
+li_count = UpperBound(ls_empkey)
 lb_1.Reset()
 FOR li_loop = 1 to li_count
    lb_1.AddItem(ls_empkey[li_loop])

@@ -1633,13 +1633,14 @@ Public
 **Syntax**
 
 ```
-application.instancename.of_SetUser ( )
+application.instancename.of_SetUser ( user )
 ```
 
 | Argument | Description |
 | --- | --- |
 | *application* | Global variable of type n_cst_appmanager or a customized n_cst_appmanager descendant (must be gnv_app) |
 | *instancename* | Instance name of n_cst_error (the n_cst_appmanager default for this value is inv_error) |
+| *user* | String specifying the user of the application |
 
 **Return value**
 
