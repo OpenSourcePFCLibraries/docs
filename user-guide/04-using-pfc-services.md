@@ -497,14 +497,14 @@ this.inv_security.of_InitSecurity &
    (itr_sec, "EISAPP", gnv_app.of_GetUserID(), ls_mapped, "")
 ```
 
-Names are compared without regard to case. A group that isn't in the mapping is passed on unchanged, and a group mapped to nothing (`app-guests=`) is dropped. To sign users in with OpenID Connect and get their groups, use the n_cst_appmanager of_OpenIDLogonDlg function, which opens w_openid_logon (see the *PFC Object Reference*). When membership comes from an identity provider, set the Security Administrator's ExternalGroupMembership option, as described in Chapter 7, "PFC Utilities".
+Names are compared without regard to case. A group that isn't in the mapping is passed on unchanged, and a group mapped to nothing (`app-guests=`) is dropped. To sign users in with OpenID Connect and get their groups, use the n_cst_appmanager of_OpenIDLogonDlg function, which opens w_openid_logon (see the *PFC Object Reference*). With `Flow=code` in the `[OpenID]` section, users sign in in their web browser, with the identity provider's own sign-in page, so multi-factor authentication and single sign-on work; the default, `Flow=password`, asks for a user ID and password in the window instead. When membership comes from an identity provider, set the Security Administrator's ExternalGroupMembership option, as described in Chapter 7, "PFC Utilities".
 
 **Using Microsoft Entra ID (PFC 2025 and later)** Entra ID needs a little more setup than providers such as Authentik to give the same result:
 
 - Define app roles in the application's registration and assign users or groups to them, then set `GroupsClaim=roles` in the `[OpenID]` section so w_openid_logon reads the `roles` claim. (You can use the `groups` claim instead, but it holds group object IDs rather than names, so map the IDs with of_MapGroups, and Entra omits it for users in many groups.)
 - Set **Assignment required** on the enterprise application, so only users and groups assigned to it can sign in.
 - Entra's userinfo endpoint doesn't return roles or groups. w_openid_logon reads them from the ID token instead, so request the `openid` scope.
-- Entra discourages the password grant that w_openid_logon uses, and it doesn't support multi-factor authentication.
+- Use `Flow=code`, with the redirect URI `http://127.0.0.1/callback` under **Mobile and desktop applications** in the registration (Entra ignores the port for loopback addresses). Entra discourages the password grant (`Flow=password`), and it doesn't support multi-factor authentication.
 
 Scopes in Entra ID, such as `SMTP.Send`, are delegated permissions that a resource API checks: they authorize the application to act for the user, not the user's role in your application. Use app roles or groups for that.
 
@@ -612,6 +612,8 @@ st_status.Text = gnv_app.inv_language.of_GetText("app_status_ready", "Ready")
 **Generating the language file**
 
 `tools\New-PfcLanguageFile.ps1` generates the English language file from the PFC source, and `tools\New-PfcTranslation.ps1` makes a first translation of it from a Translation Toolkit dictionary. Run them again when PFC changes, to add new texts.
+
+Texts the dictionary doesn't have, or translates badly, can be translated by hand in an `additions.lng` file in the folder of the translated file, in the same format as the language file. New-PfcTranslation.ps1 uses those entries instead of the dictionary's, so they are kept each time you make the file again. The translations in the localization repository work this way.
 
 ### Transaction registration service
 

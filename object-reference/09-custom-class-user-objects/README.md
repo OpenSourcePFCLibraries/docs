@@ -67,6 +67,7 @@ The user objects are listed in alphabetical order. Each object’s discussion in
 - [n_cst_platform](n_cst_platform.md)
 - [n_cst_platformunicode](n_cst_platformunicode.md)
 - [n_cst_queue](n_cst_queue.md)
+- [n_cst_redirectlistener](n_cst_redirectlistener.md) (PFC 2025 and later)
 - [n_cst_resize](n_cst_resize.md)
 - [n_cst_rtefind](n_cst_rtefind.md)
 - [n_cst_security](n_cst_security.md)
