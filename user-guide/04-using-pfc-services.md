@@ -592,9 +592,15 @@ List box and drop-down list box items aren't translated, because code often uses
 
 **Your own texts**
 
-Your application can use the service for its own texts:
+Your application can use the service for its own texts. Keep them in the application's own language file, `lang\<application>.lng` (the name of the application object, for example `lang\peat.lng`), which the service reads after `lang\pfc.lng`. Its entries take precedence, so you can also correct PFC's texts there, and updating PFC's `pfc.lng` never touches your translations. To generate an English starting file from your source:
 
-- Captions of your windows: add entries for their English texts to the language file.
+```
+pwsh -File tools\New-PfcLanguageFile.ps1 -Source C:\MyApp\src -IdPrefix app_ -Except lang\pfc.lng -Output C:\MyApp\lang\myapp.lng
+```
+
+`-IdPrefix` is the prefix of your message IDs, and `-Except` leaves out the captions PFC's file already has.
+
+- Captions of your windows: add entries for their English texts to the application's language file.
 - Messages: call of_MessageBox with your own ID, and add the ID to the language file. For a message with values, use the of_MessageBox syntax that takes the values.
 - Other texts: call of_GetText with an ID and the English text, which is used when the file has no entry.
 - DataStores: call the n_cst_language of_Translate function after setting the DataObject.

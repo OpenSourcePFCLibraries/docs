@@ -23,7 +23,11 @@ Enable the service with the n_cst_appmanager of_SetLanguage function, before you
 this.of_SetLanguage(TRUE)
 ```
 
-When it is created, the service reads `lang\pfc.lng` in the application folder (the folder of the executable, or the current folder when the application runs in the PowerBuilder IDE), the same way PowerBuilder 2025 R2 reads its runtime messages from `lang\default.lng`. To translate PFC, put a language file for your language there; without one, PFC stays in English. Use of_SetLanguageFile to read another file, for example to let users choose a language.
+When it is created, the service reads `lang\pfc.lng` in the application folder (the folder of the executable, or the current folder when the application runs in the PowerBuilder IDE), the same way PowerBuilder 2025 R2 reads its runtime messages from `lang\default.lng`. To translate PFC, put a language file for your language there; without one, PFC stays in English.
+
+It then reads the application's own language file, `lang\<application>.lng`, where *application* is the name of the application object (for example `lang\peat.lng`). Its entries are added, and take precedence over those of `pfc.lng`. Keep your application's texts there, and your corrections of PFC's, so that updating PFC's `pfc.lng` never touches them.
+
+Use of_SetLanguageFile to start over with another file, for example to let users choose a language, and of_AddLanguageFile to add more files.
 
 PFC ships the English file, `lang\pfc.lng`, which `tools\New-PfcLanguageFile.ps1` generates from the PFC source. First translations for Danish, Dutch, French, German, Italian, Norwegian, Spanish and Swedish are in the [localization](https://github.com/OpenSourcePFCLibraries/localization) repository.
 
@@ -100,7 +104,8 @@ N_cst_language includes instance variables:
 | CAPTION | Constant: the prefix of the keys of captions in is_keys | String | Public |
 | DEFAULTFILE | Constant: "pfc.lng", the name of the language file in the lang folder of the application | String | Public |
 | il_count | The number of entries | Long | Protected |
-| is_file | The language file in use, or "" | String | Protected |
+| is_file | The language file in use (the first one read), or "" | String | Protected |
+| is_files[ ] | All the language files read, in order | String | Protected |
 | is_keys[ ] | The keys of the entries, sorted | String | Protected |
 | is_values[ ] | The texts of the entries | String | Protected |
 
@@ -112,11 +117,49 @@ N_cst_language includes these events:
 
 **Description**
 
-Reads the default language file, `lang\pfc.lng` in the application folder, if it exists.
+Reads the default language files, if they exist: `lang\pfc.lng` in the application folder, and then the application's own file (see of_GetDefaultApplicationFile).
 
 ## Functions
 
 N_cst_language includes these functions:
+
+### of_AddLanguageFile
+
+**Description**
+
+Reads another language file, keeping the entries read before. Its entries replace those with the same key.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_AddLanguageFile ( file )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_language (the n_cst_appmanager default for this is inv_language) |
+| *file* | String. The language file, with its path |
+
+**Return value**
+
+Integer. Returns 1 if the file was read, 0 if there is no such file, and -1 if it could not be read.
+
+**Usage**
+
+The service adds the application's default file itself when it is created. Use this function for other files, or to add the application's file for a language you chose with of_SetLanguageFile.
+
+**Examples**
+
+This example switches to German, for PFC and for the application:
+
+```
+gnv_app.inv_language.of_SetLanguageFile(is_appfolder + "lang\german\pfc.lng")
+gnv_app.inv_language.of_AddLanguageFile(is_appfolder + "lang\german\myapp.lng")
+```
 
 ### of_Escape
 
@@ -216,6 +259,30 @@ instancename.of_GetCount ( )
 
 Long. The number of entries.
 
+### of_GetDefaultApplicationFile
+
+**Description**
+
+Gets the application's default language file: `lang\<application>.lng` in the application folder, where *application* is the name of the application object.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_GetDefaultApplicationFile ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_language |
+
+**Return value**
+
+String. The file name, with its path.
+
 ### of_GetDefaultLanguageFile
 
 **Description**
@@ -288,7 +355,32 @@ instancename.of_GetLanguageFile ( )
 
 **Return value**
 
-String. The file name, with its path, or an empty string if no language file is in use.
+String. The first language file read (normally `lang\pfc.lng`), with its path, or an empty string if no language file is in use.
+
+### of_GetLanguageFiles
+
+**Description**
+
+Gets all the language files read.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_GetLanguageFiles ( files )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_language |
+| *files* | String array, passed by reference. The files, in the order they were read |
+
+**Return value**
+
+Integer. The number of files.
 
 ### of_GetMessage
 
