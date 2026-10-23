@@ -1170,6 +1170,7 @@ W_master includes precoded object functions:
 - of_GetCloseStatus
 - of_GetDWType
 - of_GetInfo
+- of_GetOrigSize (PFC 2025 and later)
 - of_GetSaveStatus
 - of_GetUpdateObjects
 - of_IsAlwaysValidate
@@ -1363,6 +1364,40 @@ MessageBox("Info",  &
   "Description: " + lnv_info.is_description  &
     + ". Name: " + lnv_info.is_name)
 ```
+
+### of_GetOrigSize
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Returns the size of the workspace the window's controls were laid out for: the resize service's original size.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_GetOrigSize ( width, height )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of w_master |
+| *width* | Integer, passed by reference. The width of the workspace at design time |
+| *height* | Integer, passed by reference. Its height |
+
+**Return value**
+
+None.
+
+**Usage**
+
+Called by of_SetResize. The design-time Width and Height (from the window's class definition) include the window's frame: the border, the title bar, the menu bar, and the scroll bars. The frame is the same size now as at design time, so the design-time workspace is the design size less the frame, which the function measures with Windows' window and client rectangles. (While the window opens, Windows makes it a little larger than its Width and Height, so PowerBuilder's Width and WorkSpaceWidth don't give the frame then.)
+
+If the design size can't be read, the function returns the current workspace size.
 
 ### of_GetSaveStatus
 
@@ -1853,6 +1888,8 @@ Integer. Returns 1 if the function succeeds, 0 if the service is already enabled
 **Usage**
 
 Use this function to create or destroy an instance of n_cst_resize. This instance is named inv_resize.
+
+The resize service starts with the window's original size: the size of the workspace the controls were laid out for in the window painter (see of_GetOrigSize). In PFC 2025 and later this is the design-time workspace, also when the window opens at another size, for example when PowerBuilder opens a sheet smaller because it doesn't fit in the frame, or when the window opens maximized. Earlier versions used the workspace at the time of_SetResize was called, which is a little larger than at design time while the window opens, so controls could be cut off at the right and bottom.
 
 **Examples**
 
