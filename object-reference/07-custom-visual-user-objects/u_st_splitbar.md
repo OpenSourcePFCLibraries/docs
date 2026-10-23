@@ -90,6 +90,7 @@ U_st_splitbar has instance variables:
 | --- | --- | --- | --- |
 | ABOVE_ANCHORED | Constant set to 7 | Integer | Public |
 | BELOW_ANCHORED | Constant set to 8 | Integer | Public |
+| ib_lbuttondown | TRUE while the user drags the splitbar: the left mouse button was pressed on it (PFC 2025 and later) | Boolean | Protected |
 | ib_supported |  | Boolean | Protected |
 | ii_LeftTopPosition[ ] |  | Integer | Protected |
 | ii_rightbottombound |  | Integer | Protected |
@@ -109,7 +110,7 @@ U_st_splitbar includes precoded events:
 |   |
 | --- |
 | Constructor MouseMove |
-| LButtonUp |
+| LButtonDown LButtonUp |
 
 ### Constructor
 
@@ -131,11 +132,23 @@ this.of_Register(lv_1, RIGHT)
 this.of_SetBarColor(RGB(192, 192, 192))
 ```
 
+### LButtonDown
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Starts a drag of the splitbar: the user pressed the left mouse button on it.
+
+**Usage**
+
+Only a drag that starts on the splitbar moves it. In earlier versions, pressing the button next to the splitbar and dragging across it moved the bar without resizing the registered objects.
+
 ### LButtonUp
 
 **Description**
 
-Calls the of_LButtonUp function.
+Ends the drag and calls the of_LButtonUp function.
 
 **Usage**
 
@@ -149,7 +162,7 @@ Calls the of_MouseMove function.
 
 **Usage**
 
-If the user presses the left mouse button, PFC uses this event to move the splitbar, refresh the location, and redraw if necessary.
+While the user drags the splitbar (the left mouse button was pressed on it and is still down), PFC uses this event to move the splitbar, refresh the location, and redraw if necessary.
 
 ## Functions
 
