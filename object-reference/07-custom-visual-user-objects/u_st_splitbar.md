@@ -53,7 +53,8 @@ U_st_splitbar has instance variables:
 | BELOW | Constant set to 4 | Integer | Public | Use with of_Register |
 | BOTTOMMOST | Constant set to 4 | Integer | Protected | Internal |
 | HORIZONTAL | Constant set to 2 | Integer | Public | Internal |
-| ib_performredraw | Controls redraw | Boolean | Protected | Internal |
+| ib_liveresize | TRUE if the registered objects resize while the bar moves (PFC 2025 and later) | Boolean | Protected | Set with of_SetLiveResize |
+| ib_performredraw | TRUE (the default): while the bar moves, the registered objects it passes over are redrawn, so the bar leaves no trace on them (of_Redraw) | Boolean | Protected | Internal |
 | idrg_lefttop[ ] | Upper-left coordinate for all registered controls | DragObject | Protected | Internal |
 | idwg_rightbottom[ ] | Lower-right coordinate for all registered controls | DragObject | Protected | Internal |
 | ii_barwidth | Thickness of splitbar | Integer | Protected | Internal |
@@ -175,6 +176,7 @@ U_st_splitbar contains precoded object functions:
 - of_GetInfo
 - of_GetMinObjectSize
 - of_GetVerticalPointer
+- of_IsLiveResize (PFC 2025 and later)
 - of_IsSupported
 - of_LButtonUp
 - of_MouseMove
@@ -184,6 +186,7 @@ U_st_splitbar contains precoded object functions:
 - of_SetBarColor
 - of_SetBarMoveColor
 - of_SetHorizontalPointer
+- of_SetLiveResize (PFC 2025 and later)
 - of_SetMinObjectSize
 - of_SetVerticalPointer
 - of_unRegister
@@ -449,6 +452,32 @@ ls_pointer = st_1.of_GetVerticalPointer()
 MessageBox("Splitbar", &
   "Vertical pointer is " + ls_pointer)
 ```
+
+### of_IsLiveResize
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Reports whether the registered objects resize while the user drags the splitbar (see of_SetLiveResize).
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_IsLiveResize ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_st_splitbar |
+
+**Return value**
+
+Boolean. Returns TRUE if they resize while the bar moves, and FALSE (the default) if they resize when the bar is dropped.
 
 ### of_IsSupported
 
@@ -799,6 +828,47 @@ This example calls the of_SetHorizontalPointer function:
 this.of_Register(tv_1, LEFT)
 this.of_Register(lv_1, RIGHT)
 this.of_SetHorizontalPointer ("SizeNS!")
+```
+
+### of_SetLiveResize
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Specifies whether the registered objects resize while the user drags the splitbar, or only when the bar is dropped.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_SetLiveResize ( switch )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of u_st_splitbar |
+| *switch* | Boolean. TRUE: the registered objects resize as the bar moves. FALSE (the default): they resize when the user releases the mouse button |
+
+**Return value**
+
+Integer. Returns 1 if the function succeeds and -1 if an error occurs.
+
+**Usage**
+
+Live resizing redraws the registered objects at every mouse move, which can be slow for objects that take long to redraw, such as DataWindows with many rows.
+
+**Examples**
+
+This example, in the splitbar's Constructor event, resizes the two DataWindows while the user drags the bar:
+
+```
+this.of_Register(dw_list, LEFT)
+this.of_Register(dw_detail, RIGHT)
+this.of_SetLiveResize(TRUE)
 ```
 
 ### of_SetMinObjectSize
