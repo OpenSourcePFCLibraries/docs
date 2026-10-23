@@ -165,11 +165,14 @@ The u_dw, u_tab, and u_tabpg Resize events call this event.
 N_cst_resize includes precoded object functions:
 
 - of_GetMinMaxPoints
+- of_GetMinSize (PFC 2025 and later)
 - of_getminmaxpoints_line
 - of_Register
 - of_Resize
+- of_IsWindowMinSize (PFC 2025 and later)
 - of_SetMinSize
 - of_SetOrigSize
+- of_SetWindowMinSize (PFC 2025 and later)
 - of_TypeOf
 - of_UnRegister
 
@@ -226,6 +229,34 @@ ELSE
 END IF
 ```
 
+### of_GetMinSize
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Returns the minimum size set with of_SetMinSize.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_GetMinSize ( minimumwidth, minimumheight )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_resize (the default is inv_resize) |
+| *minimumwidth* | Integer, passed by reference. The minimum width of the workspace |
+| *minimumheight* | Integer, passed by reference. The minimum height of the workspace |
+
+**Return value**
+
+Integer. Returns 1, or 0 if no minimum size is set.
+
 ### of_getminmaxpoints_line
 
 **Description**
@@ -254,6 +285,32 @@ instancename.of_getminmaxpoints_line ( awo_control, ai_x, ai_y, ai_width, ai_hei
 **Return value**
 
 Integer.
+
+### of_IsWindowMinSize
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Reports whether the user can make the window smaller than the minimum size (see of_SetWindowMinSize).
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_IsWindowMinSize ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_resize (the default is inv_resize) |
+
+**Return value**
+
+Boolean. Returns TRUE if the user can't make the window smaller than the minimum size, and FALSE (the default) if the user can.
 
 ### of_Register
 
@@ -414,6 +471,8 @@ END IF
 
 Establishes a minimum window size below which the resize service no longer modifies the position of registered controls.
 
+The size is that of the window's workspace (WorkSpaceWidth and WorkSpaceHeight), the area inside the border, title bar, and menu bar.
+
 **Access**
 
 Public
@@ -433,6 +492,10 @@ instancename.of_SetMinSize ( minimumwidth, minimumheight )
 **Return value**
 
 Integer. Returns 1 if the function succeeds and -1 if an error occurs.
+
+**Usage**
+
+By default, the user can still make the window smaller than the minimum size; only the controls stop moving and resizing. To stop the user from making the window smaller, call of_SetWindowMinSize(TRUE) (PFC 2025 and later).
 
 **Examples**
 
@@ -490,6 +553,48 @@ this.of_SetResize(TRUE)
 li_return = this.inv_resize.of_SetOrigSize &
    (this.width, this.height)
 ...
+```
+
+### of_SetWindowMinSize
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Specifies whether the user can make the window smaller than the minimum size set with of_SetMinSize.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_SetWindowMinSize ( switch )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_resize (the default is inv_resize) |
+| *switch* | Boolean. TRUE: the user can't make the window smaller than the minimum size. FALSE (the default): the window can be made smaller, and only the controls stop moving and resizing at the minimum size |
+
+**Return value**
+
+Integer. Returns 1 if the function succeeds and -1 if an error occurs.
+
+**Usage**
+
+The window (w_master) applies the limit in its pfc_GetMinMaxInfo event, which handles the Windows WM_GETMINMAXINFO message: the minimum size is that of the workspace, plus the window's frame (border, title bar, menu bar), so the workspace can't become smaller than the minimum size. Windows also applies it when a script resizes the window.
+
+**Examples**
+
+This example keeps the window at least as large as it is when it opens:
+
+```
+this.of_SetResize(TRUE)
+this.inv_resize.of_SetMinSize &
+   (this.WorkSpaceWidth(), this.WorkSpaceHeight())
+this.inv_resize.of_SetWindowMinSize(TRUE)
 ```
 
 ### of_TypeOf
