@@ -341,6 +341,10 @@ instancename.of_SetPosition ( )
 
 Integer. 1 if it succeeds and -1 if an error occurs.
 
+**Usage**
+
+The position comes from the frame's client area, as Windows reports it (PFC 2025 and later): the status bar is centered vertically in the MicroHelp bar, which is at the bottom of the client area, 12 units from its right end. This is correct whatever the theme, the border, and the title bar. Earlier versions worked it out from the frame's size less estimated border and title bar sizes, which put the status bar a few pixels off with some themes and Windows versions.
+
 ### of_SetBackgroundColor
 
 > Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
