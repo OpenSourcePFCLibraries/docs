@@ -95,6 +95,7 @@ W_master includes precoded events:
 - pfc_DBError
 - pfc_Descendant
 - pfc_EndTran
+- pfc_GetMinMaxInfo (PFC 2025 and later)
 - pfc_Help
 - pfc_MessageRouter
 - pfc_MicroHelp
@@ -323,6 +324,33 @@ For li_count = 1 to li_trans
 Next
 Return 0
 ```
+
+### pfc_GetMinMaxInfo
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Handles the Windows WM_GETMINMAXINFO message: when the resize service limits the window's size (n_cst_resize of_SetWindowMinSize), the user can't make the window smaller than the resize service's minimum size (n_cst_resize of_SetMinSize, a workspace size) plus the window's frame.
+
+**Syntax**
+
+```
+instancename.EVENT pfc_GetMinMaxInfo ( minmaxinfo )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of the w_master-based descendant |
+| *minmaxinfo* | The address of the MINMAXINFO structure that Windows passes |
+
+**Return value**
+
+Long. Returns 0.
+
+**Usage**
+
+The event only raises the minimum tracking size: a larger minimum that Windows sets is kept. A descendant window can still map its own event to pbm_getminmaxinfo.
 
 ### pfc_Help
 
