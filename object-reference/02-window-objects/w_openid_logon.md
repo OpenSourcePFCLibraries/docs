@@ -65,6 +65,7 @@ W_openid_logon includes instance variables:
 | ib_cancelled | TRUE if the user cancelled the wait for the browser (authorization code flow) | Boolean | Protected |
 | ib_waiting | TRUE while the window waits for the user to sign in in the browser | Boolean | Protected |
 | inv_listener | Redirect listener of the authorization code flow | n_cst_redirectlistener | Protected |
+| inv_oauth2 | The OAuth 2.0 token service whose helpers the window uses (see of_OAuth2) | n_cst_oauth2 | Protected |
 | inv_openidattrib | Settings and results of the logon | n_cst_openidattrib | Protected |
 | is_error | The identity provider's reason for refusing the sign-in (authorization code flow) | String | Protected |
 
@@ -591,6 +592,30 @@ instancename.of_Login_OAuthClient ( userid, password )
 **Return value**
 
 Integer. Returns 1 if the user signs in (the access token, and the ID token if the provider returned one, are stored in inv_openidattrib), -1 if the identity provider refuses the logon, and -2 if it can't be reached.
+
+### of_OAuth2
+
+**Description**
+
+Returns the OAuth 2.0 token service whose helpers the window uses: of_Base64Url, of_CodeChallenge, of_JSONString, of_RandomString, and of_UrlEncode call its functions of the same name.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_OAuth2 ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of w_openid_logon |
+
+**Return value**
+
+n_cst_oauth2. The token service (inv_oauth2), created when first needed.
 
 ### of_OpenBrowser
 

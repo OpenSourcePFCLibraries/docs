@@ -63,6 +63,7 @@ The user objects are listed in alphabetical order. Each object’s discussion in
 - [n_cst_nodebase](n_cst_nodebase.md)
 - [n_cst_nodecomparebase](n_cst_nodecomparebase.md)
 - [n_cst_numerical](n_cst_numerical.md)
+- [n_cst_oauth2](n_cst_oauth2.md) (PFC 2025 and later)
 - [n_cst_pbunitconversion](n_cst_pbunitconversion.md)
 - [n_cst_platform](n_cst_platform.md)
 - [n_cst_platformunicode](n_cst_platformunicode.md)

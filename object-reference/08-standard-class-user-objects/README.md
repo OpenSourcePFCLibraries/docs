@@ -32,6 +32,7 @@ The standard class user objects are listed in alphabetical order. Each object’
 - [n_ostm](n_ostm.md)
 - [n_pl](n_pl.md)
 - [n_restclient](n_restclient.md)
+- [n_smtpclient](n_smtpclient.md) (PFC 2025 and later)
 - [n_srv](n_srv.md)
 - [n_tmg](n_tmg.md)
 - [n_tr](n_tr.md)
