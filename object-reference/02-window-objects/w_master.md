@@ -367,6 +367,10 @@ This event is triggered when the user selects a menu choice that calls the of_Se
 
 All PFC visual controls, including u_dw, include events that work with the message router.
 
+**Print messages (PFC 2025 and later)** For pfc_Print and pfc_PrintImmediate, the window's event only stops the message when it returns 1, meaning the window printed. W_master's own pfc_Print and pfc_PrintImmediate fire pfc_preprint and post pfc_postprint and return 0, so File>Print and File>Print Immediate go on to the current control or the last active DataWindow, which prints. In earlier versions these messages never reached the DataWindow, because the window has a script for them.
+
+When no control has focus, the focus is the window itself, which has already been tried, so the message goes on to the last active DataWindow.
+
 ### pfc_MicroHelp
 
 **Description**
@@ -623,7 +627,7 @@ END IF
 
 **Description**
 
-No description is available.
+Empty user event into which you place processing to do after printing. W_master's pfc_Print and pfc_PrintImmediate events post it, so it runs after the window or DataWindow has printed.
 
 **Syntax**
 
@@ -774,7 +778,7 @@ END IF
 
 **Description**
 
-No description is available.
+Empty user event into which you place processing to do before printing. W_master's pfc_Print and pfc_PrintImmediate events trigger it before the window or DataWindow prints.
 
 **Syntax**
 
@@ -825,13 +829,17 @@ END IF
 
 **Description**
 
-Empty user event into which you place code that prints windows or DataWindows, first displaying the Print dialog box.
+User event into which you place code that prints windows or DataWindows, first displaying the Print dialog box. In w_master it triggers pfc_preprint and posts pfc_postprint.
+
+**Return value**
+
+Integer. Return 1 if the window printed, 0 if it didn't (the default), and -1 if an error occurs.
 
 **Usage**
 
 Extend this event to print application- and window-specific information. For example, you might print a single DataWindow. Alternatively, you might call the DataWindow report service’s of_CreateComposite function to create a composite report of all the window’s DataWindows.
 
-This event is triggered when the user selects File>Print from the menu bar of a menu that descends from the PFC m_master menu.
+This event is triggered when the user selects File>Print from the menu bar of a menu that descends from the PFC m_master menu. If you don't extend it, or your extension returns 0, the message router passes the message on to the current control or the last active DataWindow, which prints (PFC 2025 and later; see pfc_MessageRouter). If your extension prints, return 1, so that the DataWindow doesn't print as well.
 
 **Examples**
 
@@ -854,13 +862,17 @@ END IF
 
 **Description**
 
-Empty user event into which you place code that prints windows or DataWindows without displaying the Print dialog box.
+User event into which you place code that prints windows or DataWindows without displaying the Print dialog box. In w_master it triggers pfc_preprint and posts pfc_postprint.
+
+**Return value**
+
+Integer. Return 1 if the window printed, 0 if it didn't (the default), and -1 if an error occurs.
 
 **Usage**
 
 Extend this event to print application- and window-specific information.
 
-This event is triggered when the user selects File>Print Immediate from the menu bar of a menu that descends from the PFC m_master menu.
+This event is triggered when the user selects File>Print Immediate from the menu bar of a menu that descends from the PFC m_master menu. If you don't extend it, or your extension returns 0, the message router passes the message on to the current control or the last active DataWindow, which prints (PFC 2025 and later; see pfc_MessageRouter). If your extension prints, return 1, so that the DataWindow doesn't print as well.
 
 **Examples**
 
@@ -870,6 +882,7 @@ This example prints the dw_employee DataWindow:
 IF dw_employee.Event pfc_PrintImmediate( ) <> 1 THEN
   Return -1
 END IF
+Return 1
 ```
 
 ### pfc_Save
