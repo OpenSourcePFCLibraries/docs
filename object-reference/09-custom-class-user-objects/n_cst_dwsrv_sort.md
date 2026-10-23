@@ -175,6 +175,7 @@ N_cst_dwsrv_sort includes precoded object functions:
 - of_GetPropertyInfo
 - of_GetRegisterable
 - of_GetSort
+- of_GetSortDraw (PFC 2025 and later)
 - of_GetStyle
 - of_GetUseDisplay
 - of_GetVisibleOnly
@@ -487,6 +488,48 @@ MessageBox("Sort Service", "Sort is: " &
    + ls_sort)
 ```
 
+### of_GetSortDraw
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Returns the sort order indicator service, n_cst_dwsrv_sortdraw, for example to set its colors and alignment.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+dwcontrol.instancename.of_GetSortDraw ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *dwcontrol* | Instance name of the u_dw-based DataWindow control |
+| *instancename* | Instance name of n_cst_dwsrv_sort (the u_dw default is inv_sort) |
+
+**Return value**
+
+n_cst_dwsrv_sortdraw. The service, or an invalid reference when there is none: the service exists while column header sorting is on (of_SetColumnHeader).
+
+**Examples**
+
+This example draws the indicator in dark blue on the right side of the column header:
+
+```
+n_cst_dwsrv_sortdraw lnv_sortdraw
+
+dw_list.inv_sort.of_SetColumnHeader(TRUE)
+lnv_sortdraw = dw_list.inv_sort.of_GetSortDraw()
+IF IsValid(lnv_sortdraw) THEN
+   lnv_sortdraw.of_SetColorLinePrimary(RGB(0, 0, 128))
+   lnv_sortdraw.of_SetAlignment(lnv_sortdraw.RIGHT)
+END IF
+```
+
 ### of_GetStyle
 
 **Description**
@@ -681,6 +724,8 @@ Integer. Returns 1 if the function succeeds and -1 if an error occurs.
 The N-Up presentation style does not support column header sorting.
 
 If your DataWindow object uses column header suffixes other than _t, you must first call the n_cst_dwsrv of_SetDefaultHeaderSuffix function to specify the column header suffix.
+
+Column header sorting shows a sort order indicator in the header of the sort column, drawn by n_cst_dwsrv_sortdraw; of_SetColumnHeader(FALSE) removes it (PFC 2025 and later; before, it stayed). To change the indicator's colors or alignment, see of_GetSortDraw.
 
 **Examples**
 
