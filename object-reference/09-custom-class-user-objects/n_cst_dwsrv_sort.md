@@ -183,6 +183,7 @@ N_cst_dwsrv_sort includes precoded object functions:
 - of_SetExclude
 - of_SetSort
 - of_SetStyle
+- of_SetTableSort (PFC 2025 and later)
 - of_SetUseDisplay
 - of_SetVisibleOnly
 - of_Sort
@@ -467,7 +468,11 @@ dwcontrol.instancename.of_GetSort ( )
 
 **Return value**
 
-String. Returns the current sort expression for the DataWindow.
+String. Returns the current sort expression for the DataWindow, or an empty string if it has none.
+
+**Usage**
+
+**DataWindows that share data (PFC 2025 and later)** For a DataWindow that shares the data of another (ShareData), PowerBuilder keeps the sort in the primary DataWindow, and the secondary's DataWindow.Table.Sort property is `?`. The secondary's sort service therefore remembers the sorts it sets (see of_SetSort), and of_GetSort returns those. A sort set later on the primary isn't reflected in the secondary. When the secondary has no sort of its own, of_GetSort returns an empty string, not `?`.
 
 **Examples**
 
@@ -752,6 +757,8 @@ Integer. Returns 1 if the function succeeds, 0 if the user canceled out of the s
 
 To control the type of sort dialog box, call the of_SetStyle function.
 
+When the sort succeeds, the sort expression is also stored in the DataWindow's DataWindow.Table.Sort property (of_SetTableSort), so that of_GetSort, the PFC sort dialog boxes, and the sort order indicator can read it on a DataWindow that shares data (PFC 2025 and later; see of_GetSort). The PowerBuilder sort dialog box (the default style) doesn't tell the service the expression the user chose, so this isn't done for it.
+
 **Examples**
 
 This example calls the of_SetSort function:
@@ -817,6 +824,38 @@ dw_emplist.inv_sort.of_SetUseDisplay(TRUE)
 dw_emplist.inv_sort.of_SetStyle  &
   (dw_emplist.inv_sort.DRAGDROP)
 ```
+
+### of_SetTableSort
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Stores a sort expression in the DataWindow's DataWindow.Table.Sort property, so that it can be read on a DataWindow that shares data (see of_GetSort).
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+dwcontrol.instancename.of_SetTableSort ( sort )
+```
+
+| Argument | Description |
+| --- | --- |
+| *dwcontrol* | Instance name of the u_dw-based DataWindow control |
+| *instancename* | Instance name of n_cst_dwsrv_sort (the u_dw default is inv_sort) |
+| *sort* | String. The sort expression just set with SetSort |
+
+**Return value**
+
+None.
+
+**Usage**
+
+Called by of_SetSort after a successful SetSort. Nothing changes for a DataWindow that already reports the expression (a primary DataWindow, or one that doesn't share data).
 
 ### of_SetUseDisplay
 
