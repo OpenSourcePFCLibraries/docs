@@ -57,6 +57,14 @@ pwsh -File tests\run_tests.ps1 -Filter "n_cst_dwsrv_linkage_tests.test_null*"
 
 The script builds `pfc_tests`, runs it, and prints the results. It also writes `build\pfc_tests\results.xml` in JUnit format, which most build servers can display.
 
+**32-bit and 64-bit** PowerBuilder can build 32-bit and 64-bit executables, and PFC calls Windows functions whose pointer and handle sizes differ between them, such as Windows Sockets in n_cst_redirectlistener. The script builds a 32-bit test exe by default. To run the tests as a 64-bit exe too, pass `-Platform 64`; the results go to `build\pfc_tests-x64`:
+
+```
+pwsh -File tests\run_tests.ps1 -Platform 64
+```
+
+Run both when you change code that calls Windows functions. The script checks that the exe it built is the platform you asked for.
+
 | Exit code | Meaning |
 | --- | --- |
 | 0 | All tests passed |
