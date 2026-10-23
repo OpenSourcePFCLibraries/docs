@@ -1012,11 +1012,13 @@ ycoordinate )
 
 **Return value**
 
-Integer. Returns 1 if the function succeeds and -1 if an error occurs.
+Integer. Returns the number of lines in the text (lines are separated by `~r~n`) if the function succeeds and -1 if an error occurs.
 
 **Usage**
 
 Internal.
+
+The width is that of the widest line, measured with n_cst_platform of_GetTextSize, plus a space; the height is that of all the lines (PFC 2025 and later). Earlier versions used the width of the line with the most characters. The n_cst_dssrv_report function of the same name works the same way.
 
 **Examples**
 
