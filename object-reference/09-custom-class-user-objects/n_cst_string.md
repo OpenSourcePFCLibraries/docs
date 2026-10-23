@@ -53,6 +53,7 @@ N_cst_string includes precoded object functions:
 
 - of_ArrayToString
 - of_CountOccurrences
+- of_ExpressionString (PFC 2025 and later)
 - of_Format (PFC 2025 and later)
 - of_GetGlobalReplaceMethod
 - of_GetKeyValue
@@ -177,6 +178,50 @@ ll_count = inv_string.of_CountOccurrences &
 MessageBox("String", String(ll_count) &
     " occurrences of " + ls_target &
    + " within " + ls_source )
+```
+
+### of_ExpressionString
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Returns a value as a string in a DataWindow expression, for Find, SetFilter, or Evaluate: between single quotes, with each tilde (~) written as ~~ and each single quote written as ~'.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_ExpressionString ( value )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_string |
+| *value* | String. A value, for example a column's data or text the user typed |
+
+**Return value**
+
+String. The quoted value, or null if *value* is null.
+
+**Usage**
+
+A value put between quotes as it is makes the expression invalid when it contains a single quote, and changes its meaning when it contains a tilde (for example, `~t` is a tab in an expression). The DataWindow and DataStore services use this function for of_BuildExpression and of_BuildComparison.
+
+**Examples**
+
+This example finds the row for the name the user typed, which can be O'Brien:
+
+```
+n_cst_string  lnv_string
+long  ll_row
+
+ll_row = dw_1.Find("last_name = " + &
+   lnv_string.of_ExpressionString(sle_name.text), &
+   1, dw_1.RowCount())
 ```
 
 ### of_Format
