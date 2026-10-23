@@ -4,7 +4,7 @@
 
 **Description**
 
-Extension Base DataWindow service.
+Sort order indicator service. Draws the arrow that shows the sort column and order in a DataWindow's column header, for the n_cst_dwsrv_sort column header sorting (of_SetColumnHeader).
 
 **Ancestry**
 
@@ -15,6 +15,23 @@ Extension Base DataWindow service.
 - PFCDWSRV.PBL
 - PFEDWSRV.PBL
 
+**Usage**
+
+The sort service creates this service when column header sorting is turned on, and destroys it when it is turned off. To change the indicator's colors or alignment, get it with the n_cst_dwsrv_sort of_GetSortDraw function:
+
+```
+n_cst_dwsrv_sortdraw lnv_sortdraw
+
+dw_1.inv_sort.of_SetColumnHeader(TRUE)
+lnv_sortdraw = dw_1.inv_sort.of_GetSortDraw()
+IF IsValid(lnv_sortdraw) THEN
+   lnv_sortdraw.of_SetColorLinePrimary(RGB(0, 0, 128))
+   lnv_sortdraw.of_SetAlignment(lnv_sortdraw.RIGHT)
+END IF
+```
+
+To change how the indicator is drawn, extend n_cst_dwsrv_sortdraw (the extension layer) or a descendant of it: the instance variables and the drawing functions are protected (PFC 2025 and later; before, they were private, so the service couldn't be extended).
+
 ## Instance variables
 
 N_cst_dwsrv_sortdraw includes instance variables:
@@ -24,6 +41,14 @@ N_cst_dwsrv_sortdraw includes instance variables:
 | AUTO | Draw the sort indicator on the left side if the header text is centered, justified or right justified. | Integer | Public |
 | LEFT | Draw the sort indicator on the left side. | Integer | Public |
 | RIGHT | Draw the sort indicator on the right side. | Integer | Public |
+| ii_alignment | The alignment: LEFT, RIGHT, or AUTO (the default) | Integer | Protected |
+| il_primaryLineColor, il_secondaryLineColor, il_backGroundLineColor | The colors of the indicator's lines | Long | Protected |
+| invo_color | Color service | n_cst_color | Protected |
+| invo_conversion | Unit conversion service | n_cst_pbunitconversion | Protected |
+| is_band | The band the indicator is drawn in (the default is foreground) | String | Protected |
+| is_sortDWObject | The column header the indicator is drawn on | String | Protected |
+
+The variables above with Protected access were Private before PFC 2025.
 
 ## Functions
 
@@ -143,7 +168,7 @@ No description is available.
 
 **Access**
 
-Protected
+Public (PFC 2025 and later; protected before)
 
 **Syntax**
 
@@ -167,7 +192,7 @@ No description is available.
 
 **Access**
 
-Protected
+Public (PFC 2025 and later; protected before)
 
 **Syntax**
 
@@ -191,7 +216,7 @@ No description is available.
 
 **Access**
 
-Protected
+Public (PFC 2025 and later; protected before)
 
 **Syntax**
 
@@ -215,7 +240,7 @@ No description is available.
 
 **Access**
 
-Protected
+Public (PFC 2025 and later; protected before)
 
 **Syntax**
 
@@ -283,7 +308,7 @@ No description is available.
 
 **Access**
 
-Protected
+Public (PFC 2025 and later; protected before)
 
 **Syntax**
 
@@ -308,7 +333,7 @@ No description is available.
 
 **Access**
 
-Protected
+Public (PFC 2025 and later; protected before)
 
 **Syntax**
 
@@ -333,7 +358,7 @@ No description is available.
 
 **Access**
 
-Protected
+Public (PFC 2025 and later; protected before)
 
 **Syntax**
 
@@ -358,7 +383,7 @@ No description is available.
 
 **Access**
 
-Protected
+Public (PFC 2025 and later; protected before)
 
 **Syntax**
 
