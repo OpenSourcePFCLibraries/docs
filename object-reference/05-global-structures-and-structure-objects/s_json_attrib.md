@@ -1,5 +1,7 @@
 # s_json_attrib
 
+> Removed in PFC 2025. Available in the 2019 and 2022 versions of PFC. In PFC 2025 and later, use PowerBuilder's JSONParser and JSONGenerator objects instead.
+
 > Not covered in the original (PowerBuilder 9) edition of this reference. This page was generated from the PFC source code comments.
 
 **Description**

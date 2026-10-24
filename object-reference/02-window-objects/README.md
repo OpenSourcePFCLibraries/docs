@@ -12,7 +12,7 @@ The windows are listed in alphabetical order. The information for each window in
 
 - [w_about](w_about.md)
 - [w_child](w_child.md)
-- [w_debugjson](w_debugjson.md)
+- [w_debugjson](w_debugjson.md) (not in PFC 2025)
 - [w_debuglog](w_debuglog.md)
 - [w_ds_print](w_ds_print.md)
 - [w_dwproperty](w_dwproperty.md)

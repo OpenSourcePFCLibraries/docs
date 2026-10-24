@@ -46,7 +46,7 @@ The user objects are listed in alphabetical order. Each object’s discussion in
 - [n_cst_filesrv](n_cst_filesrv.md)
 - [n_cst_filesrvunicode](n_cst_filesrvunicode.md)
 - [n_cst_inifile](n_cst_inifile.md)
-- [n_cst_json](n_cst_json.md)
+- [n_cst_json](n_cst_json.md) (not in PFC 2025)
 - [n_cst_language](n_cst_language.md)
 - [n_cst_linkedlistbase](n_cst_linkedlistbase.md)
 - [n_cst_linkedlistnode](n_cst_linkedlistnode.md)
