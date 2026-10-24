@@ -34,7 +34,7 @@ To use this object:
 
 3. Call other n_cst_winsrv_statusbar functions as appropriate.
 
-**Colors and UI themes (PFC 2025 and later)** By default, the status bar uses the system ButtonFace color for its background (no color of its own when a UI theme is applied) and the Window Text color for its text. To use other colors, call of_SetBackgroundColor and of_SetTextColor. The status bar items are drawn by a DataWindow that the service creates at run time, and UI themes don't style it. In a themed application, set the colors of the theme's status bar with these functions, and give the status bar window the same background color in your theme file:
+**Colors and UI themes** By default, the status bar uses the system ButtonFace color for its background (no color of its own when a UI theme is applied) and the Window Text color for its text. To use other colors, call of_SetBackgroundColor and of_SetTextColor. The status bar items are drawn by a DataWindow that the service creates at run time, and UI themes don't style it. In a themed application, set the colors of the theme's status bar with these functions, and give the status bar window the same background color in your theme file:
 
 ```
 {
@@ -97,18 +97,18 @@ N_cst_winsrv_statusbar includes instance variables:
 | ii_memwidth | Width of memory item | Integer | Protected | Set with of_SetMemWidth (default is 350) |
 | ii_microhelpstartvalue |  | Integer | Protected |  |
 | ii_microhelpsubtractvalue |  | Integer | Protected |  |
-| ii_microhelpwin10subtractvalue | Amount subtracted from the MicroHelp height on Windows 10 and later (default 15) (PFC 2025 and later) | Integer | Protected |  |
+| ii_microhelpwin10subtractvalue | Amount subtracted from the MicroHelp height on Windows 10 and later (default 15) | Integer | Protected |  |
 | ii_microhelpwin3xsubtractvalue |  | Integer | Protected |  |
 | ii_microhelpwinnt3xsubtractvalue |  | Integer | Protected |  |
 | ii_refreshrate | Number of seconds between refreshes | Integer | Protected | Set with of_SetRefreshRate (default is 60) |
 | ii_timerwidth | Width of timer item | Integer | Protected | Set with of_SetTimerWidth (default is 400) |
 | ii_userwidth | Width of user memory item | Integer | Protected | Set with of_SetUserWidth (default is 270) |
-| il_backgroundcolor | Status bar background color (PFC 2025 and later) | Long | Protected | Set with of_SetBackgroundColor (default is -1 - not set: the system ButtonFace color, or none with a UI theme) |
+| il_backgroundcolor | Status bar background color | Long | Protected | Set with of_SetBackgroundColor (default is -1 - not set: the system ButtonFace color, or none with a UI theme) |
 | il_barfillcolor | Progress bar fill color | Long | Protected | Set with of_SetBarFillColor (default is 10789024 - medium gray) |
 | il_bartextcolor | Progress bar text | Long | Protected | Set with of_SetBarTextColor (default is 0 - black) |
 | il_gdithreshold | Threshold under which a warning displays | Long | Protected | Set with of_SetGDIThreshold |
 | il_memthreshold | Threshold under which a warning displays | Long | Protected | Set with of_SetMemThreshold |
-| il_textcolor | Status bar text color (PFC 2025 and later) | Long | Protected | Set with of_SetTextColor (default is -1 - not set: the Window Text color) |
+| il_textcolor | Status bar text color | Long | Protected | Set with of_SetTextColor (default is -1 - not set: the Window Text color) |
 | il_timerinterval | In milliseconds | Long | Protected | Set with of_SetTimerInterval (default is 1000) |
 | il_userthreshold | Threshold under which a warning displays | Long | Protected | Set with of_SetUserThreshold |
 | ill_memthreshold |  | LongLong | Protected |  |
@@ -373,7 +373,7 @@ N_cst_winsrv_statusbar includes precoded object functions:
 - of_Register
 - of_RegisterPredefined
 - of_RestoreFocusPoint
-- of_SetBackgroundColor (PFC 2025 and later)
+- of_SetBackgroundColor
 - of_SetBar
 - of_SetBarAutoReset
 - of_SetBarDisplayStyle
@@ -396,7 +396,7 @@ N_cst_winsrv_statusbar includes precoded object functions:
 - of_SetMemThreshold
 - of_SetMemWidth
 - of_SetRefreshRate
-- of_SetTextColor (PFC 2025 and later)
+- of_SetTextColor
 - of_SetTimer
 - of_SetTimerFormat
 - of_SetTimerInterval
@@ -1836,8 +1836,6 @@ IF ab_switch THEN
 
 ### of_SetBackgroundColor
 
-> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
-
 **Description**
 
 Sets the background color of the status bar.
@@ -2737,8 +2735,6 @@ lw_frame.inv_statusbar.of_SetRefreshRate(30)
 ```
 
 ### of_SetTextColor
-
-> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
 
 **Description**
 

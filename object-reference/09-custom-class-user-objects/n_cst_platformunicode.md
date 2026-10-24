@@ -344,7 +344,7 @@ Integer. Integer 1 if successful, -1 if an error occurrs.
 
 **Usage**
 
-For text with line breaks (`~r~n`, `~n`, or `~r`), *ai_width* is the width of the widest line and *ai_height* the height of all the lines; an empty line is as high as a line with a space (PFC 2025 and later). Earlier versions measured the text as one line.
+For text with line breaks (`~r~n`, `~n`, or `~r`), *ai_width* is the width of the widest line and *ai_height* the height of all the lines; an empty line is as high as a line with a space. Earlier versions measured the text as one line.
 
 ### of_GetUserID
 

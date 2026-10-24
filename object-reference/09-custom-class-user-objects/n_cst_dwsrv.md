@@ -150,7 +150,7 @@ Any. Returns the column’s value cast to the Any data type if the function succ
 
 Internal.
 
-A string value is quoted with n_cst_string of_ExpressionString, so a value that contains a single quote or a tilde gives a valid comparison (PFC 2025 and later). Pass the value as it is: don't escape it yourself.
+A string value is quoted with n_cst_string of_ExpressionString, so a value that contains a single quote or a tilde gives a valid comparison. Pass the value as it is: don't escape it yourself.
 
 **Examples**
 
@@ -200,7 +200,7 @@ Any. Returns a comparison string if the function succeeds and ! if an error occu
 
 Internal.
 
-A string value is quoted with n_cst_string of_ExpressionString, so a value that contains a single quote (O'Brien) or a tilde gives a valid expression (PFC 2025 and later). Pass the value as it is: don't escape it yourself. The n_cst_dssrv function of the same name, for DataStores, works the same way.
+A string value is quoted with n_cst_string of_ExpressionString, so a value that contains a single quote (O'Brien) or a tilde gives a valid expression. Pass the value as it is: don't escape it yourself. The n_cst_dssrv function of the same name, for DataStores, works the same way.
 
 **Examples**
 

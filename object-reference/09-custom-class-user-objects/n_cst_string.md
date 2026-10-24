@@ -53,7 +53,7 @@ N_cst_string includes precoded object functions:
 
 - of_ArrayToString
 - of_CountOccurrences
-- of_ExpressionString (PFC 2025 and later)
+- of_ExpressionString
 - of_Format (PFC 2025 and later)
 - of_GetGlobalReplaceMethod
 - of_GetKeyValue
@@ -181,8 +181,6 @@ MessageBox("String", String(ll_count) &
 ```
 
 ### of_ExpressionString
-
-> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
 
 **Description**
 

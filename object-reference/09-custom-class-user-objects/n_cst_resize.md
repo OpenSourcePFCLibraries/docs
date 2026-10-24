@@ -165,14 +165,14 @@ The u_dw, u_tab, and u_tabpg Resize events call this event.
 N_cst_resize includes precoded object functions:
 
 - of_GetMinMaxPoints
-- of_GetMinSize (PFC 2025 and later)
+- of_GetMinSize
 - of_getminmaxpoints_line
 - of_Register
 - of_Resize
-- of_IsWindowMinSize (PFC 2025 and later)
+- of_IsWindowMinSize
 - of_SetMinSize
 - of_SetOrigSize
-- of_SetWindowMinSize (PFC 2025 and later)
+- of_SetWindowMinSize
 - of_TypeOf
 - of_UnRegister
 
@@ -231,8 +231,6 @@ END IF
 
 ### of_GetMinSize
 
-> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
-
 **Description**
 
 Returns the minimum size set with of_SetMinSize.
@@ -287,8 +285,6 @@ instancename.of_getminmaxpoints_line ( awo_control, ai_x, ai_y, ai_width, ai_hei
 Integer.
 
 ### of_IsWindowMinSize
-
-> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
 
 **Description**
 
@@ -495,7 +491,7 @@ Integer. Returns 1 if the function succeeds and -1 if an error occurs.
 
 **Usage**
 
-By default, the user can still make the window smaller than the minimum size; only the controls stop moving and resizing. To stop the user from making the window smaller, call of_SetWindowMinSize(TRUE) (PFC 2025 and later).
+By default, the user can still make the window smaller than the minimum size; only the controls stop moving and resizing. To stop the user from making the window smaller, call of_SetWindowMinSize(TRUE).
 
 **Examples**
 
@@ -556,8 +552,6 @@ li_return = this.inv_resize.of_SetOrigSize &
 ```
 
 ### of_SetWindowMinSize
-
-> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
 
 **Description**
 

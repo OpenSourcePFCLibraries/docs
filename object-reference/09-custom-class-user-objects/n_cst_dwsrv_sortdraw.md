@@ -30,7 +30,7 @@ IF IsValid(lnv_sortdraw) THEN
 END IF
 ```
 
-To change how the indicator is drawn, extend n_cst_dwsrv_sortdraw (the extension layer) or a descendant of it: the instance variables and the drawing functions are protected (PFC 2025 and later; before, they were private, so the service couldn't be extended).
+To change how the indicator is drawn, extend n_cst_dwsrv_sortdraw (the extension layer) or a descendant of it: the instance variables and the drawing functions are protected (in earlier PFC releases they were private, so the service couldn't be extended).
 
 ## Instance variables
 
@@ -48,7 +48,7 @@ N_cst_dwsrv_sortdraw includes instance variables:
 | is_band | The band the indicator is drawn in (the default is foreground) | String | Protected |
 | is_sortDWObject | The column header the indicator is drawn on | String | Protected |
 
-The variables above with Protected access were Private before PFC 2025.
+The variables above with Protected access were Private in earlier PFC releases.
 
 ## Functions
 
@@ -168,7 +168,7 @@ No description is available.
 
 **Access**
 
-Public (PFC 2025 and later; protected before)
+Public (protected in earlier PFC releases)
 
 **Syntax**
 
@@ -192,7 +192,7 @@ No description is available.
 
 **Access**
 
-Public (PFC 2025 and later; protected before)
+Public (protected in earlier PFC releases)
 
 **Syntax**
 
@@ -216,7 +216,7 @@ No description is available.
 
 **Access**
 
-Public (PFC 2025 and later; protected before)
+Public (protected in earlier PFC releases)
 
 **Syntax**
 
@@ -240,7 +240,7 @@ No description is available.
 
 **Access**
 
-Public (PFC 2025 and later; protected before)
+Public (protected in earlier PFC releases)
 
 **Syntax**
 
@@ -308,7 +308,7 @@ No description is available.
 
 **Access**
 
-Public (PFC 2025 and later; protected before)
+Public (protected in earlier PFC releases)
 
 **Syntax**
 
@@ -333,7 +333,7 @@ No description is available.
 
 **Access**
 
-Public (PFC 2025 and later; protected before)
+Public (protected in earlier PFC releases)
 
 **Syntax**
 
@@ -358,7 +358,7 @@ No description is available.
 
 **Access**
 
-Public (PFC 2025 and later; protected before)
+Public (protected in earlier PFC releases)
 
 **Syntax**
 
@@ -383,7 +383,7 @@ No description is available.
 
 **Access**
 
-Public (PFC 2025 and later; protected before)
+Public (protected in earlier PFC releases)
 
 **Syntax**
 
