@@ -75,7 +75,7 @@ N_cst_debug includes instance variables:
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
 | ib_alwaysontop | Specifies whether the service displays the debug window on top of other windows | Boolean | Protected | Call of_SetAlwaysOnTop and of_GetAlwaysOnTop to access |
-| ids_debugjson |  | n_ds | Public |  |
+| ids_debugjson | The repository shown by w_debugjson (not in PFC 2025) | n_ds | Public |  |
 | PFC_BUILD_DATE | Build date | Date | Public | Informational |
 | PFC_FIXES | PFC revision level | Integer | Public | Informational |
 | PFC_MAJOR | PFC major revision level | Integer | Public | Informational |
@@ -117,12 +117,12 @@ This event destroys all objects used by the debugging service.
 N_cst_debug includes precoded functions:
 
 - of_ClearLog
-- of_CloseJSON
+- of_CloseJSON (not in PFC 2025)
 - of_GetAlwaysOnTop
 - of_IsDWProperty
 - of_IsLogOpen
 - of_Message
-- of_OpenJSON
+- of_OpenJSON (not in PFC 2025)
 - of_OpenLog
 - of_PrintLog
 - of_SetAlwaysOnTop
@@ -166,6 +166,8 @@ gnv_app.inv_debug.of_ClearLog()
 ```
 
 ### of_CloseJSON
+
+> Removed in PFC 2025. Available in the 2019 and 2022 versions of PFC. In PFC 2025 and later, use PowerBuilder's JSONParser and JSONGenerator objects instead.
 
 **Description**
 
@@ -320,6 +322,8 @@ li_return = gnv_app.inv_debug.of_Message &
 ```
 
 ### of_OpenJSON
+
+> Removed in PFC 2025. Available in the 2019 and 2022 versions of PFC. In PFC 2025 and later, use PowerBuilder's JSONParser and JSONGenerator objects instead.
 
 **Description**
 
