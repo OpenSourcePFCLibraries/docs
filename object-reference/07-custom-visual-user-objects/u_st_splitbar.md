@@ -53,7 +53,7 @@ U_st_splitbar has instance variables:
 | BELOW | Constant set to 4 | Integer | Public | Use with of_Register |
 | BOTTOMMOST | Constant set to 4 | Integer | Protected | Internal |
 | HORIZONTAL | Constant set to 2 | Integer | Public | Internal |
-| ib_liveresize | TRUE if the registered objects resize while the bar moves (PFC 2025 and later) | Boolean | Protected | Set with of_SetLiveResize |
+| ib_liveresize | TRUE if the registered objects resize while the bar moves | Boolean | Protected | Set with of_SetLiveResize |
 | ib_performredraw | TRUE (the default): while the bar moves, the registered objects it passes over are redrawn, so the bar leaves no trace on them (of_Redraw) | Boolean | Protected | Internal |
 | idrg_lefttop[ ] | Upper-left coordinate for all registered controls | DragObject | Protected | Internal |
 | idwg_rightbottom[ ] | Lower-right coordinate for all registered controls | DragObject | Protected | Internal |
@@ -91,7 +91,7 @@ U_st_splitbar has instance variables:
 | --- | --- | --- | --- |
 | ABOVE_ANCHORED | Constant set to 7 | Integer | Public |
 | BELOW_ANCHORED | Constant set to 8 | Integer | Public |
-| ib_lbuttondown | TRUE while the user drags the splitbar: the left mouse button was pressed on it (PFC 2025 and later) | Boolean | Protected |
+| ib_lbuttondown | TRUE while the user drags the splitbar: the left mouse button was pressed on it | Boolean | Protected |
 | ib_supported |  | Boolean | Protected |
 | ii_LeftTopPosition[ ] |  | Integer | Protected |
 | ii_rightbottombound |  | Integer | Protected |
@@ -135,8 +135,6 @@ this.of_SetBarColor(RGB(192, 192, 192))
 
 ### LButtonDown
 
-> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
-
 **Description**
 
 Starts a drag of the splitbar: the user pressed the left mouse button on it.
@@ -176,7 +174,7 @@ U_st_splitbar contains precoded object functions:
 - of_GetInfo
 - of_GetMinObjectSize
 - of_GetVerticalPointer
-- of_IsLiveResize (PFC 2025 and later)
+- of_IsLiveResize
 - of_IsSupported
 - of_LButtonUp
 - of_MouseMove
@@ -186,7 +184,7 @@ U_st_splitbar contains precoded object functions:
 - of_SetBarColor
 - of_SetBarMoveColor
 - of_SetHorizontalPointer
-- of_SetLiveResize (PFC 2025 and later)
+- of_SetLiveResize
 - of_SetMinObjectSize
 - of_SetVerticalPointer
 - of_unRegister
@@ -454,8 +452,6 @@ MessageBox("Splitbar", &
 ```
 
 ### of_IsLiveResize
-
-> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
 
 **Description**
 
@@ -831,8 +827,6 @@ this.of_SetHorizontalPointer ("SizeNS!")
 ```
 
 ### of_SetLiveResize
-
-> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
 
 **Description**
 

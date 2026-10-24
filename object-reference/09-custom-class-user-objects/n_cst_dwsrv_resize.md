@@ -79,11 +79,11 @@ N_cst_dwsrv_resize includes instance variables:
 | EMPTY | Constant set to an empty string | String | Protected | Internal |
 | FIXEDBOTTOM | Constant set to FixedToBottom | String | Public | Use with of_Register |
 | FIXEDBOTTOM_SCALERIGHT | Constant set to FixedToBottom&ScaleToRight | String | Public | Use with of_Register |
-| FIXEDCENTER | Constant set to FixedToCenter (PFC 2025 and later) | String | Public | Use with of_Register |
-| FIXEDCENTERBOTTOM | Constant set to FixedToCenterBottom (PFC 2025 and later) | String | Public | Use with of_Register |
-| FIXEDCENTERLEFT | Constant set to FixedToCenterLeft (PFC 2025 and later) | String | Public | Use with of_Register |
-| FIXEDCENTERRIGHT | Constant set to FixedToCenterRight (PFC 2025 and later) | String | Public | Use with of_Register |
-| FIXEDCENTERTOP | Constant set to FixedToCenterTop (PFC 2025 and later) | String | Public | Use with of_Register |
+| FIXEDCENTER | Constant set to FixedToCenter | String | Public | Use with of_Register |
+| FIXEDCENTERBOTTOM | Constant set to FixedToCenterBottom | String | Public | Use with of_Register |
+| FIXEDCENTERLEFT | Constant set to FixedToCenterLeft | String | Public | Use with of_Register |
+| FIXEDCENTERRIGHT | Constant set to FixedToCenterRight | String | Public | Use with of_Register |
+| FIXEDCENTERTOP | Constant set to FixedToCenterTop | String | Public | Use with of_Register |
 | FIXEDRIGHT | Constant set to FixedToRight | String | Public | Use with of_Register |
 | FIXEDRIGHT_SCALEBOTTOM | Constant set to FixedToRight&ScaleToBottom | String | Public | Use with of_Register |
 | FIXEDRIGHTBOTTOM | Constant set to FixedToRight&Bottom | String | Public | Use with of_Register |
@@ -541,7 +541,7 @@ dwcontrol.instancename.of_Register ( object, resizemethod )
 |  | • "ScaleToRight&Bottom" or SCALERIGHTBOTTOM |
 |  | • "FixedToRight&ScaleToBottom" or FIXEDRIGHT_SCALEBOTTOM |
 |  | • "FixedToBottom&ScaleToRight" or FIXEDBOTTOM_SCALERIGHT |
-|  | • "FixedToCenter" or FIXEDCENTER: moves half as far as the DataWindow grows, to the right and down, so the object stays centered (PFC 2025 and later) |
+|  | • "FixedToCenter" or FIXEDCENTER: moves half as far as the DataWindow grows, to the right and down, so the object stays centered |
 |  | • "FixedToCenterTop" or FIXEDCENTERTOP: stays centered horizontally, fixed to the top |
 |  | • "FixedToCenterBottom" or FIXEDCENTERBOTTOM: centered horizontally, fixed to the bottom |
 |  | • "FixedToCenterLeft" or FIXEDCENTERLEFT: fixed to the left, centered vertically |
@@ -650,7 +650,7 @@ dwcontrol.instancename.of_Register ( object, resizemethod )
 |  | • "ScaleToRight&Bottom" or SCALERIGHTBOTTOM |
 |  | • "FixedToRight&ScaleToBottom" or FIXEDRIGHT_SCALEBOTTOM |
 |  | • "FixedToBottom&ScaleToRight" or FIXEDBOTTOM_SCALERIGHT |
-|  | • "FixedToCenter" or FIXEDCENTER: moves half as far as the DataWindow grows, to the right and down, so the object stays centered (PFC 2025 and later) |
+|  | • "FixedToCenter" or FIXEDCENTER: moves half as far as the DataWindow grows, to the right and down, so the object stays centered |
 |  | • "FixedToCenterTop" or FIXEDCENTERTOP: stays centered horizontally, fixed to the top |
 |  | • "FixedToCenterBottom" or FIXEDCENTERBOTTOM: centered horizontally, fixed to the bottom |
 |  | • "FixedToCenterLeft" or FIXEDCENTERLEFT: fixed to the left, centered vertically |

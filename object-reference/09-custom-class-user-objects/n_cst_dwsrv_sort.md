@@ -175,7 +175,7 @@ N_cst_dwsrv_sort includes precoded object functions:
 - of_GetPropertyInfo
 - of_GetRegisterable
 - of_GetSort
-- of_GetSortDraw (PFC 2025 and later)
+- of_GetSortDraw
 - of_GetStyle
 - of_GetUseDisplay
 - of_GetVisibleOnly
@@ -184,7 +184,7 @@ N_cst_dwsrv_sort includes precoded object functions:
 - of_SetExclude
 - of_SetSort
 - of_SetStyle
-- of_SetTableSort (PFC 2025 and later)
+- of_SetTableSort
 - of_SetUseDisplay
 - of_SetVisibleOnly
 - of_Sort
@@ -473,7 +473,7 @@ String. Returns the current sort expression for the DataWindow, or an empty stri
 
 **Usage**
 
-**DataWindows that share data (PFC 2025 and later)** For a DataWindow that shares the data of another (ShareData), PowerBuilder keeps the sort in the primary DataWindow, and the secondary's DataWindow.Table.Sort property is `?`. The secondary's sort service therefore remembers the sorts it sets (see of_SetSort), and of_GetSort returns those. A sort set later on the primary isn't reflected in the secondary. When the secondary has no sort of its own, of_GetSort returns an empty string, not `?`.
+**DataWindows that share data** For a DataWindow that shares the data of another (ShareData), PowerBuilder keeps the sort in the primary DataWindow, and the secondary's DataWindow.Table.Sort property is `?`. The secondary's sort service therefore remembers the sorts it sets (see of_SetSort), and of_GetSort returns those. A sort set later on the primary isn't reflected in the secondary. When the secondary has no sort of its own, of_GetSort returns an empty string, not `?`.
 
 **Examples**
 
@@ -489,8 +489,6 @@ MessageBox("Sort Service", "Sort is: " &
 ```
 
 ### of_GetSortDraw
-
-> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
 
 **Description**
 
@@ -725,7 +723,7 @@ The N-Up presentation style does not support column header sorting.
 
 If your DataWindow object uses column header suffixes other than _t, you must first call the n_cst_dwsrv of_SetDefaultHeaderSuffix function to specify the column header suffix.
 
-Column header sorting shows a sort order indicator in the header of the sort column, drawn by n_cst_dwsrv_sortdraw; of_SetColumnHeader(FALSE) removes it (PFC 2025 and later; before, it stayed). To change the indicator's colors or alignment, see of_GetSortDraw.
+Column header sorting shows a sort order indicator in the header of the sort column, drawn by n_cst_dwsrv_sortdraw; of_SetColumnHeader(FALSE) removes it (in earlier PFC releases, it stayed). To change the indicator's colors or alignment, see of_GetSortDraw.
 
 **Examples**
 
@@ -802,7 +800,7 @@ Integer. Returns 1 if the function succeeds, 0 if the user canceled out of the s
 
 To control the type of sort dialog box, call the of_SetStyle function.
 
-When the sort succeeds, the sort expression is also stored in the DataWindow's DataWindow.Table.Sort property (of_SetTableSort), so that of_GetSort, the PFC sort dialog boxes, and the sort order indicator can read it on a DataWindow that shares data (PFC 2025 and later; see of_GetSort). The PowerBuilder sort dialog box (the default style) doesn't tell the service the expression the user chose, so this isn't done for it.
+When the sort succeeds, the sort expression is also stored in the DataWindow's DataWindow.Table.Sort property (of_SetTableSort), so that of_GetSort, the PFC sort dialog boxes, and the sort order indicator can read it on a DataWindow that shares data (see of_GetSort). The PowerBuilder sort dialog box (the default style) doesn't tell the service the expression the user chose, so this isn't done for it.
 
 **Examples**
 
@@ -871,8 +869,6 @@ dw_emplist.inv_sort.of_SetStyle  &
 ```
 
 ### of_SetTableSort
-
-> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
 
 **Description**
 

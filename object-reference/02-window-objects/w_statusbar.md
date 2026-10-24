@@ -21,15 +21,15 @@ W_statusbar includes instance variables:
 
 | Instance variable | Description | Data type | Access |
 | --- | --- | --- | --- |
-| ib_win10 | True when running on Windows 10 or later, where the MicroHelp text position is adjusted (PFC 2025 and later) | Boolean | Protected |
+| ib_win10 | True when running on Windows 10 or later, where the MicroHelp text position is adjusted | Boolean | Protected |
 | ib_win95 |  | Boolean | Protected |
 | ienv_object |  | Environment | Protected |
 | ii_borderheight |  | Long | Protected |
 | ii_borderwidth |  | Long | Protected |
 | ii_secondstorefresh | one minute. | Integer | Protected |
 | ii_winmaxwidth |  | Integer | Protected |
-| il_backgroundcolor | Background color: the system ButtonFace color unless n_cst_winsrv_statusbar sets one (PFC 2025 and later; replaces il_buttonface) | Long | Protected |
-| il_textcolor | Text color: Window Text unless n_cst_winsrv_statusbar sets one (PFC 2025 and later) | Long | Protected |
+| il_backgroundcolor | Background color: the system ButtonFace color unless n_cst_winsrv_statusbar sets one (replaces il_buttonface) | Long | Protected |
+| il_textcolor | Text color: Window Text unless n_cst_winsrv_statusbar sets one | Long | Protected |
 | il_warningcolor | Red. | Long | Protected |
 | inv_platform |  | n_cst_platform | Protected |
 | iw_parentwindow |  | w_frame | Protected |
@@ -343,11 +343,9 @@ Integer. 1 if it succeeds and -1 if an error occurs.
 
 **Usage**
 
-The position comes from the frame's client area, as Windows reports it (PFC 2025 and later): the status bar is centered vertically in the MicroHelp bar, which is at the bottom of the client area, 12 units from its right end. This is correct whatever the theme, the border, and the title bar. Earlier versions worked it out from the frame's size less estimated border and title bar sizes, which put the status bar a few pixels off with some themes and Windows versions.
+The position comes from the frame's client area, as Windows reports it: the status bar is centered vertically in the MicroHelp bar, which is at the bottom of the client area, 12 units from its right end. This is correct whatever the theme, the border, and the title bar. Earlier versions worked it out from the frame's size less estimated border and title bar sizes, which put the status bar a few pixels off with some themes and Windows versions.
 
 ### of_SetBackgroundColor
-
-> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
 
 **Description**
 
@@ -398,8 +396,6 @@ instancename.of_setrefreshrate ( ai_seconds )
 Integer. 1 if it succeeds and -1 if an error occurs.
 
 ### of_SetTextColor
-
-> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
 
 **Description**
 

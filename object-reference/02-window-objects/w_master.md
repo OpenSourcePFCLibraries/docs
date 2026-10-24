@@ -95,7 +95,7 @@ W_master includes precoded events:
 - pfc_DBError
 - pfc_Descendant
 - pfc_EndTran
-- pfc_GetMinMaxInfo (PFC 2025 and later)
+- pfc_GetMinMaxInfo
 - pfc_Help
 - pfc_MessageRouter
 - pfc_MicroHelp
@@ -327,8 +327,6 @@ Return 0
 
 ### pfc_GetMinMaxInfo
 
-> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
-
 **Description**
 
 Handles the Windows WM_GETMINMAXINFO message: when the resize service limits the window's size (n_cst_resize of_SetWindowMinSize), the user can't make the window smaller than the resize service's minimum size (n_cst_resize of_SetMinSize, a workspace size) plus the window's frame.
@@ -395,7 +393,7 @@ This event is triggered when the user selects a menu choice that calls the of_Se
 
 All PFC visual controls, including u_dw, include events that work with the message router.
 
-**Print messages (PFC 2025 and later)** For pfc_Print and pfc_PrintImmediate, the window's event only stops the message when it returns 1, meaning the window printed. W_master's own pfc_Print and pfc_PrintImmediate fire pfc_preprint and post pfc_postprint and return 0, so File>Print and File>Print Immediate go on to the current control or the last active DataWindow, which prints. In earlier versions these messages never reached the DataWindow, because the window has a script for them.
+**Print messages** For pfc_Print and pfc_PrintImmediate, the window's event only stops the message when it returns 1, meaning the window printed. W_master's own pfc_Print and pfc_PrintImmediate fire pfc_preprint and post pfc_postprint and return 0, so File>Print and File>Print Immediate go on to the current control or the last active DataWindow, which prints. In earlier versions these messages never reached the DataWindow, because the window has a script for them.
 
 When no control has focus, the focus is the window itself, which has already been tried, so the message goes on to the last active DataWindow.
 
@@ -867,7 +865,7 @@ Integer. Return 1 if the window printed, 0 if it didn't (the default), and -1 if
 
 Extend this event to print application- and window-specific information. For example, you might print a single DataWindow. Alternatively, you might call the DataWindow report service’s of_CreateComposite function to create a composite report of all the window’s DataWindows.
 
-This event is triggered when the user selects File>Print from the menu bar of a menu that descends from the PFC m_master menu. If you don't extend it, or your extension returns 0, the message router passes the message on to the current control or the last active DataWindow, which prints (PFC 2025 and later; see pfc_MessageRouter). If your extension prints, return 1, so that the DataWindow doesn't print as well.
+This event is triggered when the user selects File>Print from the menu bar of a menu that descends from the PFC m_master menu. If you don't extend it, or your extension returns 0, the message router passes the message on to the current control or the last active DataWindow, which prints (see pfc_MessageRouter). If your extension prints, return 1, so that the DataWindow doesn't print as well.
 
 **Examples**
 
@@ -900,7 +898,7 @@ Integer. Return 1 if the window printed, 0 if it didn't (the default), and -1 if
 
 Extend this event to print application- and window-specific information.
 
-This event is triggered when the user selects File>Print Immediate from the menu bar of a menu that descends from the PFC m_master menu. If you don't extend it, or your extension returns 0, the message router passes the message on to the current control or the last active DataWindow, which prints (PFC 2025 and later; see pfc_MessageRouter). If your extension prints, return 1, so that the DataWindow doesn't print as well.
+This event is triggered when the user selects File>Print Immediate from the menu bar of a menu that descends from the PFC m_master menu. If you don't extend it, or your extension returns 0, the message router passes the message on to the current control or the last active DataWindow, which prints (see pfc_MessageRouter). If your extension prints, return 1, so that the DataWindow doesn't print as well.
 
 **Examples**
 
@@ -1198,7 +1196,7 @@ W_master includes precoded object functions:
 - of_GetCloseStatus
 - of_GetDWType
 - of_GetInfo
-- of_GetOrigSize (PFC 2025 and later)
+- of_GetOrigSize
 - of_GetSaveStatus
 - of_GetUpdateObjects
 - of_IsAlwaysValidate
@@ -1394,8 +1392,6 @@ MessageBox("Info",  &
 ```
 
 ### of_GetOrigSize
-
-> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
 
 **Description**
 
@@ -1917,7 +1913,7 @@ Integer. Returns 1 if the function succeeds, 0 if the service is already enabled
 
 Use this function to create or destroy an instance of n_cst_resize. This instance is named inv_resize.
 
-The resize service starts with the window's original size: the size of the workspace the controls were laid out for in the window painter (see of_GetOrigSize). In PFC 2025 and later this is the design-time workspace, also when the window opens at another size, for example when PowerBuilder opens a sheet smaller because it doesn't fit in the frame, or when the window opens maximized. Earlier versions used the workspace at the time of_SetResize was called, which is a little larger than at design time while the window opens, so controls could be cut off at the right and bottom.
+The resize service starts with the window's original size: the size of the workspace the controls were laid out for in the window painter (see of_GetOrigSize). This is the design-time workspace, also when the window opens at another size, for example when PowerBuilder opens a sheet smaller because it doesn't fit in the frame, or when the window opens maximized. Earlier versions used the workspace at the time of_SetResize was called, which is a little larger than at design time while the window opens, so controls could be cut off at the right and bottom.
 
 **Examples**
 
