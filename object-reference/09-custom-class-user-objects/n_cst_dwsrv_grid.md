@@ -185,6 +185,8 @@ Integer. 1, Success -1, Failure.
 
 This method is automatically called when the service is activated though the call of the method of_SetGrid(TRUE)
 
+It restores the user's layout when the application keeps user preferences (the application preference service has a user key or user INI file) and one was saved, and otherwise the layout saved at application level (see of_save).
+
 ### of_populate
 
 **Description**
@@ -295,7 +297,16 @@ Integer. 1, Success -1, Failure.
 
 **Usage**
 
-This method is automatically called when the method of_SetGrid(FALSE) is called at requestor dw control level.
+This method is automatically called when the method of_SetGrid(FALSE) is called at requestor dw control level, which u_dw also does when it is destroyed.
+
+The layout is saved through the application preference service (n_cst_apppreference), under the names of the window and the DataWindow control:
+
+- When the application keeps user preferences (a user key or user INI file), the layout is a user preference: it is saved as gridlayout.*window*.*control* under the user key, or in the AppUserPref section of the user INI file, so each user has a layout of their own.
+- Otherwise, it is saved at application level: under the application key, or in the application INI file in a section named after the window.
+
+Earlier PFC releases saved the layout only at application level, so an application with only user preferences didn't save it at all.
+
+An INI file must exist before the layout can be saved in it.
 
 ### of_setdialogtitle
 
