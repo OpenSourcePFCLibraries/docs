@@ -23,6 +23,14 @@ Add OK, Cancel, and window-specific CommandButtons to your w_response descendant
 
 w_master
 
+## Instance variables
+
+W_response includes instance variables:
+
+| Instance variable | Description | Data type | Access | Usage |
+| --- | --- | --- | --- | --- |
+| ib_FitWorkSpace | Controls whether the window is made larger at open when its work area is too small for its visible controls (see of_FitWorkSpace) | Boolean | Protected | Set in a descendant (default is TRUE) |
+
 ## Events
 
 W_response includes predefined events:
@@ -149,6 +157,9 @@ END IF
 
 Triggered from the top of the open event.
 
+Then, unless ib_FitWorkSpace is FALSE, it calls of_FitWorkSpace, so that the work area holds the window's controls before the descendant's open script runs.
+
+
 **Syntax**
 
 ```
@@ -182,3 +193,39 @@ instancename.EVENT ue_sysCommand ( )
 **Return value**
 
 None.
+
+## Functions
+
+W_response includes precoded object functions:
+
+- of_FitWorkSpace
+
+### of_FitWorkSpace
+
+**Description**
+
+Makes the window larger, if necessary, so that its work area holds its visible controls, with as much room on the right and at the bottom as on the left and at the top (at least 18 and at most 64 PowerBuilder units). Drawing objects are left out, and a drop-down list counts without the list that drops down. The window is never made smaller, and a window whose controls fit is not resized.
+
+**Access**
+
+Protected
+
+**Syntax**
+
+```
+instancename.of_FitWorkSpace ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of w_response |
+
+**Return value**
+
+Integer. Returns 1 if the window was made larger, 0 if its controls fit (or ib_FitWorkSpace is FALSE).
+
+**Usage**
+
+The pfc_preOpen event calls this function.
+
+PowerBuilder gives a window the work area of its design, with the current Windows frame around it; the Resize function, though, sets the size of the whole window, frame included. A descendant that resizes itself at open has to allow for the frame, whose size is known only once the window has been resized (pfc_w_restorerow resizes itself twice for that reason).
