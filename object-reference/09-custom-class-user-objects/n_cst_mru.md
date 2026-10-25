@@ -863,6 +863,10 @@ application.instancename.of_Reset ( {id } )
 
 Integer. Returns the number of rows removed if the function succeeds and -1 if an error occurs.
 
+**Usage**
+
+The items are removed from the registry or INI file too when the application closes and the service saves its lists (pfc_Close).
+
 **Examples**
 
 This example calls the of_Reset function:
@@ -1318,7 +1322,7 @@ Integer. Returns 1 if the function succeeds and -1 if an error occurs.
 
 **Usage**
 
-Internal.
+Internal.  An empty list is saved as empty, and the entries after the last item are cleared, so items no longer in the list are not read back the next time.
 
 **Examples**
 
