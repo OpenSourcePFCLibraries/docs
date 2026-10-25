@@ -39,8 +39,8 @@ N_cst_environment includes instance variables:
 | is_ComputerName | The NetBIOS name of the computer running this application. | String | Public |
 | is_OSEditionDesc | e.g., "Professional", "Home Premium". | String | Public |
 | is_OSServicePackDesc | Describes service pack level, e.g., "Service Pack 2". | String | Public |
-| is_OSSummaryDesc | e.g., "Windows 7 Professional, Service Pack 1 (64-bit)". | String | Public |
-| is_OSVersionDesc | e.g., "Windows XP", "Windows 7", "Windows Server 2003 R2". | String | Public |
+| is_OSSummaryDesc | e.g., "Windows 11 Professional (64-bit)", "Windows 7 Professional, Service Pack 1 (64-bit)". | String | Public |
+| is_OSVersionDesc | e.g., "Windows 11", "Windows 10", "Windows Server 2022", "Windows 7". | String | Public |
 | iui_NumColorsPowerOf2 | NumberOfColors = ( 2 ^ this_value ) - 1. | UInt | Public |
 | iui_OSMajorServicePack |  | UInt | Public |
 | iui_OSMinorServicePack |  | UInt | Public |
@@ -198,7 +198,7 @@ String.
 
 **Description**
 
-No description is available.
+Decodes the version information that of_GetOSInfo obtains, and sets the version and edition descriptions (is_OSVersionDesc, is_OSEditionDesc).  It names Windows NT 3.51 to Windows 11 and Windows Server 2003 to 2025.  Windows 10, Windows 11 and Windows Server 2016 and later are all version 10.0, so the build number tells them apart: Windows 11 from build 22000; Windows Server 2019 from 17763, 2022 from 20348 and 2025 from 26100.  Extend the pfc_OSVersionDesc and pfc_OSEditionDesc events to change the descriptions.
 
 **Syntax**
 
@@ -247,7 +247,7 @@ Integer. Integer 1 (SUCCESS) - PB environment object property values have been c
 
 **Description**
 
-Obtains and decodes information about the Windows operating system this application is executing under. Notes: This method is based on free sample PB code made written and made publicly available by Roland Smith (topwizprogramming.com), and has adapted for use in the PFC with his consent.
+Obtains and decodes information about the Windows operating system this application is executing under.  The version comes from the Windows RtlGetVersion function, which reports the real version whatever the application's manifest says; GetVersionEx, used if RtlGetVersion fails, reports version 6.2 (Windows 8) to applications whose manifest doesn't declare support for later versions. Notes: This method is based on free sample PB code made written and made publicly available by Roland Smith (topwizprogramming.com), and has adapted for use in the PFC with his consent.
 
 **Access**
 
