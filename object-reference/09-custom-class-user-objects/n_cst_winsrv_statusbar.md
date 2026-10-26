@@ -34,18 +34,9 @@ To use this object:
 
 3. Call other n_cst_winsrv_statusbar functions as appropriate.
 
-**Colors and UI themes** By default, the status bar uses the system ButtonFace color for its background (no color of its own when a UI theme is applied) and the Window Text color for its text. To use other colors, call of_SetBackgroundColor and of_SetTextColor. The status bar items are drawn by a DataWindow that the service creates at run time, and UI themes don't style it. In a themed application, set the colors of the theme's status bar with these functions, and give the status bar window the same background color in your theme file:
+**Colors and UI themes** The status bar is a popup window with a DataWindow that the service creates at run time, which UI themes don't style, so the service colors it itself (of_GetColors). For the background and for the text, it uses the color the application set with of_SetBackgroundColor or of_SetTextColor; otherwise the color of the current theme's status bar, the statusbar entry of the theme's window section (of_GetThemeColors); otherwise the system ButtonFace and Window Text colors.
 
-```
-{
-	"w_statusbar.dw_statusbar":
-	{
-		"drawing":true,
-		"background-color-enabled":true,
-		"background-color":"#CCCCCC"
-	}
-}
-```
+PowerBuilder has no event for a theme change.  Apply themes with gnv_app.of_ApplyTheme, which also refreshes the status bar at once; a theme applied with ApplyTheme reaches the status bar at its next refresh (of_CheckTheme, at the refresh rate).  The service finds the theme's theme.json in the folder given to of_ApplyTheme, or else in theme\<name> under the current directory, where a deployed application keeps its themes.
 
 **PFC 7 custom class extension** To further the extendibility of PFC, a new n_cst_winsrv_statusbarattrib custom class user object replaces the os_dwobjects object structure that is now obsolete.
 
@@ -343,6 +334,7 @@ N_cst_winsrv_statusbar includes precoded object functions:
 - of_BarReset
 - of_BarUpdateVisuals
 - of_CalculateMicrohelpHeight
+- of_CheckTheme
 - of_CreateDWObject
 - of_GetBar
 - of_GetBarDisplayStyle
@@ -356,12 +348,15 @@ N_cst_winsrv_statusbar includes precoded object functions:
 - of_GetBarTextColor
 - of_GetBarWidth
 - of_GetBorderType
+- of_GetColors
 - of_GetGapWidth
 - of_GetGDI
 - of_GetGDIThreshold
 - of_GetMem
 - of_GetMemThreshold
 - of_GetRefreshRate
+- of_GetThemeColors
+- of_GetThemeFile
 - of_GetTimer
 - of_GetTimerInterval
 - of_GetUser
@@ -370,6 +365,7 @@ N_cst_winsrv_statusbar includes precoded object functions:
 - of_IsPredefined
 - of_Modify
 - of_Open
+- of_RefreshThemeColors
 - of_Register
 - of_RegisterPredefined
 - of_RestoreFocusPoint
@@ -563,6 +559,34 @@ This example is from the of_CreateDWObject function:
 li_microhelpheight = of_CalculateMicroHelpHeight()
 ...
 ```
+
+### of_CheckTheme
+
+**Description**
+
+Refreshes the status bar's colors if the UI theme changed since they were last set.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_CheckTheme ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_winsrv_statusbar (the w_frame default is inv_statusbar) |
+
+**Return value**
+
+Integer. Returns 1 if the theme changed and the colors were refreshed, 0 if it didn't change.
+
+**Usage**
+
+The status bar calls this function at each refresh, so that it follows a theme applied with ApplyTheme anywhere in the application.
 
 ### of_CreateDWObject
 
@@ -1108,6 +1132,36 @@ MessageBox("Status Bar", &
         + ls_borderstyle[li_border + 1])
 ```
 
+### of_GetColors
+
+**Description**
+
+Gets the colors the status bar uses.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_GetColors ( background, text )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_winsrv_statusbar (the w_frame default is inv_statusbar) |
+| *background* | Long variable, passed by reference, for the background color |
+| *text* | Long variable, passed by reference, for the text color |
+
+**Return value**
+
+Integer. Returns 1.
+
+**Usage**
+
+Each color is the one the application set (of_SetBackgroundColor, of_SetTextColor), or else the current theme's (of_GetThemeColors), or else the system's (ButtonFace, as Windows has it, and Window Text).
+
 ### of_GetGapWidth
 
 **Description**
@@ -1356,6 +1410,61 @@ MessageBox("Status Bar", &
    "Refresh rate is " &
        + String(li_refresh))
 ```
+
+### of_GetThemeColors
+
+**Description**
+
+Reads the status bar colors of a UI theme from its theme.json: the statusbar entry of the theme's window section (background-color, and color in text-font).
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_GetThemeColors ( themefile, background, text )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_winsrv_statusbar (the w_frame default is inv_statusbar) |
+| *themefile* | String specifying the theme's theme.json |
+| *background* | Long variable, passed by reference, for the theme's background color; -1 if the theme doesn't set it |
+| *text* | Long variable, passed by reference, for the theme's text color; -1 if the theme doesn't set it |
+
+**Return value**
+
+Integer. Returns 1 if the file was read and -1 if it can't be read.
+
+### of_GetThemeFile
+
+**Description**
+
+Gets the current UI theme's theme.json.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_GetThemeFile ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_winsrv_statusbar (the w_frame default is inv_statusbar) |
+
+**Return value**
+
+String. The file, or an empty string if no theme is applied or its file can't be found.
+
+**Usage**
+
+GetTheme gives only the theme's name. The file is looked for in the folder given to gnv_app.of_ApplyTheme (of_GetThemePath), then in theme\<name> under the current directory.
 
 ### of_GetTimer
 
@@ -1687,6 +1796,34 @@ IF IsValid (inv_statusbar) THEN
 END IF
 ```
 
+### of_RefreshThemeColors
+
+**Description**
+
+Colors the status bar with the colors of of_GetColors.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_RefreshThemeColors ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of n_cst_winsrv_statusbar (the w_frame default is inv_statusbar) |
+
+**Return value**
+
+Integer. Returns 1 if it succeeds and 0 if the status bar isn't open.
+
+**Usage**
+
+The service calls this function when the status bar opens and when the system colors change, gnv_app.of_ApplyTheme calls it when it applies a theme, and of_CheckTheme calls it when the theme changed.
+
 ### of_Register
 
 **Description**
@@ -1861,7 +1998,7 @@ Integer. Returns 1 if the function succeeds and -1 if the color isn't valid.
 
 **Usage**
 
-Without this function, the status bar uses the system ButtonFace color, or no color of its own when a UI theme is applied. You can call it before or after the status bar opens. UI themes don't style the status bar items: see "Colors and UI themes" in the Usage section above.
+Without this function, the status bar has the background color of the current theme's status bar, or the system ButtonFace color. You can call it before or after the status bar opens. See "Colors and UI themes" in the Usage section above.
 
 **Examples**
 
@@ -2761,7 +2898,7 @@ Integer. Returns 1 if the function succeeds and -1 if the color isn't valid.
 
 **Usage**
 
-Without this function, the status bar text uses the Window Text color. The color applies to the status bar items (text, the time, and memory and GDI readings), but not to the progress bar text, which you set with of_SetBarTextColor. You can call it before or after the status bar opens. Use it with a dark UI theme, which doesn't style the status bar items: see "Colors and UI themes" in the Usage section above.
+The color applies to the status bar items (text, the time, and memory and GDI readings), but not to the progress bar text, which you set with of_SetBarTextColor. You can call it before or after the status bar opens. Without it, the text has the color of the current theme's status bar, or the Window Text color: see "Colors and UI themes" in the Usage section above.
 
 **Examples**
 

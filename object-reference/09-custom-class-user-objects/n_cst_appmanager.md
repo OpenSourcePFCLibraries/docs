@@ -533,6 +533,7 @@ MessageBox("System Error", &
 N_cst_appmanager includes precoded object functions:
 
 - of_About
+- of_ApplyTheme
 - of_GetAppIniFile
 - of_GetAppKey
 - of_GetCopyright
@@ -540,6 +541,7 @@ N_cst_appmanager includes precoded object functions:
 - of_GetHelpFile
 - of_GetLogo
 - of_GetMicrohelp
+- of_GetThemePath
 - of_GetUserID
 - of_GetUserIniFile
 - of_GetUserKey
@@ -605,6 +607,35 @@ IF IsValid (gnv_app) THEN
    gnv_app.of_About()
 END IF
 ```
+
+### of_ApplyTheme
+
+**Description**
+
+Applies a UI theme, remembers its folder, and refreshes the colors of the frame's status bar.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_ApplyTheme ( themepath )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Global variable of type n_cst_appmanager (must be gnv_app) |
+| *themepath* | String specifying the full path of the theme's folder, or an empty string to remove the theme |
+
+**Return value**
+
+Integer. Returns 1 if it succeeds and -1 if ApplyTheme fails.
+
+**Usage**
+
+Use it instead of ApplyTheme: the PFC status bar, which UI themes don't style, takes its colors from the theme at once (n_cst_winsrv_statusbar of_RefreshThemeColors). A theme applied with ApplyTheme reaches the status bar at its next refresh.
 
 ### of_GetAppIniFile
 
@@ -877,6 +908,34 @@ ELSE
    "Microhelp is disabled")
 END IF
 ```
+
+### of_GetThemePath
+
+**Description**
+
+Gets the folder of the UI theme applied with of_ApplyTheme.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_GetThemePath ( )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Global variable of type n_cst_appmanager (must be gnv_app) |
+
+**Return value**
+
+String. The folder, or an empty string if no theme was applied with of_ApplyTheme.
+
+**Usage**
+
+GetTheme gives only the theme's name; services that read the theme's files, such as the status bar service, use this function to find them.
 
 ### of_GetUserID
 
