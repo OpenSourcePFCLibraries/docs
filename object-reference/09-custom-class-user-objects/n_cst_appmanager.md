@@ -627,7 +627,7 @@ instancename.of_ApplyTheme ( themepath )
 | Argument | Description |
 | --- | --- |
 | *instancename* | Global variable of type n_cst_appmanager (must be gnv_app) |
-| *themepath* | String specifying the full path of the theme's folder, or an empty string to remove the theme |
+| *themepath* | String specifying the full path of the theme's folder |
 
 **Return value**
 
@@ -636,6 +636,8 @@ Integer. Returns 1 if it succeeds and -1 if ApplyTheme fails.
 **Usage**
 
 Use it instead of ApplyTheme: the PFC status bar, which UI themes don't style, takes its colors from the theme at once (n_cst_winsrv_statusbar of_RefreshThemeColors). A theme applied with ApplyTheme reaches the status bar at its next refresh.
+
+PowerBuilder can apply another theme while the application runs, but can't remove one: ApplyTheme fails for an empty string and for "Do Not Use Themes", and so does of_ApplyTheme. To run without a theme, don't apply one when the application starts.
 
 ### of_GetAppIniFile
 
