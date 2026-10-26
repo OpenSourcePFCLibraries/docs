@@ -291,55 +291,76 @@ The Users and Groups window then shows users and groups without their membership
 
 ### Running the security scanner
 
-The security scanner examines all the windows, DataWindows, menus, and user objects in an application. It saves to the PFC database information on:
+The security scanner reads the windows, menus, user objects, and DataWindow objects of an application and records in the security database the items that can be secured:
 
-- Windows
-- Window controls
-- For DataWindow controls, information on the columns in the associated DataWindow object
-- Menu items
-- User objects and tab controls; collects information on all controls defined on the user object or tab page
+- Windows and their controls, including the controls a window inherits from its ancestors
+- For DataWindow controls, the columns of their DataWindow objects
+- Menu items, including inherited ones; a window's scan includes the items of its menu
+- User objects and tab controls, with the controls of their tab pages and user objects, named as the security service names them at run time (for example, `tab_1.tabpage_1.dw_1.emp_id`)
+
+The scanner reads the objects' source, so it scans a PowerBuilder 2025 solution as well as a workspace. It doesn't need the application to be compiled.
 
 **Usage**
 
-You can run the security scanner from PowerBuilder or you run it from the security administration utility.
+You can run the security scanner from the security administration utility, on its own, or from the command line for an unattended scan.
 
-**To run the security scanner from PowerBuilder:**
+**The security database** The scanner uses the security administration utility's INI file (*pfcsecad.ini*) to connect to the security database. It looks for the file in this order:
 
-1. To your workspace, add an Existing Application target that uses the PFCSECSC.PBL library and the pfcsecurity_scanner application.
+1. The file given on the command line with `/ini`. The security administration utility gives its own INI file this way.
+2. The file named by the `PFC_SECURITY_INI` environment variable.
+3. *pfcsecad.ini* in the current folder.
 
-   **Use an existing target if available** If there is already a target file for the pfcsecurity_scanner application, just add this file to your workspace instead of creating a new target file.
+Otherwise, the scanner asks for the file. If it can't connect, it shows the database's error and lets you choose another INI file.
 
-2. Select Run>Select And Run, choose the pfcsecurity_scanner target and click OK.
+**To run the security scanner from the security administration utility:**
 
-   **If you have trouble connecting** If there are problems connecting to the PFC.DB database, check the PFCSECAD.INI file and your workstation’s ODBC settings.
+1. Run the security administration utility.
 
-**To run the security scanner from within the security administration utility:**
+   See “Defining users and groups” for steps on running it.
 
-1. Select and run the security administration utility (PFCSECAD.PBT).
+2. Select File>Scan Application from the menu bar.
 
-   See “Defining users and groups” for steps on adding the security administration target file to your workspace.
+   The scanner starts with the utility's INI file. The scanner, *pfcsecurity_scanner.exe*, must be in the utility's folder or on the path.
 
-2. Select File>Scan Application from the security administration utility menu bar.
+3. In the Select Application dialog box, browse for the application's project (*.pbproj*), solution (*.pbsln*), or target (*.pbt*).
 
-   The Select Application dialog box displays a list of the applications defined in the Application section of the PB.INI file:
+   For a solution, choose the project to scan; the solution's default project is selected. The dialog box lists the application's libraries. For a workspace whose objects are kept as source (with source control), the scanner reads them from the workspace's *ws_objects* folder; otherwise, it reads the PBL files.
 
-   ![Figure](images/ug-p229-1.png)
+4. Click OK.
 
-3. Select the application to be scanned and click Select.
+   The Select Objects to be Scanned dialog box lists the application's windows, menus, visual user objects, and DataWindow objects. All of them are selected, except the PFC ancestor layer (the *pfc_* objects), which is never opened itself.
 
-   The Select Objects to be Scanned dialog box displays:
-
-   ![Figure](images/ug-p229-2.png)
-
-4. Press CTRL+click or SHIFT+click to select the objects to be scanned.
+5. Press CTRL+click or SHIFT+click to change the selection, then click Scan.
 
    **Selecting objects** To minimize the size of the security database, do not select objects for which you will never assign security.
 
-5. Click Scan.
+6. When the scan completes, the scanner shows a summary: the controls added to the template, the controls whose type changed, and the controls the template has that the objects no longer have.
 
-   **Scanner executable file** The security administration utility uses the *pfcsecsc.exe* file to perform the scan. PowerBuilder installs this file in the PFC Security directory.
+**Scanning again** You can scan an application again after you change it. A new scan adds the controls that are new, and keeps your work in Template Management:
 
-6. When scanning completes, click Exit.
+- A description you edited is kept.
+- A control you deleted stays deleted. The scanner remembers the controls it found in the *security_scan* table, which it creates in the security database if it doesn't have it. (If the scanner's login can't create tables, create the table with *security_scan.sql* from the [Database-scripts-and-files](https://github.com/OpenSourcePFCLibraries/Database-scripts-and-files) repository.)
+- A control the object no longer has is listed in the summary, and kept in the template, because it might have security settings. Delete it in Template Management.
+
+**To run the security scanner from the command line:**
+
+```
+pfcsecurity_scanner [/ini <file>] [/target <file> [/project <name>]] [/scan [/log <file>]]
+```
+
+| Option | Description |
+| --- | --- |
+| `/ini` | The security administration utility's INI file |
+| `/target` | The project (*.pbproj*), solution (*.pbsln*), or target (*.pbt*) to scan |
+| `/project` | For a solution, the project to scan; otherwise the solution's default project |
+| `/scan` | Scans without a window: the objects that the Select Objects to be Scanned dialog box selects by default (all but the *pfc_* objects). Messages and the summary are written to the log. |
+| `/log` | The log of an unattended scan; otherwise *pfcsecurity_scanner.log* in the current folder |
+
+Without `/scan`, the scanner opens the Select Application dialog box with the target and project selected. Put a path with spaces in quotation marks. For example, to scan an application every night:
+
+```
+pfcsecurity_scanner /ini "C:\PFC\pfcsecad.ini" /target "C:\Projects\Sales\Sales.pbsln" /project sales /scan /log "C:\Logs\scan.log"
+```
 
 **To customize the controls for which security is enabled:**
 
