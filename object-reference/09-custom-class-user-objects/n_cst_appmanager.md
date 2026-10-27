@@ -75,6 +75,7 @@ N_cst_appmanager includes instance variables:
 | inv_debug | Reference variable for the debug service | n_cst_debug | Public | Use in dot notation to access n_cst_debug functions |
 | inv_dwcache | Reference variable for data caching services | n_cst_dwcache | Public | Use in dot notation to access n_cst_dwcache functions |
 | inv_error | Reference variable for the error service | n_cst_error | Public | Use in dot notation to access n_cst_error functions |
+| inv_help | Reference variable for the help service (PFC 2025 and later) | n_cst_help | Public | Use in dot notation to access n_cst_help functions |
 | inv_language | Reference variable for the language service (PFC 2025 and later) | n_cst_language | Public | Use in dot notation to access n_cst_language functions |
 | inv_mru | Reference variable for the most recently used object service | n_cst_mru | Public | Use in dot notation to access n_cst_mru functions |
 | inv_security | Reference variable for the security service | n_cst_security | Public | Use in dot notation to access n_cst_security functions |
@@ -557,6 +558,7 @@ N_cst_appmanager includes precoded object functions:
 - of_SetDwCache
 - of_SetError
 - of_SetFrame
+- of_SetHelp (PFC 2025 and later)
 - of_SetHelpFile
 - of_SetLanguage (PFC 2025 and later)
 - of_SetLogo
@@ -833,6 +835,12 @@ This example uses the of_GetHelpFile function as part of a PowerScript ShowHelp 
 
 ```
 ShowHelp(gnv_app.of_GetHelpFile(), Index!)
+```
+
+In PFC 2025 and later, where the Help file can be a PDF file, this example shows it with the help service ([n_cst_help](n_cst_help.md)):
+
+```
+gnv_app.inv_help.of_ShowHelp(gnv_app.of_GetHelpFile())
 ```
 
 ### of_GetLogo
@@ -1557,6 +1565,46 @@ IF IsValid (gnv_app) THEN
 END IF
 ```
 
+### of_SetHelp
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Enables or disables the help service, which shows the application's help file (of_SetHelpFile) and the help of the PFC dialog boxes: a PDF help file in the application or in the user's PDF viewer. The help service is implemented through the n_cst_help user object. You reference this instance of n_cst_help through the inv_help instance variable.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_SetHelp ( boolean )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Global variable of type n_cst_appmanager (must be gnv_app) |
+| *boolean* | Boolean specifying whether to enable (TRUE) or disable (FALSE) the help service |
+
+**Return value**
+
+Integer. Returns 1 if the function succeeds, 0 if no action was necessary, and -1 if an error occurs.
+
+**Usage**
+
+Enable the service to choose how help is shown, with its of_SetViewer and of_SetDialogHelpFile functions. Without it, w_master creates one when help is requested, which shows help in the application. See [n_cst_help](n_cst_help.md).
+
+**Examples**
+
+This example from an application manager pfc_Open event enables the help service and shows help in the user's PDF viewer:
+
+```
+this.of_SetHelp(TRUE)
+inv_help.of_SetViewer(inv_help.PDFVIEWER)
+```
+
 ### of_SetHelpFile
 
 **Description**
@@ -1576,7 +1624,7 @@ instancename.of_SetHelpFile ( filename )
 | Argument | Description |
 | --- | --- |
 | *instancename* | Global variable of type n_cst_appmanager (must be gnv_app) |
-| *filename* | String specifying the fully qualified name of the online Help file |
+| *filename* | String specifying the online Help file: a PDF file, or a compiled HTML Help (.chm) or WinHelp (.hlp) file. In PFC 2025 and later, a file without a path is looked for in the current folder and then in the folder of the application |
 
 **Return value**
 
@@ -1586,12 +1634,20 @@ Integer. Returns 1 if the function succeeds and -1 if an error occurs.
 
 You should call this function at application startup, typically in the n_cst_appmanager Constructor event. Your application accesses the Help filename through the of_GetHelpFile function.
 
+In PFC 2025 and later, w_master pfc_Help shows the file with the help service ([n_cst_help](n_cst_help.md)): a PDF file in the application or in the user's PDF viewer, and a compiled help file with ShowHelp.
+
 **Examples**
 
 This example calls the of_SetHelpFile function in the n_cst_appmanager Constructor event (since it’s called from within the object, it doesn’t require the gnv_app prefix):
 
 ```
 of_SetHelpFile("c:\eis\eisapp.hlp")
+```
+
+In PFC 2025 and later, this example sets a PDF help file beside the application:
+
+```
+of_SetHelpFile("eisapp.pdf")
 ```
 
 ### of_SetLanguage

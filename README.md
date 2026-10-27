@@ -10,6 +10,7 @@ PFC was originally developed by Sybase, Inc. and shipped with PowerBuilder. It i
 | --- | --- |
 | [User's Guide](user-guide/README.md) | PFC concepts, class library design, programming with PFC services, visual controls, windows and menus, utilities, deployment, and a step-by-step tutorial |
 | [Object Reference](object-reference/README.md) | Every PFC object, with its instance variables, events, and functions (volumes 1 and 2 of the printed reference, combined) |
+| [Dialog Help](dialog-help/README.md) | Help for the PFC dialog boxes, for the people who use an application built with PFC: the source of `pfcdlg.pdf`, which the dialog boxes' Help buttons open. New; it replaces the PFCDLG help file |
 | [Running the PFC Unit Tests](unit-tests.md) | Getting the PBUnit test framework, running the tests from the command line or the IDE, and the tests that need a database. New; not part of the original manuals |
 
 ## About this conversion

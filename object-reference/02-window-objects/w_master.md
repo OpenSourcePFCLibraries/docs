@@ -56,7 +56,7 @@ W_master includes instance variables:
 | --- | --- | --- | --- | --- |
 | CONTINUE_ACTION | Constant set to 1 | Integer | Public | Internal |
 | FAILURE | Constant set to -1 | Integer | Public | Internal |
-| ia_helptypeid | Controls whether PFC calls the ShowHelp function by topic, keyword, or index | Any | Protected | Set programmatically |
+| ia_helptypeid | The window's Help topic: a topic number (Long), a keyword (String), or nothing for the Help file's start (see pfc_Help) | Any | Protected | Set programmatically |
 | ib_alwaysvalidate | Controls whether the save process includes all objects in the validation process | Boolean | Protected | Set with of_SetAlwaysValidate (default is FALSE) |
 | ib_closestatus | Indicates whether the window is closing | Boolean | Protected | Internal |
 | ib_disableclosequery | Indicates whether CloseQuery processing is enabled | Boolean | Protected | Internal |
@@ -354,7 +354,7 @@ The event only raises the minimum tracking size: a larger minimum that Windows s
 
 **Description**
 
-Calls the ShowHelp function by index, topic or keyword, based on the ia_helptypeid instance variable.
+Shows the application's Help file at the topic in the ia_helptypeid instance variable (a topic number or a keyword), or at its start. In PFC 2025 and later, the help service ([n_cst_help](../09-custom-class-user-objects/n_cst_help.md)) shows it: a PDF file in the application or in the user's PDF viewer, at the named destination `topic_<number>` or the keyword, and a compiled help file with ShowHelp by index, topic or keyword.
 
 **Return value**
 
@@ -364,7 +364,7 @@ Integer. Returns 1 if the event succeeds and -1 if an error occurs.
 
 This event is triggered when the window has focus and the user selects Help>Help Topics from the menu bar of a menu that descends from the PFC m_master menu. You can also trigger it directly (from a Help CommandButton, for example).
 
-If the Help type ID is not specified, this event opens the top-level Help contents topic. Call the n_cst_appmanager of_SetHelpfile function to specify the application’s Help filename.
+If the Help type ID is not specified, this event opens the top-level Help contents topic. Call the n_cst_appmanager of_SetHelpfile function to specify the application’s Help filename. The event uses gnv_app.inv_help if the application started the help service (of_SetHelp), so that its settings apply.
 
 ### pfc_MessageRouter
 
@@ -1213,6 +1213,7 @@ W_master includes precoded object functions:
 - of_SetUpdateable
 - of_SetUpdateObjects
 - of_SetUpdateRequestor
+- of_ShowDialogHelp (PFC 2025 and later)
 - of_Update
 - of_UpdateChecks
 - of_UpdatePrep
@@ -2070,6 +2071,37 @@ inv_luw.of_SetRequestor (this)
 inv_luw.of_SetUpdateRequestor (this)
 ...
 ```
+
+### of_ShowDialogHelp
+
+> Available in PFC 2025 and later. Not available in the 2019 and 2022 versions of PFC.
+
+**Description**
+
+Shows the help of a PFC dialog box, from the PFC dialog help (pfcdlg.pdf). The Help buttons of the PFC dialog boxes call it.
+
+**Access**
+
+Public
+
+**Syntax**
+
+```
+instancename.of_ShowDialogHelp ( destination )
+```
+
+| Argument | Description |
+| --- | --- |
+| *instancename* | Instance name of w_master |
+| *destination* | String. The topic of the dialog box, a named destination in the dialog help: the name of the PFC window without its prefix, for example "w_find" (see the [dialog help](../../dialog-help/README.md)) |
+
+**Return value**
+
+Integer. Returns 1 if it succeeds and -1 if the help file doesn't exist or couldn't be shown.
+
+**Usage**
+
+The function uses gnv_app.inv_help if the application started the help service, and otherwise one of its own. See [n_cst_help](../09-custom-class-user-objects/n_cst_help.md) of_ShowDialogHelp.
 
 ### of_Update
 
