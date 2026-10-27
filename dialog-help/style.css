@@ -1,0 +1,18 @@
+@page { size: Letter; margin: 0.75in 0.8in; }
+body { font-family: "Segoe UI", sans-serif; font-size: 10.5pt; line-height: 1.45; color: #1f1f1f; }
+h1 { font-size: 18pt; font-weight: 600; margin: 0 0 8pt; }
+h1.title { font-size: 24pt; margin-top: 1.5in; }
+p.sub { font-size: 12pt; font-weight: 600; margin: 14pt 0 4pt; }
+p.intro { font-size: 12pt; color: #555; }
+nav { break-after: page; }
+nav h2 { font-size: 14pt; font-weight: 600; margin-top: 30pt; }
+nav ol { padding-left: 18pt; }
+nav li { margin: 3pt 0; }
+section { break-before: page; }
+a { color: #0f5ea8; text-decoration: none; }
+ul { padding-left: 18pt; }
+li { margin: 4pt 0; }
+li p { margin: 4pt 0; }
+code, pre { font-family: Consolas, monospace; font-size: 9.5pt; }
+pre { background: #f3f3f3; padding: 6pt 8pt; border-radius: 3pt; }
+em { color: #555; }

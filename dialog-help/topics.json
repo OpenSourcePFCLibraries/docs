@@ -1,0 +1,86 @@
+[
+  {
+    "destination": "w_filterextended",
+    "title": "Extended Filter dialog box"
+  },
+  {
+    "destination": "w_filtersimple",
+    "title": "Simple Filter dialog box"
+  },
+  {
+    "destination": "pb_filter_dialog",
+    "title": "Default Filter dialog box"
+  },
+  {
+    "destination": "w_find",
+    "title": "Find dialog box"
+  },
+  {
+    "destination": "w_pagesetup",
+    "title": "Page Setup dialog box"
+  },
+  {
+    "destination": "w_replace",
+    "title": "Replace dialog box"
+  },
+  {
+    "destination": "w_restorerow",
+    "title": "Restore Row dialog box"
+  },
+  {
+    "destination": "PB_Modify_Expression",
+    "title": "Modify Expression dialog box"
+  },
+  {
+    "destination": "w_sortdragdrop",
+    "title": "Sort dialog box (drag and drop)"
+  },
+  {
+    "destination": "w_sortmulti",
+    "title": "Sort dialog box (multi-sort)"
+  },
+  {
+    "destination": "w_sortsingle",
+    "title": "Sort dialog box (single item)"
+  },
+  {
+    "destination": "PB_sort_dialog",
+    "title": "Sort dialog box (default)"
+  },
+  {
+    "destination": "w_toolbars",
+    "title": "Toolbars dialog box"
+  },
+  {
+    "destination": "w_zoom",
+    "title": "Zoom dialog box"
+  },
+  {
+    "destination": "w_debuglog",
+    "title": "Debug Log"
+  },
+  {
+    "destination": "w_dwproperty_servicestab",
+    "title": "DataWindow Properties, Services tab"
+  },
+  {
+    "destination": "w_dwproperty_bufferstab",
+    "title": "DataWindow Properties, Buffers tab"
+  },
+  {
+    "destination": "w_dwproperty_status_flagstab",
+    "title": "DataWindow Properties, Status Flags tab"
+  },
+  {
+    "destination": "w_dwpropertyservices",
+    "title": "DataWindow services"
+  },
+  {
+    "destination": "w_sqlspy",
+    "title": "SQL Spy"
+  },
+  {
+    "destination": "w_sqlspyinspect",
+    "title": "SQL Spy Inspect"
+  }
+]

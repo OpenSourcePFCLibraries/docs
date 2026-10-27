@@ -22,6 +22,7 @@ The windows are listed in alphabetical order. The information for each window in
 - [w_find](w_find.md)
 - [w_frame](w_frame.md)
 - [w_grid](w_grid.md)
+- [w_helpviewer](w_helpviewer.md) (PFC 2025 and later)
 - [w_logon](w_logon.md)
 - [w_main](w_main.md)
 - [w_master](w_master.md)
