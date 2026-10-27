@@ -473,6 +473,8 @@ this.DisplayMenuAsRibbonBar = &
 
 **Images** A ribbon button's image is the menu item's ButtonImage property; the menu bar shows MenuImage, and the Quick Access Toolbar and the classic toolbar show ToolbarItemName. Set all three on your menu items, and on the inherited PFC items you use, in a descendant of m_master. Items whose ToolbarItemVisible property is FALSE stay off the Quick Access Toolbar.
 
+**Panel names** A panel is named after its first menu item: its PanelText property, or else its text. That item counts even when it is hidden, and many of m_master's items are hidden until you show them. A separator starts a new panel even when it is hidden, and a panel with no visible items isn't shown. If you show File > Properties but not File > Delete, for example, its panel is labelled "Delete"; set PanelText on the Delete item to name it.
+
 **Order of added items** An item you add to an inherited menu in a descendant is placed after the inherited items, unless they have ShiftToRight set to TRUE. To put an item before File > Exit, for example, set ShiftToRight on the inherited separator, Exit, and the MRU items.
 
 **The ribbon's font** The ribbon has its own, larger font. Set the font of the frame's ribbon (the mdirbb_1 property) in pfc_PreOpen:
