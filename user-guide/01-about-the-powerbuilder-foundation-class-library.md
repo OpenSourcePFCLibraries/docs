@@ -347,6 +347,10 @@ The PFC local database is intended for developer use only. If your application u
 
 Use the PFC code examples to view PFC objects and services in action and learn how to code and implement most common PFC functionality. The PFC code example interface provides extensive cross-reference and usage information.
 
+The Examples app is in the `examples` folder of the [2025-Solution](https://github.com/OpenSourcePFCLibraries/2025-Solution) repository; its [README](https://github.com/OpenSourcePFCLibraries/2025-Solution/blob/master/examples/README.md) describes setting it up. Each example's help topic is in [PFCEXAMP.pdf](https://github.com/OpenSourcePFCLibraries/Example-application-help-file/releases/latest/download/PFCEXAMP.pdf).
+
 **The PFC sample application**
 
 Use PEAT (the PFC sample application) to see an example of PFC used in a project estimation and tracking system.
+
+PEAT is in the `demoapp` folder of the 2025-Solution repository; its [README](https://github.com/OpenSourcePFCLibraries/2025-Solution/blob/master/demoapp/README.md) describes setting it up. Both applications show their menus as a ribbon, use a UI theme, and use SVG images, as described in “Giving a PFC application a current look” in [Chapter 6](06-using-pfc-windows-and-menus.md#giving-a-pfc-application-a-current-look).

@@ -453,3 +453,74 @@ For more information on PFC user events, see the *PFC Object Reference*.
 PFC also provides pop-up menus for use by your applications and PFC services. The pop-up menu provided depends on the control that you right-click. You can disable the pop-up menu functionality by setting the ib_rmbmenu instance variable to FALSE in a control’s Constructor event. You can also extend the pop-up menus to add application-specific functionality.
 
 For a list of the pop-up menus provided for standard controls, see “Using right-mouse button support”.
+
+## Giving a PFC application a current look
+
+> Applies to PowerBuilder 2025 and PFC 2025. gnv_app.of_ApplyTheme is not available in the 2019 and 2022 versions of PFC.
+
+A PFC application can look like a current Windows application without changing PFC: show the menu as a ribbon, apply a UI theme, and use SVG images and the Segoe UI font. The Examples app (`examples`) and the PEAT sample application (`demoapp`) in the [2025-Solution](https://github.com/OpenSourcePFCLibraries/2025-Solution) repository do all of this, and both have an **Appearance** window that switches the theme and the ribbon while the application runs. Their READMEs describe the settings.
+
+### Showing the menu as a ribbon
+
+Set the frame's DisplayMenuAsRibbonBar property to TRUE, before the frame opens or while it is open. PowerBuilder then shows the frame's menu, and the menu of the active sheet, as a ribbon (RibbonView): the menu bar's items become the ribbon's tabs, their items become buttons in panels (a separator starts a new panel), and the toolbar becomes the Quick Access Toolbar above the ribbon. You don't need a u_rbb control or a ribbon bar definition, and the PFC menus, the message router, and the MRU and security services work as they do with the menu bar. See [Using RibbonView](https://docs.appeon.com/pb2025/pbug/RibbonView.html) in the PowerBuilder documentation for the rules.
+
+This example, from the frame's pfc_PreOpen event, shows the ribbon unless the INI file says otherwise:
+
+```
+this.DisplayMenuAsRibbonBar = &
+   (ProfileString(gnv_app.of_GetAppIniFile(), "Application", "RibbonBar", "1") <> "0")
+```
+
+**Images** A ribbon button's image is the menu item's ButtonImage property; the menu bar shows MenuImage, and the Quick Access Toolbar and the classic toolbar show ToolbarItemName. Set all three on your menu items, and on the inherited PFC items you use, in a descendant of m_master. Items whose ToolbarItemVisible property is FALSE stay off the Quick Access Toolbar.
+
+**Panel names** A panel is named after its first menu item: its PanelText property, or else its text. That item counts even when it is hidden, and many of m_master's items are hidden until you show them. A separator starts a new panel even when it is hidden, and a panel with no visible items isn't shown. If you show File > Properties but not File > Delete, for example, its panel is labelled "Delete"; set PanelText on the Delete item to name it.
+
+**Order of added items** An item you add to an inherited menu in a descendant is placed after the inherited items, unless they have ShiftToRight set to TRUE. To put an item before File > Exit, for example, set ShiftToRight on the inherited separator, Exit, and the MRU items.
+
+**The ribbon's font** The ribbon has its own, larger font. Set the font of the frame's ribbon (the mdirbb_1 property) in pfc_PreOpen:
+
+```
+mdirbb_1.FaceName = "Segoe UI"
+mdirbb_1.TextSize = -8
+```
+
+PowerBuilder makes the ribbon again when a sheet with its own menu is activated, and the font is lost. Set it again from the sheet's Activate event, with a posted call so that it runs after the ribbon has been made:
+
+```
+// w_f_myframe.of_SetRibbonFont sets mdirbb_1's font
+If IsValid(w_f_myframe) Then
+   If w_f_myframe.DisplayMenuAsRibbonBar Then w_f_myframe.Post of_SetRibbonFont()
+End If
+```
+
+### Applying a UI theme
+
+Apply a theme when the application starts, in the application manager's pfc_Open event, with gnv_app.of_ApplyTheme instead of ApplyTheme: it also gives the PFC status bar the theme's colors at once.
+
+```
+string ls_theme
+ls_theme = ProfileString(this.of_GetAppIniFile(), "Application", "Theme", "Flat Design Grey")
+If DirectoryExists(GetCurrentDirectory() + "\theme\" + ls_theme) Then &
+   this.of_ApplyTheme(GetCurrentDirectory() + "\theme\" + ls_theme)
+```
+
+Deploy the theme's folder with the application; PowerBuilder's themes are in its `IDE\theme` folder. Another theme can be applied while the application runs, but a theme can't be removed: to run without one, don't apply one at startup, and tell the user that the change takes effect the next time the application starts (see [of_ApplyTheme](../object-reference/09-custom-class-user-objects/n_cst_appmanager.md#of_applytheme)).
+
+### Images
+
+PowerBuilder 2025 shows SVG images in window icons, menu items, the ribbon and toolbars, and TreeView and ListView pictures, and they stay sharp at any DPI. Some places don't show SVG; use PNG there:
+
+- A DataWindow object's bitmap
+- A DropDownPictureListBox's pictures
+- The picture of a DataWindow's row focus indicator (SetRowFocusIndicator)
+- The toolbar picture of a menu item that has a submenu (the toolbar's drop-down button)
+
+Application and window icons (ICO files) need care: PowerBuilder's runtime crashes at startup on an icon whose small sizes (16 to 48 pixels) are stored as PNG. Store those sizes as bitmaps, and only the 256-pixel size as PNG. A window icon can also be an SVG file.
+
+The images can be found by a path relative to the application's folder, such as `images\tb_new.svg`, when the application runs with that folder as its current directory: the IDE runs an application from the folder of its application library.
+
+**Row focus indicators** To use your own picture as a DataWindow's row pointer, place a picture control (u_p) on the window with Visible set to FALSE, and pass it to SetRowFocusIndicator. Don't hide it by placing it outside the window: PFC response windows grow to show all their controls.
+
+### Fonts
+
+Use Segoe UI, at 8 or 9 points, in your windows, user objects, and DataWindow objects. It is wider than MS Sans Serif, so check labels, column headers, and computed fields for clipped text, and widen them where needed.
