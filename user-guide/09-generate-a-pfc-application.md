@@ -134,8 +134,6 @@ For more information on implementing the application manager, see Chapter 3, “
 
 The first two properties establish an INI file and online Help file for use with the application. The Help file, `pfctutor.pdf`, isn't in the tutorial folder: download it from the [PFCTUTOR-help-file-and-source](https://github.com/OpenSourcePFCLibraries/PFCTUTOR-help-file-and-source/releases/latest/download/pfctutor.pdf) repository's latest release and save it there. The other properties establish information that will be used in the application’s About dialog box and splash screen.
 
-![Figure](images/ug-p249-1.png)
-
 **If you prefer to add code to the Constructor event** You could type the following lines of code calling PFC functions instead of filling in the property boxes in the Properties view:
 
 ```
