@@ -523,4 +523,6 @@ The images can be found by a path relative to the application's folder, such as 
 
 ### Fonts
 
-Use Segoe UI, at 8 or 9 points, in your windows, user objects, and DataWindow objects. It is wider than MS Sans Serif, so check labels, column headers, and computed fields for clipped text, and widen them where needed.
+Use Segoe UI, at 8 or 9 points, in your windows, user objects, and DataWindow objects. It is wider than MS Sans Serif for some text, so check labels, column headers, and computed fields for clipped text, and widen them where needed.
+
+**PFC's own fonts (PFC 2025 and later)** PFC's standard visual user objects (u_st, u_cb, u_sle, u_lv and the others), its dialog boxes, its DataWindow objects, and its pop-up menus use Segoe UI 8. They used MS Sans Serif 8 (and Tahoma in the dialog boxes and menus) before. A control inherited from a PFC object takes Segoe UI unless it sets its own font, so an application that inherits PFC's controls changes font when it moves to PFC 2025, and a label that fit exactly may need a little more room. Controls and DataWindow objects that set their own font aren't affected. The default font of the report services (n_cst_dwsrv_report and n_cst_dssrv_report), which they use for the objects they add to a DataWindow when you don't give one, is Segoe UI too.
