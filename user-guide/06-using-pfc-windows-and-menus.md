@@ -508,9 +508,8 @@ Deploy the theme's folder with the application; PowerBuilder's themes are in its
 
 ### Images
 
-PowerBuilder 2025 shows SVG images in window icons, menu items, the ribbon and toolbars, and TreeView and ListView pictures, and they stay sharp at any DPI. Some places don't show SVG; use PNG there:
+PowerBuilder 2025 R2 shows SVG images in window icons, menu items, the ribbon and toolbars, and TreeView and ListView pictures, and they stay sharp at any DPI. A DataWindow object's bitmap shows SVG too, on screen and in print, but a DataWindow saved as PDF (SaveAs with the NativePDF method) draws an SVG ragged; use PNG for a picture in a report that users save as PDF. PowerBuilder 2025 GA doesn't show SVG images anywhere; to run PFC 2025's own windows with it, see "Deploying PFC's images" in [Deploying a PFC Application](08-deploying-a-pfc-application.md#deploying-pfcs-images). Even in 2025 R2, some places don't show SVG; use PNG there:
 
-- A DataWindow object's bitmap
 - A DropDownPictureListBox's pictures
 - The picture of a DataWindow's row focus indicator (SetRowFocusIndicator)
 - The toolbar picture of a menu item that has a submenu (the toolbar's drop-down button)
