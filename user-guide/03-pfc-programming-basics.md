@@ -539,14 +539,23 @@ Online Help is an important part of any application. PFC provides functions and 
 
 For information on PFC dialog Help, see “Deploying PFC dialog box Help”.
 
+**PDF Help files (PFC 2025 and later)** The Help file is a PDF file. PFC's help service ([n_cst_help](../object-reference/09-custom-class-user-objects/n_cst_help.md)) shows it at the window's topic, in a window of the application or in the user's PDF viewer. A topic is a named destination in the PDF file. A compiled HTML Help (.chm) or WinHelp (.hlp) file is still shown with the ShowHelp function, but current versions of Windows can't open WinHelp files.
+
 **To enable online Help in a PFC application:**
 
-1. Within n_cst_appmanager or a descendant, you can use the Properties view to assign the complete name of the Help file to the is_helpfile instance variable.
+1. Within n_cst_appmanager or a descendant, you can use the Properties view to assign the name of the Help file to the is_helpfile instance variable. In PFC 2025 and later, a name without a path is looked for in the current folder and then in the application's folder.
 
    Alternatively, you can call the of_SetHelpFile function to establish the Help filename. You usually do this in the Constructor event:
 
    ```
-   this.of_SetHelpFile("c:\eis\eisapp.hlp")
+   this.of_SetHelpFile("eisapp.pdf")
+   ```
+
+   To choose where the Help is shown, start the help service with the of_SetHelp function and call its of_SetViewer function. By default, it's shown in a window of the application:
+
+   ```
+   this.of_SetHelp(TRUE)
+   inv_help.of_SetViewer(inv_help.PDFVIEWER)  // the user's PDF viewer
    ```
 
 2. Specify the Help topic associated with the window. The pfc_PreOpen event is a good place for this:
@@ -558,7 +567,7 @@ For information on PFC dialog Help, see “Deploying PFC dialog box Help”.
    ia_helptypeid = ll_helpid
    ```
 
-This allows you to provide detailed online Help for selected windows. You can set ia_helptypeid to either a long (which PFC interprets as a Help topic ID) or a string (which PFC interprets as a search keyword).
+This allows you to provide detailed online Help for selected windows. You can set ia_helptypeid to either a long (which PFC interprets as a Help topic ID) or a string (which PFC interprets as a search keyword). In a PDF Help file, the topic ID 1020 is the named destination `topic_1020`, and a string is the name of a destination.
 
 3. (Optional) If you are not using a descendant of PFC’s m_master menu, add calls to the window’s pfc_Help user event in your menu’s Help menu items. Pfc_Help is defined in w_master so it is available in all PFC windows.
 4. For dialog boxes, call the pfc_Help user event in the Help button’s Clicked event:

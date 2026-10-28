@@ -83,6 +83,8 @@ In any case, your application deployment strategy must provide for user access t
 
 ## Deploying PFC dialog box Help
 
-PFC includes the PFCDLG.HLP file, which contains online Help for PFC dialog boxes. If your application uses PFC dialog boxes (such as w_find, w_replace, and w_sortdragdrop) you should deploy PFCDLG.HLP so users will have dialog box Help.
+The Help for PFC dialog boxes is a PDF file, `pfcdlg.pdf`. If your application uses PFC dialog boxes (such as w_find, w_replace, and w_sortdragdrop), deploy `pfcdlg.pdf` with it, in the application's folder, so users will have dialog box Help. Each dialog box's Help button opens the file at the dialog box's topic. By default it's shown in a window of the application, which needs only the Microsoft Edge WebView2 runtime that Windows includes. To show it in the user's PDF viewer instead, or to give the file another name or location, use the help service ([n_cst_help](../object-reference/09-custom-class-user-objects/n_cst_help.md)) and its of_SetViewer and of_SetDialogHelpFile functions.
 
-PFC also includes PFCDLG.RTF, which contains the source text for PFC dialog box Help. If your application makes specific use of PFC dialog boxes, you can modify this file and recompile the Help file.
+Download `pfcdlg.pdf` from the docs repository: [pfcdlg.pdf](https://github.com/OpenSourcePFCLibraries/docs/raw/main/dialog-help/pfcdlg.pdf). Its source is the [dialog help](../dialog-help/README.md), one Markdown page per dialog box. If your application makes specific use of PFC dialog boxes, you can change those pages and build the file again, as the dialog help's README describes.
+
+**Earlier versions of PFC** In the 2019 and 2022 versions of PFC, the dialog box Help is the compiled help file `pfcdlg.chm` (earlier, `PFCDLG.HLP`), from the archived [PFCDLG-help-file-and-source](https://github.com/OpenSourcePFCLibraries/PFCDLG-help-file-and-source) repository.
