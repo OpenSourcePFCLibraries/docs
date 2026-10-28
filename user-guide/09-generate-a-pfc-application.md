@@ -127,14 +127,12 @@ For more information on implementing the application manager, see Chapter 3, “
    | Property | Value |
    | --- | --- |
    | is_appinifile | *drive*:\*pathname*\*pfc*\*tutorial*\*pfctutor.ini* |
-   | is_helpfile | *drive*:\*pathname*\*pfc*\*tutorial*\*pfctutor.hlp* |
-   | is_version | PFC 9.0 |
-   | is_logo | *drive*:\*pathname*\*pfc*\*tutorial*\*tutsport.bmp* |
+   | is_helpfile | *drive*:\*pathname*\*pfc*\*tutorial*\*pfctutor.pdf* |
+   | is_version | PFC 2025 |
+   | is_logo | *drive*:\*pathname*\*pfc*\*tutorial*\*pfctutor.png* |
    | is_copyright | PFC tutorial application |
 
-The first two properties establish an INI file and online Help file for use with the application. The other properties establish information that will be used in the application’s About dialog box and splash screen.
-
-![Figure](images/ug-p249-1.png)
+The first two properties establish an INI file and online Help file for use with the application. The Help file, `pfctutor.pdf`, isn't in the tutorial folder: download it from the [PFCTUTOR-help-file-and-source](https://github.com/OpenSourcePFCLibraries/PFCTUTOR-help-file-and-source/releases/latest/download/pfctutor.pdf) repository's latest release and save it there. The other properties establish information that will be used in the application’s About dialog box and splash screen.
 
 **If you prefer to add code to the Constructor event** You could type the following lines of code calling PFC functions instead of filling in the property boxes in the Properties view:
 
@@ -142,11 +140,11 @@ The first two properties establish an INI file and online Help file for use with
 this.of_SetAppIniFile &
 ("drive:\pathname\pfc\tutorial\pfctutor.ini")
 this.of_SetHelpFile &
-("drive:\pathname\pfc\tutorial\pfctutor.hlp")
+("drive:\pathname\pfc\tutorial\pfctutor.pdf")
 this.of_SetLogo &
-("drive:\pathname\pfc\tutorial\tutsport.bmp")
+("drive:\pathname\pfc\tutorial\pfctutor.png")
 this.of_SetCopyright("PFC Tutorial application.")
-this.of_SetVersion("PFC 9.0")
+this.of_SetVersion("PFC 2025")
 ```
 
 7. Select *File*>*Save As* from the menu bar.
