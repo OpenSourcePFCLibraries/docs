@@ -58,6 +58,8 @@ Use these files as follows:
 | Distributing PBDs or DLLs | Pfcapsrv.pbr Pfcdwsrv.pbr Pfcmain.pbr Pfcutil.pbr | The bitmaps named in each PBR file are copied into the associated PBD or DLL | You must deploy bitmap files separately and make sure they are in a directory that is accessible at execution |
 |  | Pfcwnsrv.pbr |  | time |
 
+**PFC 2025 and later** PFC has one PBR file, `pfc libs\pfc.pbr`, in the [2025-Solution](https://github.com/OpenSourcePFCLibraries/2025-Solution/blob/master/pfc%20libs/pfc.pbr) and 2025-Workspace repositories. It lists the DataWindow objects that PFC's objects name only in their scripts, and PFC's images (see “Deploying PFC's images”). Use it as the executable's PBR (with pbautobuild, `/r "pfc libs\pfc.pbr"`), or copy its lines into your application's PBR. Its DataWindow entries are relative to the folder you build from; its images are listed by file name, so put the `pfc libs\images` folder on the path while you build, or the build leaves them out. The README in that folder has an example.
+
 ## Deploying database tables
 
 PFC ships with the PFC.DB database.
