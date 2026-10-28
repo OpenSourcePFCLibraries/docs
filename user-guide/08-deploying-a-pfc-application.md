@@ -58,6 +58,8 @@ Use these files as follows:
 | Distributing PBDs or DLLs | Pfcapsrv.pbr Pfcdwsrv.pbr Pfcmain.pbr Pfcutil.pbr | The bitmaps named in each PBR file are copied into the associated PBD or DLL | You must deploy bitmap files separately and make sure they are in a directory that is accessible at execution |
 |  | Pfcwnsrv.pbr |  | time |
 
+**PFC 2025 and later** PFC has one PBR file, `pfc libs\pfc.pbr`, in the [2025-Solution](https://github.com/OpenSourcePFCLibraries/2025-Solution/blob/master/pfc%20libs/pfc.pbr) and 2025-Workspace repositories. It lists the DataWindow objects that PFC's objects name only in their scripts, and PFC's images (see “Deploying PFC's images”). Use it as the executable's PBR (with pbautobuild, `/r "pfc libs\pfc.pbr"`), or copy its lines into your application's PBR. Its DataWindow entries are relative to the folder you build from; its images are listed by file name, so put the `pfc libs\images` folder on the path while you build, or the build leaves them out. The README in that folder has an example.
+
 ## Deploying database tables
 
 PFC ships with the PFC.DB database.
@@ -88,3 +90,11 @@ The Help for PFC dialog boxes is a PDF file, `pfcdlg.pdf`. If your application u
 Download `pfcdlg.pdf` from the docs repository: [pfcdlg.pdf](https://github.com/OpenSourcePFCLibraries/docs/raw/main/dialog-help/pfcdlg.pdf). Its source is the [dialog help](../dialog-help/README.md), one Markdown page per dialog box. If your application makes specific use of PFC dialog boxes, you can change those pages and build the file again, as the dialog help's README describes.
 
 **Earlier versions of PFC** In the 2019 and 2022 versions of PFC, the dialog box Help is the compiled help file `pfcdlg.chm` (earlier, `PFCDLG.HLP`), from the archived [PFCDLG-help-file-and-source](https://github.com/OpenSourcePFCLibraries/PFCDLG-help-file-and-source) repository.
+
+## Deploying PFC's images
+
+Some PFC objects show pictures of their own: the message box (w_message) shows an icon for each kind of message, the drag-and-drop Sort dialog box (w_sortdragdrop) uses drag icons, and a printed TreeView (u_tv and n_cst_tvsrv_print of_PrintTree) draws its lines, expand and collapse boxes, and default item pictures with pictures. PFC names these files without a path, so deploy them where your application finds files: beside the executable, in a folder on the system path, or compiled into the executable or a PBD by listing them in a PBR file (see “Using PBR files”).
+
+The files are in the `pfc libs\images` folder of the [2025-Solution](https://github.com/OpenSourcePFCLibraries/2025-Solution/tree/master/pfc%20libs/images) and [2025-Workspace](https://github.com/OpenSourcePFCLibraries/2025-Workspace) repositories, whose README lists which object uses each one. They're SVG, PNG and ICO files named `pfc_*`, so they don't clash with your application's own images. If you replace one with your own picture, keep its file name.
+
+**Earlier versions of PFC** The 2019 and 2022 versions of PFC use bitmaps and icons with other names (`info.bmp`, `folder.bmp`, `arrowl.ico` and so on): in 2019, in that repository's `images` folder, and in 2022, from the [PFC-Image-Files](https://github.com/OpenSourcePFCLibraries/PFC-Image-Files) repository.

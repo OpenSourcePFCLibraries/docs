@@ -865,7 +865,7 @@ Integer. 1 if successful, -1 if an error occurrs.
 
 **Syntax 3**
 
-Print the TreeView. This function overloads the real of_PrintTree which is protected. Use this format of the function when the same picture is desired for all levels of the tree. This function will default to using "folder.bmp" for the picture and "foldopen.bmp" for the selected picture.
+Print the TreeView. This function overloads the real of_PrintTree which is protected. Use this format of the function when the same picture is desired for all levels of the tree. This function will default to using "pfc_tree_folder.png" for the picture and "pfc_tree_folder_open.png" for the selected picture ("folder.bmp" and "foldopen.bmp" before PFC 2025).
 
 Access: Public
 
@@ -887,7 +887,7 @@ Integer. 1 if successful, -1 if an error occurrs.
 
 **Syntax 4**
 
-Print the TreeView. This function overloads the real of_PrintTree which is protected. Use this format of the function to print the entire tree with the same picture for all levels. This function will default to using "folder.bmp" for the picture and "foldopen.bmp" for the selected picture.
+Print the TreeView. This function overloads the real of_PrintTree which is protected. Use this format of the function to print the entire tree with the same picture for all levels. This function will default to using "pfc_tree_folder.png" for the picture and "pfc_tree_folder_open.png" for the selected picture ("folder.bmp" and "foldopen.bmp" before PFC 2025).
 
 Access: Public
 
@@ -907,7 +907,7 @@ Integer. 1 if successful, -1 if an error occurrs.
 
 **Syntax 5**
 
-Print the TreeView. This function overloads the real of_PrintTree which is protected. Use this format of the function when the same picture is desired for all levels. This function will default to using "folder.bmp" for the picture and "foldopen.bmp" for the selected picture.
+Print the TreeView. This function overloads the real of_PrintTree which is protected. Use this format of the function when the same picture is desired for all levels. This function will default to using "pfc_tree_folder.png" for the picture and "pfc_tree_folder_open.png" for the selected picture ("folder.bmp" and "foldopen.bmp" before PFC 2025).
 
 Access: Public
 

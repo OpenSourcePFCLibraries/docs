@@ -155,8 +155,8 @@ tvcontrol.instancename.of_PrintTree ( { handle {, canceldialog
 | *instancename* | Instance name of n_cst_tvsrv_print (the u_tvs default is inv_print) |
 | *handle* (optional) | Long specifying the handle of the TreeView item from which to begin printing. The default is 0, which starts at the top of the TreeView hierarchy |
 | *canceldialog* (optional) | Boolean specifying whether to display a Cancel dialog. The default is FALSE |
-| *pictname* (optional) | String specifying the filename to display as the picture. The default is folder.bmp |
-| *selectedpictname* (optional) | String specifying the filename to display as the selected picture. The default is foldopen.bmp |
+| *pictname* (optional) | String specifying the filename to display as the picture. The default is pfc_tree_folder.png (folder.bmp before PFC 2025) |
+| *selectedpictname* (optional) | String specifying the filename to display as the selected picture. The default is pfc_tree_folder_open.png (foldopen.bmp before PFC 2025) |
 
 **Return value**
 
@@ -164,7 +164,7 @@ Integer. Returns 1 if the function succeeds and -1 if an error occurs.
 
 **Usage**
 
-The pictures specified (including the default pictures, folder.bmp and foldopen.bmp) must be in a directory that is accessible at execution time.
+The pictures specified (including the default pictures, pfc_tree_folder.png and pfc_tree_folder_open.png from PFC's `pfc libs\images` folder, or folder.bmp and foldopen.bmp before PFC 2025) must be in a directory that is accessible at execution time.
 
 **Examples**
 
@@ -208,7 +208,7 @@ Integer. Returns 1 if the function succeeds and -1 if an error occurs.
 
 **Usage**
 
-The pictures specified (including the default pictures, folder.bmp and foldopen.bmp) must be in a directory that is accessible at execution time.
+The pictures specified (including the default pictures, pfc_tree_folder.png and pfc_tree_folder_open.png from PFC's `pfc libs\images` folder, or folder.bmp and foldopen.bmp before PFC 2025) must be in a directory that is accessible at execution time.
 
 **Examples**
 
