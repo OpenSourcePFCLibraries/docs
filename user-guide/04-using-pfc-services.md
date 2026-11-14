@@ -4,26 +4,26 @@
 
 This chapter explains PFC services and how to use them.
 
-| Contents Topic | Page |
-| --- | --- |
-| Application services | 49 |
-| DataWindow services | 63 |
-| Window services | 89 |
-| Menu service | 95 |
-| Resize service | 96 |
-| Conversion service | 98 |
-| Date/Time service | 99 |
-| File service | 101 |
-| INI file service | 102 |
-| Numerical service | 103 |
-| Platform service | 105 |
-| Selection service | 106 |
-| SQL parsing service | 108 |
-| String-handling service | 109 |
-| Metaclass service | 111 |
-| Logical unit of work service | 111 |
-| List service | 114 |
-| Timing service | 126 |
+| Contents |
+| --- |
+| [Application services](#application-services) |
+| [DataWindow services](#datawindow-services) |
+| [Window services](#window-services) |
+| [Menu service](#menu-service) |
+| [Resize service](#resize-service) |
+| [Conversion service](#conversion-service) |
+| [Date/Time service](#datetime-service) |
+| [File service](#file-service) |
+| [INI file service](#ini-file-service) |
+| [Numerical service](#numerical-service) |
+| [Platform service](#platform-service) |
+| [Selection service](#selection-service) |
+| [SQL parsing service](#sql-parsing-service) |
+| [String-handling service](#string-handling-service) |
+| [Metaclass service](#metaclass-service) |
+| [Logical unit of work service](#logical-unit-of-work-service) |
+| [List service](#list-service) |
+| [Timing service](#timing-service) |
 
 ## Application services
 
@@ -316,7 +316,7 @@ If you use the w_message dialog box, you have additional options:
 
 **Usage**
 
-Use the error service to handle all of your application’s message and error handling. If you are keeping messages in a database, you can either use the messages tables in PFC.DB or pipe it to your application’s database.
+Use the error service to handle all of your application’s message and error handling. If you are keeping messages in a database, you can either use the messages table in the PFC database (see “The PFC database” in Chapter 1) or pipe it to your application’s database.
 
 **Using the messages table** In most cases you should copy the messages table to your application’s database. This table contains predefined PFC error messages as well as those that you define.
 
@@ -343,7 +343,7 @@ Use the error service to handle all of your application’s message and error ha
             (itr_error)
      ```
 
-**The error message source** When using a file as the error message source, the file must contain all rows found in the PFC.DB messages table; columns must be delimited by tabs.
+**The error message source** When using a file as the error message source, the file must contain all rows found in the PFC database's messages table; columns must be delimited by tabs.
 
 PFC uses predefined messages in certain situations. If you enable the error message service and receive message display errors, make sure the error message source has been established correctly.
 

@@ -4,11 +4,11 @@
 
 This chapter explains how to use PFC as the basis for your own class library.
 
-| Contents Topic | Page |
-| --- | --- |
-| Using PFC to design a class library | 19 |
-| Choosing an extension strategy | 20 |
-| Defining a new service | 24 |
+| Contents |
+| --- |
+| [Using PFC to design a class library](#using-pfc-to-design-a-class-library) |
+| [Choosing an extension strategy](#choosing-an-extension-strategy) |
+| [Defining a new service](#defining-a-new-service) |
 
 ## Using PFC to design a class library
 
@@ -66,13 +66,9 @@ This strategy has two advantages:
 
 You add, modify, and extend PFC through objects in the intermediate extension level.
 
-To implement an intermediate extension level, you can use the Library Extender or create intermediate extension level objects manually.
+To implement an intermediate extension level, you create the intermediate extension level objects and redefine the inheritance hierarchy.
 
 ![Figure](images/ug-p031-2.png)
-
-**Use the Library Extender** It’s best to use the Library Extender to create intermediate extension levels.
-
-See “Library Extender”.
 
 **To manually create an additional extension level and redefine the inheritance hierarchy:**
 

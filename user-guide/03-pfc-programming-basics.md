@@ -6,17 +6,17 @@ This chapter explains basic PFC programming practices and tells you how to get s
 
 **Assumptions** This chapter and all remaining chapters in this manual assume an intermediate extension level strategy, which allows the developer to modify and extend objects in the PFC extension level.
 
-| Contents Topic | Page |
-| --- | --- |
-| Setting up the application manager | 29 |
-| Building applications | 33 |
-| Using attribute objects | 38 |
-| Using PFC constants | 40 |
-| The message router | 41 |
-| Transaction management with PFC | 43 |
-| Calling ancestor functions and events | 45 |
-| Adding online Help to an application | 46 |
-| Installing PFC upgrades | 47 |
+| Contents |
+| --- |
+| [Setting up the application manager](#setting-up-the-application-manager) |
+| [Building applications](#building-applications) |
+| [Using attribute objects](#using-attribute-objects) |
+| [Using PFC constants](#using-pfc-constants) |
+| [The message router](#the-message-router) |
+| [Transaction management with PFC](#transaction-management-with-pfc) |
+| [Calling ancestor functions and events](#calling-ancestor-functions-and-events) |
+| [Adding online Help to an application](#adding-online-help-to-an-application) |
+| [Installing PFC upgrades](#installing-pfc-upgrades) |
 
 ## Setting up the application manager
 
