@@ -22,7 +22,7 @@ Error message service. Provides many features for handling your application’s 
 
 **Object relationships**
 
-d_definedmessages Messages table in PFC.DB (copy to your application database) n_cst_conversion n_cst_errorattrib n_cst_filesrv n_cst_string n_ds n_tr w_message
+d_definedmessages Messages table in the PFC database (copy to your application database) n_cst_conversion n_cst_errorattrib n_cst_filesrv n_cst_string n_ds n_tr w_message
 
 **Usage**
 

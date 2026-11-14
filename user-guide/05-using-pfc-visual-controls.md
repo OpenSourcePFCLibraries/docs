@@ -4,11 +4,11 @@
 
 This chapter explains how to use PFC standard visual user objects and custom visual user objects.
 
-| Contents Topic | Page |
-| --- | --- |
-| About PFC visual controls | 129 |
-| Using standard visual user objects | 130 |
-| Using custom visual user objects | 169 |
+| Contents |
+| --- |
+| [About PFC visual controls](#about-pfc-visual-controls) |
+| [Using standard visual user objects](#using-standard-visual-user-objects) |
+| [Using custom visual user objects](#using-custom-visual-user-objects) |
 
 ## About PFC visual controls
 

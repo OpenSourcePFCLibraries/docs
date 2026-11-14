@@ -4,13 +4,12 @@
 
 This chapter describes the PFC utilities and how to use them.
 
-| Contents Topic | Page |
-| --- | --- |
-| DataWindow Properties window | 207 |
-| SQL Spy | 210 |
-| Security | 213 |
-| Library Extender | 225 |
-| Migration Assistant | 226 |
+| Contents |
+| --- |
+| [DataWindow Properties window](#datawindow-properties-window) |
+| [SQL Spy](#sql-spy) |
+| [Security](#security) |
+| [Migration Assistant](#migration-assistant) |
 
 ## DataWindow Properties window
 
@@ -174,7 +173,7 @@ The PFC security system includes:
 - **The security scanner** Scans user-specified objects to gather information on all items that can be secured.
 - **The security database** Contains information on users, groups, items to be secured, and user access to those secured items.
 
-**Delivered as a local database** PFC provides a local database to hold security information. However, when you implement security, you will want to use a server database.
+**Delivered as a database** PFC provides a database to hold security information, in SQL Anywhere (the original and a version 17 database) and SQL Server 2022 versions. When you implement security, put the security tables in a server database.
 
 **Security by exception**
 
@@ -210,24 +209,17 @@ To use PFC security, you must define users and groups. A user can be a member of
 
 You use the security administration utility to define users and groups, as well as associate users with groups.
 
-**Use an existing target file** If you already have a target file for your security administration utility, add it to your PowerBuilder workspace, make sure it includes all the PFC libraries in its library list, and skip the first four steps in the following procedure.
+**The security administration utility** The utility is the pfcsecurity_admin application, in the *security administrator* project (*security administrator.pbproj*) of the PFC solution (*PFC.pbsln*). Its library, *pfcsecad.pbl*, is in the *security administrator* folder, and the project's library list already includes the PFC libraries. You can run it from PowerBuilder, or deploy the project's executable, *pfcsecurity_admin.exe*. The security scanner is a separate project in the same solution, *security scanner* (*security scanner.pbproj*), which builds *pfcsecurity_scanner.exe*.
 
 **To define users:**
 
-1. Add an Existing Application target to your PowerBuilder workspace (select File>New from the PowerBuilder menu bar, click the Target tab, click the Existing Application target icon, and click OK).
-2. On the Choose Library and Application page of the target wizard, select the pfcsecurity_admin application in the PFCSECAD.PBL library in the PFC\Security directory and click Next.
-3. On the Set Library Search Path page of the target wizard, add all the PFC libraries to the library list and click Next.
-4. On the Specify Target File page of the target wizard, click Finish.
+1. Open the PFC solution, *PFC.pbsln*, in PowerBuilder, and run the *security administrator* project.
 
-   The default target filename has the same name as the security application you selected with a PBT extension.
+   **Security database and INI file** The utility reads its connection to the security database from the `[Database]` section of *pfcsecad.ini*, in its current folder. The delivered file connects to a SQL Server database named PFC; change the section for your security database. If the utility can't connect, check this section.
 
-5. Select Run>Select And Run from the PowerBuilder menu bar, select the security_admin target, and click OK.
+   The PFC database, with the security tables, is in the [Database-scripts-and-files](https://github.com/OpenSourcePFCLibraries/Database-scripts-and-files) repository: the original SQL Anywhere database (*pfc.db*), a SQL Anywhere 17 version (*pfc17.db*), and a SQL Server 2022 backup (*PFC.sql_server.bak*). See “The PFC database” in Chapter 1.
 
-   **Security administration database and INI file** If there are problems connecting to the PFC.DB database, check the PFCSECAD.INI file and your workstation’s ODBC settings.
-
-   If you have moved the PFC security tables from PFC.DB to some other database, you must update the Database section of the PFCSECAD.INI file to reflect the appropriate database connection parameters.
-
-6. Select File>User/Groups from the security administration utiltiy menu bar.
+2. Select File>Users/Groups from the security administration utility menu bar.
 
    The User/Group Management window displays:
 
@@ -353,7 +345,7 @@ pfcsecurity_scanner [/ini <file>] [/target <file> [/project <name>]] [/scan [/lo
 | `/ini` | The security administration utility's INI file |
 | `/target` | The project (*.pbproj*), solution (*.pbsln*), or target (*.pbt*) to scan |
 | `/project` | For a solution, the project to scan; otherwise the solution's default project |
-| `/scan` | Scans without a window: the objects that the Select Objects to be Scanned dialog box selects by default (all but the *pfc_* objects). Messages and the summary are written to the log. |
+| `/scan` | Scans without a window: the objects that the Select Objects to be Scanned dialog box selects by default (all but the *pfc_* objects). Requires `/target`. Messages, errors (including a command line error or a failed connection), and the summary are written to the log instead of being shown. |
 | `/log` | The log of an unattended scan; otherwise *pfcsecurity_scanner.log* in the current folder |
 
 Without `/scan`, the scanner opens the Select Application dialog box with the target and project selected. Put a path with spaces in quotation marks. For example, to scan an application every night:
@@ -404,9 +396,9 @@ Users may belong to zero or more groups. User settings always take precedence ov
 
 **To define security for a user or group:**
 
-1. Select and run the security administration utility (PFCSECAD.PBT).
+1. Run the security administration utility.
 
-   See “Defining users and groups” for steps on adding the security administration target file to your workspace.
+   See “Defining users and groups” for steps on running it.
 
 2. Select File>Users/Objects from the menu bar.
 
@@ -484,15 +476,16 @@ Enabling the security service in your application involves:
 
 ### Maintaining the security database
 
-The PFC security system tables are delivered in the PFC.DB local database. The PFC security tables are:
+The PFC security system tables are delivered in the PFC database (see “Defining users and groups”). The PFC security tables are:
 
-- Security_apps
-- Security_groups
-- Security_info
-- Security_template
-- Security_users
+- security_apps
+- security_groupings
+- security_info
+- security_template
+- security_users
+- security_scan, which the security scanner creates if the database doesn't have it (see “Running the security scanner”)
 
-You can use the PFC.DB local database to define users and groups, scan objects, and define access privileges. However, you will need to migrate these tables to a server database before deploying applications. The PFC security system and the security database are designed for easy migration to a server database:
+You can use the delivered database to define users and groups, scan objects, and define access privileges. If it isn't the server database your applications use, migrate these tables to that database before deploying applications. The PFC security system and the security database are designed for easy migration to a server database:
 
 - All database interactions for PFC security are via DataWindows (there is no embedded SQL)
 - The PFC security system enforces cascading deletes manually
@@ -509,32 +502,12 @@ To enable security for all of your application’s users, move the PFC security 
    - If necessary, use the Select Painter to change the name of the associated database tables or columns to match those on the server database. Remember not to change the name of the DataWindow columns.
 3. In your application, populate Transaction object fields as appropriate for the server database containing the security tables.
 
-## Library Extender
-
-You use the PFC Library Extender to automatically create and populate an intermediate extension level between two existing levels, redefining the inheritance hierarchy.
-
-By supplying the Library Extender with the names of the upper and lower levels, the Library Extender:
-
-- Creates a new PBL
-- Creates objects in the new PBL that descend from objects in the upper level
-- Recreates objects in the lower level such that they descend from objects in the new PBL
-
-  ![Figure](images/ug-p236-1.png)
-
-Typically you would use the Library Extender to add an intermediate level (or levels) between the PFC ancestor level and the PFC extension level. Adding corporate and departmental extensions to intermediate extension levels allows the application programmer to make full use of the extension level.
-
-**Usage**
-
-The Library Extender is available on the Tool tab in the New dialog box.
-
-For complete usage information, see the Library Extender online Help.
-
 ## Migration Assistant
 
-The Migration Assistant scans PowerBuilder libraries (PBLs) and highlights usage of obsolete functions and events. Obsolete functions and events still work in the current version of PowerBuilder but may not work in future versions. If you plan on maintaining an application in the future, it's best to use current syntax and events.
+The Migration Assistant is a PowerBuilder tool, not part of PFC. It scans an application's code and lists obsolete syntax, features that have been removed, and reserved words used as names. Obsolete functions and events still work in the current version of PowerBuilder but may not work in future versions. If you plan on maintaining an application in the future, it's best to use current syntax and events.
 
 **Usage**
 
 The Migration Assistant is available on the Tool tab in the New dialog box.
 
-For complete usage information, see the Migration Assistant online Help.
+For complete usage information, see the Migration Assistant's online Help (click the Help (?) button or press F1), and "Upgrading targets/projects" in the PowerBuilder *Users Guide*.

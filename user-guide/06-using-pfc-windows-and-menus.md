@@ -4,10 +4,11 @@
 
 This chapter explains how to use PFC windows and menus.
 
-| Contents Topic | Page |
-| --- | --- |
-| Using PFC windows | 191 |
-| Using menus with PFC | 201 |
+| Contents |
+| --- |
+| [Using PFC windows](#using-pfc-windows) |
+| [Using menus with PFC](#using-menus-with-pfc) |
+| [Giving a PFC application a current look](#giving-a-pfc-application-a-current-look) |
 
 ## Using PFC windows
 

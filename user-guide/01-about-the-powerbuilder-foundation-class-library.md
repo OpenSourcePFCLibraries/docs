@@ -4,13 +4,13 @@
 
 This chapter introduces the PowerBuilder Foundation Class Library (PFC). It includes PFC basics, prerequisite PowerBuilder concepts, object-oriented concepts, and a list of PFC components.
 
-| Contents Topic | Page |
-| --- | --- |
-| Understanding PFC | 3 |
-| Understanding PowerBuilder | 4 |
-| How PFC uses object orientation | 8 |
-| How PFC uses the extension level | 11 |
-| The PFC components | 15 |
+| Contents |
+| --- |
+| [Understanding PFC](#understanding-pfc) |
+| [Understanding PowerBuilder](#understanding-powerbuilder) |
+| [How PFC uses object orientation](#how-pfc-uses-object-orientation) |
+| [How PFC uses the extension level](#how-pfc-uses-the-extension-level) |
+| [The PFC components](#the-pfc-components) |
 
 ## Understanding PFC
 
@@ -330,7 +330,13 @@ PFC is distributed with PBLs containing ancestor objects and PBLs containing ext
 
 **The PFC database**
 
-PFC ships with the pfc.db local database. This database contains the following tables:
+The PFC database is in the [Database-scripts-and-files](https://github.com/OpenSourcePFCLibraries/Database-scripts-and-files) repository, in three versions:
+
+- *pfc.db*, the original SQL Anywhere local database
+- *pfc17.db*, the same database migrated to SQL Anywhere 17
+- *PFC.sql_server.bak*, the same database migrated to SQL Server 2022
+
+The files can also be downloaded from the repository's [release](https://github.com/OpenSourcePFCLibraries/Database-scripts-and-files/releases/tag/1.0). This database contains the following tables:
 
 | Table | Usage |
 | --- | --- |
@@ -341,7 +347,9 @@ PFC ships with the pfc.db local database. This database contains the following t
 | Security_template | Security service |
 | Security_users | Security service |
 
-The PFC local database is intended for developer use only. If your application uses the error message service or security service, you should copy these tables to a server database, as described in “Deploying database tables”.
+The security scanner also uses a security_scan table, which it creates in the security database if the database doesn't have it (see “Running the security scanner” in Chapter 7).
+
+The PFC database is intended for developer use only. If your application uses the error message service or security service, you should copy these tables to a server database, as described in “Deploying database tables”.
 
 **The PFC code examples**
 

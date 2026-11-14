@@ -4,12 +4,13 @@
 
 This chapter explains considerations related to PFC application deployment.
 
-| Contents Topic | Page |
-| --- | --- |
-| Choosing a deployment strategy | 227 |
-| Using PBR files | 229 |
-| Deploying database tables | 229 |
-| Deploying PFC dialog box Help | 230 |
+| Contents |
+| --- |
+| [Choosing a deployment strategy](#choosing-a-deployment-strategy) |
+| [Using PBR files](#using-pbr-files) |
+| [Deploying database tables](#deploying-database-tables) |
+| [Deploying PFC dialog box Help](#deploying-pfc-dialog-box-help) |
+| [Deploying PFC's images](#deploying-pfcs-images) |
 
 ## Choosing a deployment strategy
 
@@ -62,11 +63,11 @@ Use these files as follows:
 
 ## Deploying database tables
 
-PFC ships with the PFC.DB database.
+The PFC database is in the [Database-scripts-and-files](https://github.com/OpenSourcePFCLibraries/Database-scripts-and-files) repository, as the original SQL Anywhere database (*pfc.db*), a SQL Anywhere 17 version (*pfc17.db*), and a SQL Server 2022 backup (*PFC.sql_server.bak*). See “The PFC database” in Chapter 1.
 
 **Table references**
 
-Although no PFC services reference PFC.DB directly, certain services reference tables that were originally shipped in PFC.DB:
+Although no PFC services reference the PFC database directly, certain services reference tables that are in it:
 
 | PFC service | Tables referenced |
 | --- | --- |
