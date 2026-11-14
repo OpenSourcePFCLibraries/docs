@@ -7,7 +7,6 @@ Global structure containing information used in n_cst_platform and w_pagesetup.
 **Library**
 
 - PFCAPSRV.PBL
-- PFEAPSRV.PBL
 
 | Properties Field | Data type |
 | --- | --- |

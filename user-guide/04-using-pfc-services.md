@@ -833,7 +833,7 @@ You establish drop-down DataWindow search functionality by enabling the service 
 
 U_dw destroys the service automatically when the DataWindow is destroyed.
 
-2. In the DataWindow control’s EditChanged event, add a call to the n_cst_dropdownsearch pfc_EditChanged event:
+2. In the DataWindow control’s EditChanged event, add a call to the n_cst_dwsrv_dropdownsearch pfc_EditChanged event:
 
    ```
    this.inv_dropdownsearch.Event pfc_EditChanged &
@@ -2233,7 +2233,7 @@ Because PFC instantiates a platform-specific descendant of n_cst_filesrv, it doe
    n_cst_filesrv  inv_filesrv
    ```
 
-2. Call the f_set_filesrv global function:
+2. Call the f_setfilesrv global function:
 
    ```
    f_SetFilesrv(inv_filesrv, TRUE)

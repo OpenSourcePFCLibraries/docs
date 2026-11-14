@@ -292,7 +292,7 @@ Boolean. Returns TRUE if *menu* has a toolbar and FALSE if it does not.
 
 **Examples**
 
-This example is from the n_cst_preference of_Save function:
+This example is from the n_cst_winsrv_preference of_Save function:
 
 ```
 ...

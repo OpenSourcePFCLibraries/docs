@@ -18,7 +18,7 @@ Timing service (multiple timers). Use this service to maintain an unlimited numb
 - [n_cst_datetime](n_cst_datetime.md)
 - [n_ds](../08-standard-class-user-objects/n_ds.md)
 - [n_tmg](../08-standard-class-user-objects/n_tmg.md)
-- n_tmgregisterattrib
+- n_cst_tmgregisterattrib
 
 **Usage**
 
@@ -77,7 +77,7 @@ N_cst_tmgmultiple includes instance variables:
 | ids_list | DataStore containing information on registered objects | n_ds | Protected | Internal |
 | il_interval | Timer interval | Long | Protected | Access with of_GetInterval |
 | inv_datetime | DateTime service | n_cst_datetime | Protected | Internal |
-| inv_tmgregister[ ] | Information on registered objects | n_cst_tmgregist erattrib | Protected | Internal |
+| inv_tmgregister[ ] | Information on registered objects | n_cst_tmgregisterattrib | Protected | Internal |
 | itmg_requestor | N_tmg instance that owns the n_cst_tmgmultiple instance | n_tmg | Protected | Internal |
 | POSTEVENT | Constant set to 1 | Integer | Public | Use with of_Register |
 | TRIGGEREVENT | Constant set to 0 | Integer | Public | Use with of_Register |

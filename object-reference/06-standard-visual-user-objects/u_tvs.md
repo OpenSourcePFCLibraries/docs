@@ -19,13 +19,13 @@ U_tvs is a self-updating object.
 
 PFC visual user objects are designed to be used with windows that are descendants of w_master. U_tvs also uses:
 
-- m_tv
+- [m_tvs](../03-menus/m_tvs.md)
 - [n_cst_infoattrib](../05-global-structures-and-structure-objects/n_cst_infoattrib.md)
 - [n_ds](../08-standard-class-user-objects/n_ds.md)
 - [n_cst_luw](../09-custom-class-user-objects/n_cst_luw.md)
 - [n_cst_tvsrv](../09-custom-class-user-objects/n_cst_tvsrv.md)
 - [n_cst_tvsrv_levelsource](../09-custom-class-user-objects/n_cst_tvsrv_levelsource.md)
-- n_cst_print
+- [n_cst_tvsrv_print](../09-custom-class-user-objects/n_cst_tvsrv_print.md)
 
 **Usage**
 

@@ -12,8 +12,8 @@ W_master is a self-updating object.
 
 **Library**
 
-- PFCWNSRV.PBL
-- PFEWNSRV.PBL
+- PFCMAIN.PBL
+- PFEMAIN.PBL
 
 **Object relationships**
 
@@ -869,19 +869,16 @@ This event is triggered when the user selects File>Print from the menu bar of a 
 
 **Examples**
 
-This example synchs the copies property of all DataWindows on the window:
+This example prints both of the window's DataWindows, showing the Print dialog box for the first one only, and returns 1 so that the DataWindow doesn't print again:
 
 ```
 Integer  li_rc
-s_printdlgattrib  lstr_printdlg
 
-li_rc = dw_1.Event pfc_PrintDlg(lstr_printdlg)
+li_rc = dw_1.Event pfc_Print()
 IF li_rc = 1 THEN
-  dw_2.object.datawindow.print.copies = &
-    lstr_printdlg.l_copies
-  dw_3.object.datawindow.print.copies = &
-    lstr_printdlg.l_copies
+  dw_2.Event pfc_PrintImmediate()
 END IF
+RETURN li_rc
 ```
 
 ### pfc_PrintImmediate

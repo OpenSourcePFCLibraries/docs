@@ -92,7 +92,7 @@ N_cst_dwsrv_resize includes instance variables:
 | il_parentminimumwidth | Minimum width of DataWindow control | Long | Protected | Set with of_SetMinSize |
 | il_parentprevheight | Original height of DataWindow control | Long | Protected | Set with of_SetOrigSize |
 | il_parentprevwidth | Original width of DataWindow control | Long | Protected | Set with of_SetOrigSize |
-| inv_registered [] | Array of registered columns and text objects | n_cst_dws rv_resizeat trib | Protected | Set with of_Register |
+| inv_registered [] | Array of registered columns and text objects | n_cst_dwsrv_resizeattrib | Protected | Set with of_Register |
 | istr_registered[ ] |  | n_cst_dwsrv_resizeattrib | Protected |  |
 | LINE | Constant set to "line" | String | Protected | Internal |
 | SCALE | Constant set to "Scale" | String | Public | Use with of_Register |

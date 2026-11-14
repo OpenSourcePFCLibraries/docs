@@ -23,7 +23,6 @@ N_cst_apppreference automatically loads settings when the application opens and 
 
 **Object relationships**
 
-- n_cst_appatrib
 - [n_cst_conversion](n_cst_conversion.md)
 - [n_cst_inifile](n_cst_inifile.md)
 - [n_cst_string](n_cst_string.md)

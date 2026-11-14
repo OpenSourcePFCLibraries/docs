@@ -14,8 +14,6 @@ For complete information on using SQL Spy, see the *PFC User’s Guide*.
 
 **Library**
 
-PF
-
 - PFCUTIL.PBL
 - PFEUTIL.PBL
 

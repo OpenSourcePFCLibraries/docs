@@ -19,7 +19,7 @@ N_ds is a self-updating object.
 **Library**
 
 - PFCMAIN.PBL
-- PFEAPSRV.PBL
+- PFEMAIN.PBL
 
 **Object relationships**
 
@@ -258,7 +258,7 @@ instancename.Event pfc_PrePageSetupDlg ( attributes )
 
 This event is called by the pfc_PageSetupDlg event before calling the n_cst_platform of_PageSetupDlg function.
 
-You can use this event to modify or extend the information passed in the s_pagesettupattrib structure.
+You can use this event to modify or extend the information passed in the s_pagesetupattrib structure.
 
 **Examples**
 
@@ -273,7 +273,7 @@ astr_pagesetup.b_portraitorientation = TRUE
 
 **Description**
 
-Calls the pfc_PrintDlg function and prints the DataStore, as specified in the Print dialog box.
+Displays the Print dialog box and prints the DataStore, as specified in the dialog box (the DataStore Print function with its Print dialog box). If the user chooses to print the selection, only the selected rows are printed. If legacy printing is off (see of_SetLegacyPrint), it displays the printer setup dialog box instead and then prints.
 
 **Return value**
 
@@ -702,15 +702,14 @@ Internal.
 
 **Examples**
 
-This example is from the pfc_PrintDlg event:
+This example gets the DataStore's parent window:
 
 ```
-...
-f_setplatform (lnv_platform, true)
-this.of_GetParentWindow(lw_parent)
-ll_rc = lnv_platform.of_PrintDlg(astr_printdlg,  &
-   lw_parent)
-...
+window  lw_parent
+
+IF this.of_GetParentWindow(lw_parent) = 1 THEN
+   ...
+END IF
 ```
 
 ### of_IsUpdateable

@@ -145,7 +145,7 @@ inv_dropdownsearch.Event pfc_ItemFocusChanged &
 
 ## Functions
 
-N_cst_dwsrv_dropdownseach contains precoded object functions:
+N_cst_dwsrv_dropdownsearch contains precoded object functions:
 
 - of_AddColumn
 - of_DeleteItem

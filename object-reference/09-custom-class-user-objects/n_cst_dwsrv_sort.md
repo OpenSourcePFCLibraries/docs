@@ -1016,7 +1016,7 @@ li_rc = of_Sort()
 
 **Description**
 
-Grants pfc_u_dw access to of_draw() in the sub-service n_cst_sortDraw.
+Grants pfc_u_dw access to of_draw() in the sub-service n_cst_dwsrv_sortdraw.
 
 **Access**
 
@@ -1040,7 +1040,7 @@ None.
 
 **Description**
 
-Grants pfc_u_dw access to of_drawNone() in the sub-service n_cst_sortDraw. It also keeps instance variable in this service in sync with n_cst_sortDraw.
+Grants pfc_u_dw access to of_drawNone() in the sub-service n_cst_dwsrv_sortdraw. It also keeps instance variable in this service in sync with n_cst_dwsrv_sortdraw.
 
 **Access**
 

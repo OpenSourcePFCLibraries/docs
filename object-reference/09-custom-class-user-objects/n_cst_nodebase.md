@@ -40,8 +40,8 @@ N_cst_nodebase includes instance variables:
 | --- | --- | --- | --- | --- |
 | ia_data | Node data | Any | Protected | Set with of_SetData |
 | ia_key | Node key value | Any | Protected | Set with of_SetKey |
-| inv_next | Reference to next node | n_cst_node base | Protected | Set with of_SetNext |
-| inv_prev | Reference to prior node | n_cst_node base | Protected | Set with of_SetPrev |
+| inv_next | Reference to next node | n_cst_nodebase | Protected | Set with of_SetNext |
+| inv_prev | Reference to prior node | n_cst_nodebase | Protected | Set with of_SetPrev |
 
 ## Functions
 

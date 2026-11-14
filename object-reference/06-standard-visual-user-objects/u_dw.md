@@ -272,7 +272,7 @@ If you are using the dropdown DataWindow search service (n_cst_dwsrv_dropdownsea
 
 **Examples**
 
-This example shows the code you add to call the n_cst_dropdownsearch pfc_ItemFocusChanged event:
+This example shows the code you add to call the n_cst_dwsrv_dropdownsearch pfc_ItemFocusChanged event:
 
 ```
 inv_dropdownsearch.Event pfc_ItemFocusChanged &
@@ -845,7 +845,7 @@ instancename.Event pfc_PrePageSetupDlg ( attributes )
 
 This event is called by the pfc_PageSetupDlg event before calling the n_cst_platform of_PageSetupDlg function.
 
-You can use this event to modify or extend the information passed in the s_pagesettupattrib structure.
+You can use this event to modify or extend the information passed in the s_pagesetupattrib structure.
 
 **Examples**
 
@@ -875,7 +875,7 @@ instancename.Event pfc_PreProperties ( attributes )
 
 **Usage**
 
-This event is called by the pfc_Debug event before calling the n_cst_property of_OpenProperty function.
+This event is called by the pfc_Debug event before calling the n_cst_dwsrv_property of_OpenProperty function.
 
 You can use this event to modify or extend the information passed in the n_cst_propertyattrib object.
 
@@ -923,7 +923,7 @@ Integer. Returns 1 if the function succeeds and -1 if an error occurs.
 
 **Usage**
 
-The n_cst_rowmanager of_UnDelete function calls this event before opening the w_restorerow window. It adds filter and sort information to the n_cst_restorerowattrib structure.
+The n_cst_dwsrv_rowmanager of_UnDelete function calls this event before opening the w_restorerow window. It adds filter and sort information to the n_cst_restorerowattrib structure.
 
 You can extend this event to modify the information passed to the w_restorerow window.
 
@@ -1043,7 +1043,7 @@ Call this event to scroll the DataWindow to the previous page.
 
 **Description**
 
-Calls the pfc_PrintDlg function and prints the DataWindow, as specified in the Print dialog box.
+Displays the Print dialog box and prints the DataWindow, as specified in the dialog box (the DataWindow Print function with its Print dialog box). If the user chooses to print the selection, only the selected rows are printed.
 
 **Return value**
 
