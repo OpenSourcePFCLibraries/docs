@@ -17,7 +17,7 @@ PFC contains two types of visual controls:
 - **Standard visual user objects** Consist of a single PowerBuilder control. PFC adds logic to enhance the control’s functionality and reusability. The u_lb ListBox control is an example of a standard visual user object.
 - **Custom visual user objects** Consist of several controls that function as a unit. PFC adds logic to perform the appropriate processing. The u_calculator calculator control is an example of a custom visual object.
 
-**Standard class user objects** PFC also features a set of standard *class* user objects, such as n_tr (transaction), n_cn (connection), and n_msg (message).
+**Standard class user objects** PFC also features a set of standard *class* user objects, such as n_tr (transaction), n_ds (DataStore), and n_msg (message).
 
 For information on using standard class user objects, see Chapter 3, “PFC Programming Basics”.
 

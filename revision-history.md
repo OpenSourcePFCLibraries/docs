@@ -119,7 +119,11 @@ PFC 2025 comes in two forms: the [2025-Solution](https://github.com/OpenSourcePF
 - **Language service**: PFC's messages, and window, menu and DataWindow text, come from a language file, which can be generated from the Translation Toolkit dictionaries.
 - **A current look**: Segoe UI in place of MS Sans Serif and Tahoma, current images (SVG, with PNG versions), layout around a ribbon bar, and a status bar that follows the UI theme. One resource file, *pfc.pbr*, lists PFC's images and DataWindow objects.
 - **Resize and layout**: a minimum window size, the design-time size as the original size, the DataWindow resize service's FIXEDCENTER methods, live resizing with the split bar, and response windows big enough for their controls.
-- **Removed**: the JSON service (n_cst_json, w_debugjson), in favor of PowerBuilder's JSONParser and JSONGenerator; the XSLFOP PDF method, in favor of NativePDF.
+- **Removed**:
+  - the JSON service (n_cst_json, w_debugjson), in favor of PowerBuilder's JSONParser and JSONGenerator
+  - the XSLFOP PDF method, in favor of NativePDF
+  - the wrappers of obsolete PowerBuilder classes: Connection (n_cn), for EAServer; Inet and InternetResult (n_inet, n_ir), in favor of OpenURL and HTTPClient; Service (n_srv); and ErrorLogging (pfc_n_errorlogging), for EAServer and MTS components
+  - saving the DDETimeOut property in the application preference service, since DDE is obsolete
 - **Tools**: the Library Extender (*New-PfcExtensionLayer.ps1*), which replaces the PowerBuilder IDE's Library Extender wizard for solutions and workspaces (see "Library Extender" in [the User's Guide, chapter 7](user-guide/07-pfc-utilities.md#library-extender)), an incremental build script (*Build-Incremental.ps1*), and scripts for language files and translations.
 - **Unit tests** with PBUnit (see [Running the PFC Unit Tests](unit-tests.md)).
 - **Applications**: the Examples app, PEAT and the security administrator, with ribbons, the UI theme and Fluent icons; a new OpenID Connect demo and an SMTP demo.
