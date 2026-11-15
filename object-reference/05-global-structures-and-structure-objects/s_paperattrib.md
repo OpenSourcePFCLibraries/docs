@@ -2,12 +2,11 @@
 
 **Description**
 
-Global structure containing information used in s_pagestupattrib.
+Global structure containing information used in [s_pagesetupattrib](s_pagesetupattrib.md).
 
 **Library**
 
 - PFCAPSRV.PBL
-- PFEAPSRV.PBL
 
 | Properties Field | Data type |
 | --- | --- |

@@ -332,7 +332,7 @@ The message router calls this event when a RichTextEdit control based on u_rte h
 
 **Description**
 
-Calls the pfc_PrintDlg function and prints the RichTextEdit control, as specified in the Print dialog box.
+Displays the Print dialog box and prints the RichTextEdit control, as specified in the dialog box (the RichTextEdit PrintEx function with its Print dialog box).
 
 **Return value**
 

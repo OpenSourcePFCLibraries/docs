@@ -13,7 +13,7 @@ Defining virtual functions in an ancestor object is a technique that allows you 
 **Library**
 
 - PFCAPSRV.PBL
-- PFEAPSRV.BPL
+- PFEAPSRV.PBL
 
 **Object relationships**
 
@@ -74,7 +74,7 @@ N_cst_filesrv includes precoded object functions, most of which are virtual func
 
 By defining virtual functions in this object, you can declare a reference variable of type n_cst_filesrv for use with all n_cst_filesrv descendants.
 
-N_cst_filsrv includes precoded object functions:
+N_cst_filesrv includes precoded object functions:
 
 - of_AssemblePath
 - of_CalculateFileAttributes
@@ -2098,7 +2098,7 @@ This example calls the of_SortDirList function:
 String    ls_currdir
 Integer   li_cnt, li_entries
 String    ls_import
-n_cst_dirlistattrib lnv_dirlist[ ]
+n_cst_dirattrib lnv_dirlist[ ]
 
 SetPointer(HourGlass!)
 ls_currdir = "c:\Win95"

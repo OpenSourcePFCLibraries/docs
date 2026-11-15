@@ -600,7 +600,7 @@ Integer. Returns 1 if the function succeeds and -1 if an error occurs.
 
 **Examples**
 
-This example is from the u_tvs_of_SetBase function:
+This example is from the u_tvs of_SetBase function:
 
 ```
 ...

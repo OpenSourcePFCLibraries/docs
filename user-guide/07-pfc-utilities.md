@@ -129,7 +129,7 @@ The w_sqlspyinspect dialog box allows you view and optionally modify SQL before 
 
 1. Update the database, inserting, deleting, or modifying rows.
 
-   The w_sqlinspect dialog box displays:
+   The w_sqlspyinspect dialog box displays:
 
    ![Figure](images/ug-p222-2.png)
 

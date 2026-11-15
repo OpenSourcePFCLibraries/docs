@@ -20,7 +20,7 @@ DataWindow property object.
 - [n_cst_metaclass](n_cst_metaclass.md)
 - [n_cst_propertyattrib](../05-global-structures-and-structure-objects/n_cst_propertyattrib.md)
 - w_dwproperty
-- w_dwpropertyservice
+- [w_dwpropertyservices](../02-window-objects/w_dwpropertyservices.md)
 
 **Usage**
 
@@ -170,7 +170,7 @@ If IsValid(inv_property) Then
 
 **Description**
 
-Opens the w_dwpropertyservice dialog box for the specified service.
+Opens the w_dwpropertyservices dialog box for the specified service.
 
 **Access**
 
@@ -186,7 +186,7 @@ dwcontrol.instancename.of_OpenPropertyService ( service )
 | --- | --- |
 | *dwcontrol* | Instance name of the u_dw-based DataWindow control |
 | *instancename* | Instance name of n_cst_dwsrv_property (the u_dw default is either inv_property or snv_property) |
-| *service* | PowerObject containing the service to be displayed in the w_dwpropertyservice dialog box |
+| *service* | PowerObject containing the service to be displayed in the w_dwpropertyservices dialog box |
 
 **Return value**
 

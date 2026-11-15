@@ -297,7 +297,6 @@ PFC includes many pre-event processes, to which you add code that customizes or 
 - pfc_PreLogonDlg
 - pfc_PreOpen
 - pfc_PrePageSetupDlg
-- pfc_PrePrintDlg
 - pfc_PreRestoreRow
 - pfc_PreSplash
 - pfc_PreToolbar

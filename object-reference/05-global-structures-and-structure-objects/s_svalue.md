@@ -7,7 +7,6 @@ Global structure containing information used in n_cst_dwsrv_querymode.
 **Library**
 
 - PFCDWSRV.PBL
-- PFEDWSRV.PBL
 
 | Properties Field | Data type |
 | --- | --- |

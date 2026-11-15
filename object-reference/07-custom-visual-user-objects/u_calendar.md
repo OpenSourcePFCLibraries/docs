@@ -17,8 +17,8 @@ U_calendar provides support for highlighting:
 
 **Library**
 
-- PFCAPSRV.PBL
-- PFEAPSRV.PBL
+- PFCMAIN.PBL
+- PFEMAIN.PBL
 
 **Object relationships**
 

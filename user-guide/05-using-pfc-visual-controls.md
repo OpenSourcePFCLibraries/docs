@@ -390,23 +390,21 @@ PFC provides events that allow you to print DataWindows. You can:
 
 - Display a Print dialog box, allowing you to choose options before printing
 
-  PFC uses the s_printdlgattrib structure to pass DataWindow properties to the n_cst_platform of_PrintDlg function. You can use the pfc_PrePrintDlg event to further customize the initial contents of the Print dialog box by modifying elements in the s_printdlgattrib structure.
-
-  The elements in the s_printdlgattrib structure reflect selected DataWindow Print properties (such as collate, page numbers, and number of copies).
+  PFC displays PowerBuilder's Print dialog box (the DataWindow Print function). To set the dialog box's initial values, such as the number of copies or collation, set the DataWindow's Print properties before calling pfc_Print. If the user chooses to print the selection, PFC prints only the selected rows.
 
 - Print a DataWindow without displaying the Print dialog box
 - Display a Page Setup dialog box that allows you to specify print settings
 
-  PFC uses the s_pagesetupattrib structure to pass DataWindow properties to the n_cst_platform of_PageSetupDlg function. You can use the pfc_PrePageSetupDlg event to further customize the initial contents of the Page Setup dialog box by modifying elements in the s_pagesetupdlgattrib structure.
+  PFC uses the s_pagesetupattrib structure to pass DataWindow properties to the n_cst_platform of_PageSetupDlg function. You can use the pfc_PrePageSetupDlg event to further customize the initial contents of the Page Setup dialog box by modifying elements in the s_pagesetupattrib structure.
 
   The elements in the s_pagesetupattrib structure reflect selected DataWindow Print properties (such as margins, paper size, and orientation).
 
 **To display the Print dialog box:**
 
-1. (Optional) Add code to the pfc_PrePrintDlg event to modify the information used by the pfc_PrintDlg function (this example provides a default for the number of copies specification):
+1. (Optional) Set the DataWindow's Print properties for the dialog box's initial values (this example sets the number of copies):
 
    ```
-   astr_printdlg.l_copies = 1
+   dw_emp.Object.DataWindow.Print.Copies = 1
    ```
 
 2. Call the pfc_Print event:
@@ -1331,9 +1329,7 @@ U_rte provides events that allow you to print the data in RichTextEdit controls.
 
 - Display a Print dialog box, allowing you to choose options before printing
 
-  PFC uses the s_printdlgattrib structure to pass properties to the n_cst_platform of_PrintDlg function. You can use the pfc_PrePrintDlg event to further customize the contents of the Print dialog box by modifying elements in the s_printdlgattrib structure.
-
-  The values in the s_printdlgattrib structure reflect selected RichTextEdit Print properties (such as collate, page numbers, and number of copies).
+  PFC displays PowerBuilder's Print dialog box (the RichTextEdit PrintEx function).
 
 - Print a RichTextEdit control without displaying the Print dialog box
 
@@ -1341,17 +1337,11 @@ U_rte also provides functions that allow you to control the printing of page num
 
 **To display the Print dialog box:**
 
-1. (Optional) Add code to the pfc_PrePrintDlg event to modify the information used by the pfc_PrintDlg function (this example provides a default for the number of copies specification):
+- Call the pfc_Print event:
 
-   ```
-   astr_printdlg.l_copies = 1
-   ```
-
-2. Call the pfc_Print event:
-
-   ```
-   rte_doc.Event pfc_Print()
-   ```
+  ```
+  rte_doc.Event pfc_Print()
+  ```
 
 **To print a RichTextEdit control without displaying the Print dialog box:**
 

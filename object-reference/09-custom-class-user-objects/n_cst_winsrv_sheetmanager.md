@@ -24,7 +24,7 @@ Enable the sheet management service for all multiple-sheet MDI applications. You
 To use the sheet management service:
 
 1. Create an instance of n_cst_winsrv_sheetmanager by calling the w_frame of_SetSheetManager function.
-2. Call n_cst_sheetmanager functions as needed to access information on open sheets.
+2. Call n_cst_winsrv_sheetmanager functions as needed to access information on open sheets.
 
 **PFC 7 custom class extension** To further the extendibility of PFC, a new n_cst_winsrv_sheetmanagerattrib custom class user object replaces the os_sheet object structure that is now obsolete.
 
@@ -44,7 +44,7 @@ N_cst_winsrv_sheetmanager includes instance variables:
 | Instance variable | Description | Data type | Access | Usage |
 | --- | --- | --- | --- | --- |
 | ie_arrange | Current arrange type | ArrangeTypes | Protected | Internal |
-| inv_sheet[ ] | Array containing information on the previous state of active sheets | n_cst_winsrv_she etmanagerattrib | Protected | Internal |
+| inv_sheet[ ] | Array containing information on the previous state of active sheets | n_cst_winsrv_sheetmanagerattrib | Protected | Internal |
 | istr_sheet[ ] |  | n_cst_winsrv_sheetmanagerattrib | Protected |  |
 
 ## Events

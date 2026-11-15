@@ -16,8 +16,8 @@ When this object is instantiated, PFC displays debugging messages in certain sit
 
 **Library**
 
-- PFCAPSRV.PBL
-- PFEAPSRV.PBL
+- PFCUTIL.PBL
+- PFEUTIL.PBL
 
 **Object relationships**
 

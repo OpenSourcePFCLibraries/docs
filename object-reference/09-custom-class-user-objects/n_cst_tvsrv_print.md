@@ -99,7 +99,7 @@ li_RC = lds_Print.Print(ab_CancelDialog)
 
 **Description**
 
-Function added by Vipul. The function recursively goes through ancestors of an item and builds a string of flags indicating whether they had siblings or not. These flags would be picked by d_printree's parentsiblings field which helps display lines beween nodes. The Lines between nodes should only appear if there is a sibling waiting to be printed (NextTreeItem)
+Function added by Vipul. The function recursively goes through ancestors of an item and builds a string of flags indicating whether they had siblings or not. These flags would be picked by d_printtree's parentsiblings field which helps display lines beween nodes. The Lines between nodes should only appear if there is a sibling waiting to be printed (NextTreeItem)
 
 **Access**
 

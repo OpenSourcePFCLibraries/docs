@@ -13,7 +13,7 @@ Defining virtual functions in an ancestor object is a technique that allows you 
 **Library**
 
 - PFCAPSRV.PBL
-- PFEAPSRV.BPL
+- PFEAPSRV.PBL
 
 **Object relationships**
 

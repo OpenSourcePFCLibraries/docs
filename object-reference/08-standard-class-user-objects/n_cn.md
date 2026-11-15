@@ -40,10 +40,6 @@ To use n_cn:
 
 4. Continue the distributed application as appropriate.
 
-**See also**
-
-n_trp
-
 ## Instance variables
 
 N_cn includes instance variables:
