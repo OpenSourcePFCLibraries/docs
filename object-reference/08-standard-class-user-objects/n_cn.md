@@ -1,5 +1,7 @@
 # n_cn
 
+> Removed in PFC 2025. Available in the 2019 and 2022 versions of PFC. PowerBuilder's Connection object connected clients to EAServer components, and EAServer hasn't been supported since PowerBuilder 2017.
+
 **Description**
 
 Connection object for use with all distributed PFC applications. You can either use this object as is or create descendants that include customized or extended functionality.

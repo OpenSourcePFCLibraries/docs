@@ -1,5 +1,7 @@
 # n_inet
 
+> Removed in PFC 2025. Available in the 2019 and 2022 versions of PFC. PowerBuilder's Inet object has been obsolete since PowerBuilder 2019 R3. Use the OpenURL function or the HTTPClient object ([n_httpclient](n_httpclient.md)) instead.
+
 **Description**
 
 Inet nonvisual user object ancestor.

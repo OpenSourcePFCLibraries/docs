@@ -4,7 +4,9 @@
 
 Application preference service. When enabled, you can use n_cst_apppreference to save and restore application and user information using either an INI file or the Windows registry. N_cst_apppreference saves the following *application* information:
 
-User key MicroHelp Help file Version Logo bitmap Copyright notice DDETimeOut property DisplayName property DWMessageTitle property MicrohelpDefault property RightToLeft property ToolbarFrameTitle property ToolbarPopMenuText property ToolbarSheetTitle property ToolbarUserControl property
+User key MicroHelp Help file Version Logo bitmap Copyright notice DisplayName property DWMessageTitle property MicrohelpDefault property RightToLeft property ToolbarFrameTitle property ToolbarPopMenuText property ToolbarSheetTitle property ToolbarUserControl property
+
+**DDETimeOut (PFC 2025 and later)** The 2019 and 2022 versions of PFC also save the DDETimeOut property. PFC 2025 doesn't, because DDE has been obsolete since PowerBuilder 2022 R2; a value already saved is ignored.
 
 N_cst_apppreference can also save the following *user* information:
 
