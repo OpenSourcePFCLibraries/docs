@@ -66,9 +66,11 @@ This strategy has two advantages:
 
 You add, modify, and extend PFC through objects in the intermediate extension level.
 
-To implement an intermediate extension level, you create the intermediate extension level objects and redefine the inheritance hierarchy.
+To implement an intermediate extension level, you can use the Library Extender or create intermediate extension level objects manually.
 
 ![Figure](images/ug-p031-2.png)
+
+**Use the Library Extender (PFC 2025 and later)** It's best to use the Library Extender to create intermediate extension levels. See "Library Extender" in Chapter 7. It's available in PFC 2025 and later; it is not available in the 2019 and 2022 versions of PFC.
 
 **To manually create an additional extension level and redefine the inheritance hierarchy:**
 
