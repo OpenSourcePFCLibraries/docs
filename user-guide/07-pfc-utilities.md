@@ -9,6 +9,7 @@ This chapter describes the PFC utilities and how to use them.
 | [DataWindow Properties window](#datawindow-properties-window) |
 | [SQL Spy](#sql-spy) |
 | [Security](#security) |
+| [Library Extender](#library-extender) |
 | [Migration Assistant](#migration-assistant) |
 
 ## DataWindow Properties window
@@ -501,6 +502,72 @@ To enable security for all of your application’s users, move the PFC security 
    - Preserve the DataWindow’s column order and DataWindow column names.
    - If necessary, use the Select Painter to change the name of the associated database tables or columns to match those on the server database. Remember not to change the name of the DataWindow columns.
 3. In your application, populate Transaction object fields as appropriate for the server database containing the security tables.
+
+## Library Extender
+
+The Library Extender adds an intermediate extension level between the PFC ancestor level and the PFC extension level, redefining the inheritance hierarchy (see "Choosing an extension strategy" in Chapter 2). By default, the new level's objects use the pfd_ prefix and are in pfd libraries:
+
+```
+pfc_u_dw  (pfcmain.pbl)   PFC ancestor level: replaced by each PFC release
+   ^
+pfd_u_dw  (pfdmain.pbl)   intermediate extension level: your corporate changes
+   ^
+u_dw      (pfemain.pbl)   PFC extension level: used by the application
+```
+
+Adding corporate and departmental extensions to intermediate extension levels allows the application programmer to make full use of the extension level.
+
+**Available in PFC 2025 and later** The Library Extender is a PowerShell script, *New-PfcExtensionLayer.ps1*, in the *tools* folder of the [2025-Solution](https://github.com/OpenSourcePFCLibraries/2025-Solution/tree/master/tools) and [2025-Workspace](https://github.com/OpenSourcePFCLibraries/2025-Workspace/tree/master/tools) repositories. It works with a PowerBuilder 2025 solution (*.pbsln*) or workspace (*.pbw*). It is not available in the 2019 and 2022 versions of PFC. (The Library Extender that shipped with the Sybase PFC, on the Tool tab of the New dialog box, isn't part of the open source project.)
+
+**What it does**
+
+For each object in the extension libraries (for example, u_dw) that inherits directly from a PFC ancestor object (pfc_u_dw), the Library Extender:
+
+- Creates an empty descendant of the ancestor object, pfd_u_dw, in an intermediate library named after the extension library (pfemain becomes pfdmain, pfeapsrv becomes pfdapsrv, and so on)
+- Changes the extension object to inherit from the new object. Nothing else in the extension object changes, so changes you have already made to the extension level stay where they are.
+- Adds the intermediate libraries to the library list of every project (*.pbproj*) or target (*.pbt*) that uses the extension libraries, after the last extension library
+
+It's safe to run again. Extension objects that already inherit from their pfd_ objects are left alone, and if a pfd_ object already exists, the Library Extender points the extension object at it without changing it.
+
+**Usage**
+
+Requirements:
+
+- PowerBuilder 2025. PBAutoBuild (*pbautobuild250.exe*) is needed only to compile afterwards.
+- PowerShell 7 (`pwsh`) or Windows PowerShell 5.1.
+- For a workspace, the workspace must be under source control, with up-to-date source in its *ws_objects* folder. The Library Extender changes that source; PBAutoBuild then imports it into the PBLs.
+
+Close the solution or workspace in PowerBuilder, and commit (or back up) your libraries first, so you can review the changes and undo them.
+
+**To preview the changes:**
+
+```
+pwsh -File tools\New-PfcExtensionLayer.ps1 -Path C:\src\MyApp\MyApp.pbsln -WhatIf
+```
+
+**To add the intermediate extension level and compile:**
+
+```
+pwsh -File tools\New-PfcExtensionLayer.ps1 -Path C:\src\MyApp\MyApp.pbsln -Build
+```
+
+For a workspace, give the *.pbw* file. With `-Build`, the Library Extender imports the source into the PBLs, creating the new PBLs.
+
+Options let you use other prefixes and library names (`-LayerPrefix`, `-LayerLibraryPrefix`), put all the new objects in one library (`-LayerLibrary`), extend only some objects (`-Include`, `-Exclude`), and update only some projects (`-Project`).
+
+**Taking a new PFC release**
+
+1. Commit your current state.
+2. Replace the pfc and pfe libraries with the ones from the new release. Keep your pfd libraries. If you also changed the extension level, merge your changes into the new pfe objects.
+3. Run the Library Extender again with `-Build`. It points the new extension objects at your existing pfd_ objects, and creates pfd_ objects for objects that are new in the release.
+
+**More than one intermediate level** To add a departmental level between a corporate pfd level and the extension level, run the Library Extender again with the corporate level as the ancestor level:
+
+```
+pwsh -File tools\New-PfcExtensionLayer.ps1 -Path MyApp.pbsln -AncestorPrefix pfd_ -LayerPrefix dpt_ -LayerLibraryPrefix dpt -Build
+```
+
+For all the options, the exit codes, and a known issue with workspaces, see [New-PfcExtensionLayer.md](https://github.com/OpenSourcePFCLibraries/2025-Solution/blob/master/tools/New-PfcExtensionLayer.md).
 
 ## Migration Assistant
 
