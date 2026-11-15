@@ -517,7 +517,7 @@ u_dw      (pfemain.pbl)   PFC extension level: used by the application
 
 Adding corporate and departmental extensions to intermediate extension levels allows the application programmer to make full use of the extension level.
 
-**Available in PFC 2025 and later** The Library Extender is a PowerShell script, *New-PfcExtensionLayer.ps1*, in the *tools* folder of the [2025-Solution](https://github.com/OpenSourcePFCLibraries/2025-Solution/tree/master/tools) and [2025-Workspace](https://github.com/OpenSourcePFCLibraries/2025-Workspace/tree/master/tools) repositories. It works with a PowerBuilder 2025 solution (*.pbsln*) or workspace (*.pbw*). It is not available in the 2019 and 2022 versions of PFC. (The Library Extender that shipped with the Sybase PFC, on the Tool tab of the New dialog box, isn't part of the open source project.)
+**Available in PFC 2025 and later** The Library Extender is a PowerShell script, *New-PfcExtensionLayer.ps1*, in the *tools* folder of the [2025-Solution](https://github.com/OpenSourcePFCLibraries/2025-Solution/tree/master/tools) and [2025-Workspace](https://github.com/OpenSourcePFCLibraries/2025-Workspace/tree/master/tools) repositories. It works with a PowerBuilder 2025 solution (*.pbsln*) or workspace (*.pbw*). It is not available in the 2019 and 2022 versions of PFC. (The original Library Extender was a wizard in the PowerBuilder IDE, on the Tool tab of the New dialog box, not part of PFC, so it wasn't included when PFC was released as open source.)
 
 **What it does**
 
