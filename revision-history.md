@@ -14,7 +14,7 @@ PFC versions follow PowerBuilder versions. The years are those of the PowerBuild
 | [10.5 to 11.5](#pfc-105-to-115) | 2006–2008 | Updated for each PowerBuilder release |
 | [12.0](#pfc-120) | 2010 | ANSI Windows and UNIX support removed |
 | [12.5](#pfc-125) | 2011 | DataWindow grid service, window style service, conversion objects; Classic and .NET editions |
-| [12.6](#pfc-126) | 2014 | Moved from CodePlex to GitHub |
+| [12.6](#pfc-126) | 2014 | Moved from CodePlex to GitHub in 2017 |
 | [2017](#pfc-2017) | 2017 | First Appeon PowerBuilder release |
 | [2019](#pfc-2019) | 2019 | Native Git source control; controls and objects for PowerBuilder 2019 and 2019 R2 |
 | [2021](#pfc-2021) | 2021 | Updated for PowerBuilder 2021 |
@@ -81,10 +81,14 @@ Updated for PowerBuilder 10.5, 11.0 and 11.5, with no major changes.
 - **Window style service** (n_cst_winsrv_style): reads and sets a window's Windows styles and extended styles.
 - **Conversion objects**: n_cst_colorconv, n_cst_measureconversion and n_cst_pbunitconversion, and many more named colors in n_cst_color.
 - **Global function** f_removeduplicate.
+- **New services**: the environment service (n_cst_environment), which reports on the host system, and a JSON service (n_cst_json, removed again in PFC 2025).
+- **Extended services**: n_cst_string (e-mail address checks, URL encoding, removing punctuation), n_cst_numerical (bitwise operations, and hexadecimal, octal and binary numbers), n_cst_conversion (more types, and number formats such as 1.234,56), n_cst_filesrv (directory trees, short and long path names, temporary files), n_cst_platform (system folders, system colors, DPI and system metrics; memory as LongLong), n_cst_apppreference (an XML file as well as an INI file or the registry), n_cst_inifile and n_cst_metaclass.
+- **DataWindow services**: a sort order indicator in the column headers; LIKE and NOT LIKE operators; the thousands separator and the first day of the week from the Windows regional settings.
+- **Windows and controls**: pfc_PrePrint and pfc_PostPrint events in w_master, a w_response the user can resize, a pfc_PositionChanged event in u_htb and u_vtb, and center positions in the resize service.
 
 ## PFC 12.6
 
-- **GitHub**: PFC moved from CodePlex to GitHub, with the changes made on CodePlex after its last release.
+- **GitHub**: PFC moved from CodePlex to GitHub in 2017, when CodePlex shut down, with the changes made on CodePlex after its last release.
 
 ## PFC 2017
 
@@ -95,14 +99,14 @@ Updated for PowerBuilder 10.5, 11.0 and 11.5, with no major changes.
 
 - **Native Git source control**: the source is kept in a *ws_objects* folder. Developers fork the repository and connect to the workspace, instead of downloading PBLs.
 - **Controls for PowerBuilder 2019 and 2019 R2**: u_am (Animation), u_dp (DatePicker), u_mc (MonthCalendar), and in 2019 R2, u_wb (WebBrowser) and u_rbb (RibbonBar).
-- **Objects for PowerBuilder 2019 R2's classes**: n_coderobject, n_crypterobject, n_compressorobject, n_extractorobject, n_httpclient, n_restclient and n_smtpclient.
+- **Objects for PowerBuilder 2019 R2's classes**: n_coderobject, n_crypterobject, n_compressorobject, n_extractorobject, n_httpclient and n_restclient.
 - **The new controls in the services**: the resize, logical unit of work, status bar and conversion services handle them.
 - **Databases**: the demo and example applications can use SQL Server as well as SQL Anywhere.
 
 ## PFC 2021
 
 - Updated for PowerBuilder 2021.
-- **DataStore printing** (n_ds of_SetLegacyPrint), for DataStores without a window handle.
+- **DataStore printing** (n_ds of_SetLegacyPrint), for DataStores without a window handle, and n_ds of_PrintSetup.
 
 ## PFC 2022
 
@@ -113,11 +117,11 @@ Updated for PowerBuilder 10.5, 11.0 and 11.5, with no major changes.
 
 PFC 2025 comes in two forms: the [2025-Solution](https://github.com/OpenSourcePFCLibraries/2025-Solution) repository, in PowerBuilder 2025's solution format (*.pbsln* and projects), and the [2025-Workspace](https://github.com/OpenSourcePFCLibraries/2025-Workspace) repository, in the workspace format. It's meant for PowerBuilder 2025 R2.
 
-- **Sign-in with an identity provider**: an OpenID Connect logon window (w_openid_logon), with the authorization code flow and PKCE; an OAuth 2.0 token service (n_cst_oauth2), also used to send mail with n_smtpclient.
+- **Sign-in with an identity provider**: an OpenID Connect logon window (w_openid_logon), with the authorization code flow and PKCE; an OAuth 2.0 token service (n_cst_oauth2), also used to send mail with n_smtpclient, a new wrapper of PowerBuilder's SMTPClient class.
 - **Security**: groups from the identity provider instead of the security database, an optional deny-by-default mode, and every control type secured. The security scanner reads object source, opens solutions and projects, keeps your work when you scan again, and runs from the command line.
 - **Help**: a help service (n_cst_help, w_helpviewer) that shows PDF help in the application or in the PDF viewer; the dialog boxes' Help is a PDF file. Compiled HTML Help replaces WinHelp.
 - **Language service**: PFC's messages, and window, menu and DataWindow text, come from a language file, which can be generated from the Translation Toolkit dictionaries.
-- **A current look**: Segoe UI in place of MS Sans Serif and Tahoma, current images (SVG, with PNG versions), layout around a ribbon bar, and a status bar that follows the UI theme. One resource file, *pfc.pbr*, lists PFC's images and DataWindow objects.
+- **A current look**: Segoe UI in place of MS Sans Serif and Tahoma, current images (SVG, with PNG versions), layout around a ribbon bar, and a status bar that follows the UI theme. One resource file, *pfc.pbr*, lists PFC's images and DataWindow objects. MS Sans Serif is a bitmap font that doesn't scale with the display or use ClearType, and fixed-size bitmaps turn blocky or blurry when they're scaled, so these changes are what let a DPI-aware PFC application look right at high DPI. PFC's own images are in the repository (*pfc libs\images*), so [PFC-Image-Files](https://github.com/OpenSourcePFCLibraries/PFC-Image-Files) no longer has to be on the path.
 - **Resize and layout**: a minimum window size, the design-time size as the original size, the DataWindow resize service's FIXEDCENTER methods, live resizing with the split bar, and response windows big enough for their controls.
 - **Removed**:
   - the JSON service (n_cst_json, w_debugjson), in favor of PowerBuilder's JSONParser and JSONGenerator
@@ -126,5 +130,20 @@ PFC 2025 comes in two forms: the [2025-Solution](https://github.com/OpenSourcePF
   - saving the DDETimeOut property in the application preference service, since DDE is obsolete
 - **Tools**: the Library Extender (*New-PfcExtensionLayer.ps1*), which replaces the PowerBuilder IDE's Library Extender wizard for solutions and workspaces (see "Library Extender" in [the User's Guide, chapter 7](user-guide/07-pfc-utilities.md#library-extender)), an incremental build script (*Build-Incremental.ps1*), and scripts for language files and translations.
 - **Unit tests** with PBUnit (see [Running the PFC Unit Tests](unit-tests.md)).
-- **Applications**: the Examples app, PEAT and the security administrator, with ribbons, the UI theme and Fluent icons; a new OpenID Connect demo and an SMTP demo.
+- **Code quality**: Visual Expert was run on the project, and every finding was dealt with: fixed, confirmed as a false positive, or risk-accepted where the fix would break the interface that existing applications are built on.
+- **Applications**: the Examples app, PEAT and the security administrator, with ribbons, the UI theme, Fluent icons and Segoe UI.
+  - **Examples app**: new examples for the language, security, timing, transaction registration and utility services, the DataStore, grid, query mode and report services, the ribbon bar, the sheet manager and a controls gallery; column header sorting in the Sort Service example and restoring deleted rows in the Row Manager example; the Metaclass, Logical Unit of Work, Recursive Tree View and split bar examples rebuilt; the PFC 5.0 TreeView and ListView examples, and the catalog entries for Rich Text Edit examples that no longer existed, removed. The catalog is read from text files in the repository, and F1 opens the example's help topic.
+  - **OpenID Connect demo** (new): signs users in with an identity provider, with the password grant or with the authorization code flow and PKCE in the browser, and applies PFC security from the groups the provider reports. PEAT's OpenID Connect logon moved here.
+  - **SMTP demo** (new): sends mail with n_smtpclient and an OAuth 2.0 access token from n_cst_oauth2, with the authorization code flow in the browser, the device code flow, or client credentials.
 - **Documentation**: the manuals converted to Markdown and brought up to date, in the [docs](https://github.com/OpenSourcePFCLibraries/docs) repository.
+
+## Updates to PFC 2019 and 2022
+
+In October and November 2026, some of the PFC 2025 changes were also made in the [2019](https://github.com/OpenSourcePFCLibraries/2019) and [2022](https://github.com/OpenSourcePFCLibraries/2022) repositories:
+
+- **Security**: the deny-by-default mode, restrictions kept in place after application code changes a control, and newer and unknown control types handled. The security scanner scans a target's source, merges re-scans and runs from the command line.
+- **Resize and layout**: a minimum window size, the design-time size as the original size, the DataWindow resize service's FIXEDCENTER methods, live resizing with the split bar, response windows big enough for their controls, and the MDI client area laid out around a ribbon bar.
+- **Status bar**: follows the UI theme's colors, and displays correctly on Windows 10 and later.
+- **Help and building**: compiled HTML Help instead of WinHelp (2019; PFC 2022 already used it), and a script that builds the targets from the command line (*tools\build.ps1*).
+
+The 2019 and 2022 versions don't have Segoe UI, the new images, sign-in with an identity provider, OAuth 2.0, n_smtpclient, or the language and help services.
