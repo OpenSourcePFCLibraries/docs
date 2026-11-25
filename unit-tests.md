@@ -19,7 +19,7 @@ PowerBuilder's **Connect to Workspace/Solution** does not download submodules, s
 **Recommended: clone with GitHub Desktop, then open the solution**
 
 1. In GitHub Desktop, use **File > Clone repository** to clone your fork. GitHub Desktop downloads the submodule along with the rest of the source.
-2. In PowerBuilder, use **File > Open** to open `PFC.pbsln` from the cloned folder, instead of Connect to Workspace/Solution.
+2. In PowerBuilder, use **File > Open Workspace/Solution** to open `PFC.pbsln` from the cloned folder, instead of Connect to Workspace/Solution.
 3. Do a full rebuild.
 
 If you use git from the command line, `git clone --recurse-submodules` does the same as step 1.
