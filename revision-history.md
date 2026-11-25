@@ -14,7 +14,7 @@ PFC versions follow PowerBuilder versions. The years are those of the PowerBuild
 | [10.5 to 11.5](#pfc-105-to-115) | 2006–2008 | Updated for each PowerBuilder release |
 | [12.0](#pfc-120) | 2010 | ANSI Windows and UNIX support removed |
 | [12.5](#pfc-125) | 2011 | DataWindow grid service, window style service, conversion objects; Classic and .NET editions |
-| [12.6](#pfc-126) | 2014 | Moved from CodePlex to GitHub |
+| [12.6](#pfc-126) | 2014 | Moved from CodePlex to GitHub in 2017 |
 | [2017](#pfc-2017) | 2017 | First Appeon PowerBuilder release |
 | [2019](#pfc-2019) | 2019 | Native Git source control; controls and objects for PowerBuilder 2019 and 2019 R2 |
 | [2021](#pfc-2021) | 2021 | Updated for PowerBuilder 2021 |
@@ -88,7 +88,7 @@ Updated for PowerBuilder 10.5, 11.0 and 11.5, with no major changes.
 
 ## PFC 12.6
 
-- **GitHub**: PFC moved from CodePlex to GitHub, with the changes made on CodePlex after its last release.
+- **GitHub**: PFC moved from CodePlex to GitHub in 2017, when CodePlex shut down, with the changes made on CodePlex after its last release.
 
 ## PFC 2017
 
